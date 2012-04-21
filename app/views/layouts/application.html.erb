@@ -7,8 +7,29 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <div class="navbar navbar-fixed-top ">
+    <div class="navbar-inner">
+      <div class="container">
+        <%= link_to "My Ingesup","#", :class => "brand" %>
+      </div>
+    </div>
+  </div>
 
-<%= yield %>
+  <div class="container page ">
+    <div class="row">
+      <div class="span2 sidebar">
+        <ul class="nav nav-list">
+          <%= yield :sidebar %>
+        </ul>
+      </div>
+      <div class="span10 content">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+  
+
+
 
 </body>
 </html>
