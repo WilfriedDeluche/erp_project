@@ -1,0 +1,29 @@
+/*import*/
+@import "mixins.css.scss";
+
+/*variable*/
+$page-margin-top: 60px;
+$content-min-height: 400px;
+
+body {
+	background-image: url("grey-background.png");
+	background-repeat: repeat;
+}
+
+.page {
+	margin-top: $page-margin-top;
+}
+
+.sidebar {
+	background-color: #FFF;
+	min-height: $content-min-height;
+	@include lifted;
+	@include drop-shadow;
+}
+
+.content {
+	background-color: #FFF;
+	min-height: $content-min-height;
+	@include lifted;
+	@include drop-shadow;
+}

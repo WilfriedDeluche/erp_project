@@ -1,0 +1,37 @@
+<%= content_for :sidebar do %>
+  <li class="nav-header">Public</li>
+  <li>
+    <%= link_to school_public_pages_path do %>
+      <i class="icon-home"></i>
+      École
+    <% end %>
+  </li>
+  <li>
+    <%= link_to news_public_pages_path do %>
+      <i class="icon-camera"></i>
+      Actualités
+    <% end %>
+  </li>
+  <li>
+    <%= link_to contact_public_pages_path do %>
+      <i class="icon-envelope"></i>
+      Contact
+    <% end %>
+  </li>
+  <li class="nav-header">Privé</li>
+  <% if user_signed_in? %>
+    <li>
+      <%= link_to home_index_path do %>
+        <i class="icon-user"></i>
+        Administration
+      <% end %>
+    </li>
+  <% else %>
+    <li>
+      <%= link_to new_user_session_path do %>
+        <i class="icon-user"></i>
+        Connexion
+      <% end %>
+    </li>
+  <% end %>
+<% end %>
