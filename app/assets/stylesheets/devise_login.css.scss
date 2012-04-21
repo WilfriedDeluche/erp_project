@@ -1,0 +1,17 @@
+@import "mixins.css.scss";
+
+#login {
+	margin-top: 50px;
+	width:400px;
+	@include center;
+	
+	.label {
+		width:390px;
+		height:60px;
+		background-color: #F5F5F5;
+		color: #888;
+		font-size: 30px;
+		font-weight: normal;
+	}
+	
+}
