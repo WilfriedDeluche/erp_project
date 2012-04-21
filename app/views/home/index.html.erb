@@ -1,0 +1,13 @@
+<h1>Ingesup Platform</h1>
+
+<p>Bienvenue sur la plateforme Ingesup</p>
+
+<p>Voici vos informations personnelles:</p>
+
+<ul>
+  <li>Nom : <strong><%= current_user.last_name.upcase %></strong></li>
+  <li>Prénom : <%= current_user.first_name.capitalize %></li>
+  <li>Email : <%= current_user.email %></li>
+</ul>
+
+<p><%= link_to "Se déconnecter", destroy_user_session_path, :method => :delete, :id => "sign_out" %></p>

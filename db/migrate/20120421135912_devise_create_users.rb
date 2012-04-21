@@ -36,8 +36,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       ## Token authenticatable
       # t.string :authentication_token
 
-      t.string :first_name
-      t.string :last_name
+      t.string :first_name, :default => ""
+      t.string :last_name, :default => ""
 
       t.timestamps
     end
