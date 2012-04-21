@@ -7,6 +7,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+
   <div class="navbar navbar-fixed-top ">
     <div class="navbar-inner">
       <div class="container">
@@ -15,21 +16,31 @@
     </div>
   </div>
 
-  <div class="container page ">
-    <div class="row">
+  <div class="container page ">    
+    <div class="row">      
       <div class="span2 sidebar">
         <ul class="nav nav-list">
           <%= yield :sidebar %>
         </ul>
       </div>
       <div class="span10 content">
+        <% if notice %>
+          <div class="alert alert-success fade in">
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+            <%= notice %>
+          </div>
+        <% end %>
+        <% if alert %>
+          <div class="alert alert-error fade in">
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+            <%= alert %>
+          </div>
+        <% end %>
+        
         <%= yield %>
       </div>
     </div>
   </div>
   
-
-
-
 </body>
 </html>
