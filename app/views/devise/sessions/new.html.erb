@@ -1,4 +1,7 @@
 <%= render "public_pages/sidebar"%>
+<div class="page-header">
+  <h1 class="title">Connection</h1>
+</div>
 <div id="login">
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
     <p><%= f.email_field :email, :class => "label", :placeholder => "Email" %></p>
