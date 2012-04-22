@@ -18,5 +18,13 @@
       Contact
     <% end %>
   </li>
-  <li class="nav-header">Actions</li>
+  <li class="nav-header">Privé</li>
+  <% if user_signed_in? %>
+    <li>
+      <%= link_to home_index_path do %>
+        <i class="icon-user"></i>
+        Mon espace
+      <% end %>
+    </li>
+  <% end %>
 <% end %>
