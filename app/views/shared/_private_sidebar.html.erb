@@ -20,11 +20,11 @@
   </li>
   <li class="nav-header">Privé</li>
   <% if user_signed_in? %>
-  <li>
-    <%= link_to destroy_user_session_path, :method => :delete do %>
-      <i class="icon-user"></i>
-      Déconnexion
-    <% end %>
-  </li>
+    <li>
+      <%= link_to home_index_path do %>
+        <i class="icon-user"></i>
+        Mon espace
+      <% end %>
+    </li>
   <% end %>
 <% end %>
