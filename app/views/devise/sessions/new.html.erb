@@ -1,17 +1,14 @@
-<h2>Connexion</h2>
+<%= render "shared/public_sidebar"%>
+<div class="page-header">
+  <h1 class="title">Connection</h1>
+</div>
+<div id="login">
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+    <p><%= f.email_field :email, :class => "label", :placeholder => "Email" %></p>
+    <p><%= f.password_field :password, :class => "label", :placeholder => "Password" %></p>
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+    <div><%= f.submit "Se connecter", :class => "btn pull-right" %></div>
+  <% end %>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
-
-  <div><%= f.submit "Se connecter" %></div>
-<% end %>
-
-<%= render "links" %>
+  <%= render "links" %>
+</div>
