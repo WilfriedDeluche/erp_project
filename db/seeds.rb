@@ -4,6 +4,10 @@
 
 # Initialize every resource
 User.destroy_all
+SchoolUser.destroy_all
+Teacher.destroy_all
+
+puts "#### ALL DATAS FROM CURRENT DATABASE DESTROYED ####"
 
 puts 'SETTING UP DEFAULT USERS'
 puts "..."
