@@ -1,4 +1,5 @@
 class SchoolUsersController < ApplicationController
+  
   # GET /school_users
   # GET /school_users.json
   def index
@@ -46,18 +47,18 @@ class SchoolUsersController < ApplicationController
     @user = User.new(params[:user]) do |u|
       u.rolable = @school_user
     end
-
+    
+    valid = @user.valid? 
+    valid = @school_user.valid? && valid
+    
     respond_to do |format|
-      if @user.valid? && @school_user.valid?
+      if valid
         @school_user.save
         @user.save        
         format.html { redirect_to @school_user, notice: 'School user was successfully created.' }
         format.json { render json: @school_user, status: :created, location: @school_user }
       else
-        format.html do 
-          @user = User.new
-          render action: "new"          
-        end
+        format.html { render action: "new" }
         format.json { render json: @school_user.errors, status: :unprocessable_entity }
       end
     end
@@ -82,6 +83,7 @@ class SchoolUsersController < ApplicationController
   # DELETE /school_users/1.json
   def destroy
     @school_user = SchoolUser.find(params[:id])
+    @school_user.user.destroy    
     @school_user.destroy
 
     respond_to do |format|
@@ -89,4 +91,5 @@ class SchoolUsersController < ApplicationController
       format.json { head :ok }
     end
   end
+
 end
