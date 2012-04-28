@@ -36,6 +36,7 @@ class SchoolUsersController < ApplicationController
   # GET /school_users/1/edit
   def edit
     @school_user = SchoolUser.find(params[:id])
+    @user = @school_user.user
   end
 
   # POST /school_users
@@ -66,9 +67,8 @@ class SchoolUsersController < ApplicationController
   # PUT /school_users/1.json
   def update
     @school_user = SchoolUser.find(params[:id])
-
     respond_to do |format|
-      if @school_user.update_attributes(params[:school_user])
+      if @school_user.update_attributes(params[:school_user]) && @school_user.user.update_attributes(params[:user])
         format.html { redirect_to @school_user, notice: 'School user was successfully updated.' }
         format.json { head :ok }
       else
