@@ -11,10 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120428142336) do
+ActiveRecord::Schema.define(:version => 20120428185616) do
 
   create_table "school_users", :force => true do |t|
     t.string   "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "teachers", :force => true do |t|
+    t.integer  "arrival_year"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -39,8 +45,7 @@ ActiveRecord::Schema.define(:version => 20120428142336) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["first_name"], :name => "index_users_on_first_name", :unique => true
-  add_index "users", ["last_name"], :name => "index_users_on_last_name", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["first_name"], :name => "index_users_on_first_name"
+  add_index "users", ["last_name"], :name => "index_users_on_last_name"
 
 end
