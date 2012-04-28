@@ -27,4 +27,13 @@
       <% end %>
     </li>
   <% end %>
+  
+  <% if school_user_signed_in? %>
+    <li>
+      <%= link_to school_users_path do %>
+        <i class="icon-user"></i>
+        Service Pédagogique
+      <% end %>
+    </li>
+  <% end %>
 <% end %>

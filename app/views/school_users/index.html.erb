@@ -1,0 +1,29 @@
+<%= render "shared/private_sidebar" %>
+
+<h1>Service Pédagogique</h1>
+
+<table class="table table-bordered table-condensed">
+  <tr>
+    <th>Nom</th>
+    <th>Prénom</th>
+    <th>Position</th>
+    <th>Actions</th>
+  </tr>
+
+<% @school_users.each do |school_user| %>
+  <tr>
+    <td><%= school_user.user.last_name.upcase %></td>
+    <td><%= school_user.user.first_name.capitalize %></td>
+    <td><%= school_user.position %></td>
+    <td>
+      <%= link_to 'Show', school_user %>
+      <%= link_to 'Edit', edit_school_user_path(school_user) %>
+      <%= link_to 'Destroy', school_user, confirm: 'Are you sure?', method: :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New School user', new_school_user_path %>

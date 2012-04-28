@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   
   belongs_to :rolable, :polymorphic => true
   
-  validates_presence_of :email, :rolable
+  validates_presence_of :email
   validates_presence_of :password, :on => :create
   validates_presence_of :password_confirmation, :on => :create
 end
