@@ -16,4 +16,14 @@ class ApplicationController < ActionController::Base
     @is_school_user_in = (user_signed_in? && current_user.rolable_type == "SchoolUser" && !current_user.rolable.nil?) ? true : false
     @is_school_user_in
   end
+  
+  def school_users_only
+    access_denied unless current_user.rolable_type == "SchoolUser" && !current_user.rolable.nil?
+  end
+  
+  def access_denied
+    respond_to do |format|
+      format.html { redirect_to home_index_path, alert: "Acces interdit" }
+    end    
+  end
 end

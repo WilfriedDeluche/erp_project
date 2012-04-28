@@ -1,25 +1,20 @@
 class SchoolUsersController < ApplicationController
+  before_filter :authenticate_user!
+  before_filter :school_users_only
+  before_filter :find_school_user, :only => [:show, :edit, :update, :destroy]
+  respond_to :html, :json
   
   # GET /school_users
   # GET /school_users.json
   def index
     @school_users = SchoolUser.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @school_users }
-    end
+    respond_with @school_users
   end
 
   # GET /school_users/1
   # GET /school_users/1.json
   def show
-    @school_user = SchoolUser.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @school_user }
-    end
+    respond_with @school_user
   end
 
   # GET /school_users/new
@@ -27,16 +22,11 @@ class SchoolUsersController < ApplicationController
   def new
     @school_user = SchoolUser.new
     @user = User.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @school_user }
-    end
+    respond_with @school_user
   end
 
   # GET /school_users/1/edit
   def edit
-    @school_user = SchoolUser.find(params[:id])
     @user = @school_user.user
   end
 
@@ -67,9 +57,9 @@ class SchoolUsersController < ApplicationController
   # PUT /school_users/1
   # PUT /school_users/1.json
   def update
-    @school_user = SchoolUser.find(params[:id])
+    @user = @school_user.user
     respond_to do |format|
-      if @school_user.update_attributes(params[:school_user]) && @school_user.user.update_attributes(params[:user])
+      if @school_user.update_attributes(params[:school_user]) && @user.update_attributes(params[:user])
         format.html { redirect_to @school_user, notice: 'School user was successfully updated.' }
         format.json { head :ok }
       else
@@ -82,7 +72,6 @@ class SchoolUsersController < ApplicationController
   # DELETE /school_users/1
   # DELETE /school_users/1.json
   def destroy
-    @school_user = SchoolUser.find(params[:id])
     @school_user.user.destroy    
     @school_user.destroy
 
@@ -92,4 +81,15 @@ class SchoolUsersController < ApplicationController
     end
   end
 
+  private
+  def find_school_user
+    begin
+      @school_user = SchoolUser.find(params[:id])
+    rescue
+      respond_to do |format|
+        format.html { redirect_to school_users_path, alert: 'School user does not exist.' }
+        format.json { render head: :not_found }
+      end
+    end
+  end
 end
