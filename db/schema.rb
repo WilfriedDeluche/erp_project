@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120421135912) do
+ActiveRecord::Schema.define(:version => 20120428142336) do
+
+  create_table "school_users", :force => true do |t|
+    t.string   "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -28,6 +34,8 @@ ActiveRecord::Schema.define(:version => 20120421135912) do
     t.string   "last_name",              :default => ""
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "rolable_id"
+    t.string   "rolable_type"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
