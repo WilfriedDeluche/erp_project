@@ -12,8 +12,8 @@
 
 <% @students.each do |student| %>
   <tr>
-    <td><%= student.user.last_name.upcase unless student.user.nil? %></td>
-    <td><%= student.user.first_name.capitalize unless student.user.nil? %></td>
+    <td><%= student.user.last_name.upcase %></td>
+    <td><%= student.user.first_name.capitalize %></td>
     <td><%= student.city.capitalize %></td>
     <td>
       <%= link_to 'Show', student %>

@@ -7,7 +7,7 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    @students = Student.all
+    @students = Student.all.select { |s| s unless s.user.nil? }
     respond_with @students
   end
 
