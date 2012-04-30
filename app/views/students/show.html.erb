@@ -1,0 +1,16 @@
+<%= render "shared/private_sidebar" %>
+
+<h1>Étudiant</h1>
+
+Nom: <%= @student.user.last_name.upcase %><br />
+Prénom: <%= @student.user.first_name.capitalize %><br />
+Email: <%= @student.user.email %><br />
+Date de Naissance: <%= @student.birthdate %><br />
+Adresse: <%= @student.address %><br />
+Code Postal: <%= @student.zip_code %><br />
+Ville: <%= @student.city %><br />
+Numéro de Mobile: <%= @student.mobile_phone_number %><br />
+<br />
+
+<%= link_to 'Edit', edit_student_path(@student) %> |
+<%= link_to 'Back', students_path %>
