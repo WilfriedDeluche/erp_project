@@ -21,3 +21,13 @@
 <% if school_user_signed_in? %>
   <p>Statut: <%= current_user.rolable.position %></p>
 <% end %>
+
+<% if student_signed_in? %>
+  <p>Autres informations :
+    <ul>
+      <li>Date de naissance : <%= current_user.rolable.birthdate %></li>
+      <li>Ville : <%= current_user.rolable.city %></li>
+      <li>Mobile : <%= current_user.rolable.mobile_phone_number %>
+    </ul>
+  </p>
+<% end %>
