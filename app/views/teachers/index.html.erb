@@ -13,7 +13,12 @@
 <% @teachers.each do |teacher| %>
   <tr>
     <td><%= teacher.user.last_name.upcase %></td>
-    <td><%= teacher.user.first_name.capitalize %></td>
+    <td>
+      <%= teacher.user.first_name.capitalize %>
+      <% unless teacher.user.invitation_token.nil? %>
+        <span class="label pull-right">Invité</span>
+      <% end %>
+    </td>
     <td>
       <%= link_to 'Show', teacher %>
       <%= link_to 'Edit', edit_teacher_path(teacher) %>

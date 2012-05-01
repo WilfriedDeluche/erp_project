@@ -6,8 +6,19 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name
   
+  attr_accessor :skip_password_validation
+  
   belongs_to :rolable, :polymorphic => true
   
   validates_presence_of :first_name, :last_name
+  
   validates_presence_of :password_confirmation, :on => :create
+  validate :skip_password, :on => :create
+
+  def skip_password
+    if self.skip_password_validation == true
+      errors[:password].clear
+      errors[:password_confirmation].clear
+    end 
+  end
 end

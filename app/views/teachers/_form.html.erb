@@ -21,18 +21,6 @@
       <div class="uneditable-input"><%= @user.email %></div>
     <% end %>
     </div>
-    
-    <% if action_name == "new" || action_name == "create" %>
-    <div>
-      <%= uf.label :password %>
-      <%= uf.password_field :password %>
-    </div>
-
-    <div>
-      <%= uf.label :password_confirmation %>
-      <%= uf.password_field :password_confirmation %>
-    </div>
-    <% end %>
   <% end %>
 
   <div>

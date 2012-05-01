@@ -8,5 +8,9 @@ Email: <%= @teacher.user.email %><br />
 Année d'Arrivée: <%= @teacher.arrival_year %><br />
 <br />
 
+<% unless @teacher.user.invitation_token.nil? %>
+  <span class="label label-warning pull-right">Cet utilisateur n'a pas encore activé son compte</span>
+<% end %>
+
 <%= link_to 'Edit', edit_teacher_path(@teacher) %> |
 <%= link_to 'Back', teachers_path %>

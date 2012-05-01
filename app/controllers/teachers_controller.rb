@@ -36,6 +36,7 @@ class TeachersController < ApplicationController
     @teacher = Teacher.new(params[:teacher])
     @user = User.new(params[:user]) do |u|
       u.rolable = @teacher
+      u.skip_password_validation = true
     end
     
     valid = @user.valid? 
@@ -44,7 +45,9 @@ class TeachersController < ApplicationController
     respond_to do |format|
       if valid
         @teacher.save
-        @user.save
+        @user.invite! do |u|
+          u.invited_by_id = current_user.id
+        end
         format.html { redirect_to @teacher, notice: 'Teacher was successfully created.' }
         format.json { render json: @teacher, status: :created, location: @teacher }
       else
