@@ -1,0 +1,29 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Liste des Étudiants</h1>
+
+<div class="row-fluid page-menu-bar">
+  <%= link_to 'Nouveau', new_student_path, :class => "btn btn-mini btn-info" %>
+</div>
+
+<table class="table table-bordered table-condensed">
+  <tr>
+    <th>Nom</th>
+    <th>Prénom</th>
+    <th>Ville</th>
+    <th>Actions</th>
+  </tr>
+
+<% @students.each do |student| %>
+  <tr>
+    <td><%= student.user.last_name.upcase %></td>
+    <td><%= student.user.first_name.capitalize %></td>
+    <td><%= student.city.capitalize %></td>
+    <td>
+      <%= link_to 'Voir', student %>
+      <%= link_to 'Modifier', edit_student_path(student) %>
+      <%= link_to 'Supprimer', student, confirm: 'Êtes-vous sûr?', method: :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
