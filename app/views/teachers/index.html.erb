@@ -1,27 +1,29 @@
 <%= render "shared/private_sidebar" %>
 
-<h1>Liste des Professeurs</h1>
+<div class="container-fluid">
+  <h1>Liste des Professeurs</h1>
 
-<table class="table table-bordered table-condensed">
-  <tr>
-    <th>Nom</th>
-    <th>Prénom</th>
-    <th>Actions</th>
-  </tr>
+  <div class="row-fluid page-menu-bar">
+    <%= link_to 'Nouveau', new_teacher_path, :class => "btn btn-mini btn-info" %>
+  </div>
+  
+  <table class="table table-bordered table-condensed">
+    <tr>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Actions</th>
+    </tr>
 
-<% @teachers.each do |teacher| %>
-  <tr>
-    <td><%= teacher.user.last_name.upcase %></td>
-    <td><%= teacher.user.first_name.capitalize %></td>
-    <td>
-      <%= link_to 'Show', teacher %>
-      <%= link_to 'Edit', edit_teacher_path(teacher) %>
-      <%= link_to 'Destroy', teacher, confirm: 'Are you sure?', method: :delete %>
-    </td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Teacher', new_teacher_path %>
+  <% @teachers.each do |teacher| %>
+    <tr>
+      <td><%= teacher.user.last_name.upcase %></td>
+      <td><%= teacher.user.first_name.capitalize %></td>
+      <td>
+        <%= link_to 'Voir', teacher %>
+        <%= link_to 'Modifier', edit_teacher_path(teacher) %>
+        <%= link_to 'Supprimer', teacher, confirm: 'Êtes-vous sûr?', method: :delete %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+</div>

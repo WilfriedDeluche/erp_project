@@ -1,8 +1,12 @@
 <%= render "shared/private_sidebar" %>
 
-<h1>Modifier un Professeur</h1>
+<div class="container-fluid">
+  <h1>Modifier un Professeur</h1>
 
-<%= render 'form' %>
-
-<%= link_to 'Show', @teacher %> |
-<%= link_to 'Back', teachers_path %>
+  <div class="row-fluid page-menu-bar">
+    <%= link_to 'Voir', @teacher, :class => "btn btn-mini btn-info" %>
+    <%= link_to 'Retour', teachers_path, :class => "btn btn-mini btn-info" %>
+  </div>
+  
+  <%= render 'form' %>
+</div>
