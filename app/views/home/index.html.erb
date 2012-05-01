@@ -17,7 +17,3 @@
 <% if teacher_signed_in? %>
   <p>Année d'arrivée: <%= current_user.rolable.arrival_year %></p>
 <% end %>
-
-<% if school_user_signed_in? %>
-  <p>Statut: <%= current_user.rolable.position %></p>
-<% end %>
