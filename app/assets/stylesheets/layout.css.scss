@@ -3,7 +3,7 @@
 
 /*variable*/
 $page-margin-top: 60px;
-$content-min-height: 400px;
+$content-min-height: 400;
 
 body {
 	background-image: url("grey-background.png");
@@ -16,25 +16,17 @@ body {
 
 .sidebar {
 	background-color: #FFF;
-	min-height: $content-min-height;
+	min-height: #{$content-min-height}px;
 	@include lifted;
 	@include drop-shadow;
 }
 
 .content {
 	background-color: #FFF;
-	min-height: $content-min-height;
+	min-height: #{$content-min-height - 20}px;
+	padding-bottom: 20px;
 	@include lifted;
 	@include drop-shadow;
-}
-
-.title {
-	margin-left: 10px;
-}
-
-.content h1 {
-	margin-bottom: 20px;
-	margin-top: 10px;
 }
 
 .page-menu-bar {

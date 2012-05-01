@@ -1,29 +1,27 @@
 <%= render "shared/private_sidebar" %>
 
-<div class="container-fluid">
-  <h1>Service Pédagogique</h1>
+<h1 class="page-header">Service Pédagogique</h1>
 
-  <div class="row-fluid page-menu-bar">
-    <%= link_to 'Nouveau', new_school_user_path, :class => "btn btn-mini btn-info" %>
-  </div>
-
-  <table class="table table-bordered table-condensed">
-    <tr>
-      <th>Nom</th>
-      <th>Prénom</th>
-      <th>Actions</th>
-    </tr>
-
-  <% @school_users.each do |school_user| %>
-    <tr>
-      <td><%= school_user.user.last_name.upcase %></td>
-      <td><%= school_user.user.first_name.capitalize %></td>
-      <td>
-        <%= link_to 'Voir', school_user %>
-        <%= link_to 'Modifier', edit_school_user_path(school_user) %>
-        <%= link_to 'Supprimer', school_user, confirm: 'Êtes-vous sûr?', method: :delete %>
-      </td>
-    </tr>
-  <% end %>
-  </table>
+<div class="row-fluid page-menu-bar">
+  <%= link_to 'Nouveau', new_school_user_path, :class => "btn btn-mini btn-info" %>
 </div>
+
+<table class="table table-bordered table-condensed">
+  <tr>
+    <th>Nom</th>
+    <th>Prénom</th>
+    <th>Actions</th>
+  </tr>
+
+<% @school_users.each do |school_user| %>
+  <tr>
+    <td><%= school_user.user.last_name.upcase %></td>
+    <td><%= school_user.user.first_name.capitalize %></td>
+    <td>
+      <%= link_to 'Voir', school_user %>
+      <%= link_to 'Modifier', edit_school_user_path(school_user) %>
+      <%= link_to 'Supprimer', school_user, confirm: 'Êtes-vous sûr?', method: :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>

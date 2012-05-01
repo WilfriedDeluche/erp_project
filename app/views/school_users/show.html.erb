@@ -1,16 +1,14 @@
 <%= render "shared/private_sidebar" %>
 
-<div class="container-fluid">
-  <h1>Utilisateur Service Pédagogique</h1>
+<h1 class="page-header">Utilisateur Service Pédagogique</h1>
 
-  <div class="row-fluid page-menu-bar">
-    <%= link_to 'Editer', edit_school_user_path(@school_user), :class => "btn btn-mini btn-info" %>
-    <%= link_to 'Retour', school_users_path, :class => "btn btn-mini btn-info" %>
-  </div>
+<div class="row-fluid page-menu-bar">
+  <%= link_to 'Editer', edit_school_user_path(@school_user), :class => "btn btn-mini btn-info" %>
+  <%= link_to 'Retour', school_users_path, :class => "btn btn-mini btn-info" %>
+</div>
 
-  <div class="well">
-    <strong>Nom: </strong><%= @school_user.user.last_name.upcase %><br />
-    <strong>Prénom: </strong><%= @school_user.user.first_name.capitalize %><br />
-    <strong>Email: </strong><%= @school_user.user.email %><br />
-  </div>
+<div class="well">
+  <strong>Nom: </strong><%= @school_user.user.last_name.upcase %><br />
+  <strong>Prénom: </strong><%= @school_user.user.first_name.capitalize %><br />
+  <strong>Email: </strong><%= @school_user.user.email %><br />
 </div>

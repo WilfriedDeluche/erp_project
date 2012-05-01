@@ -1,21 +1,19 @@
 <%= render "shared/private_sidebar" %>
 
-<div class="container-fluid">
-  <h1>Étudiant</h1>
+<h1 class="page-header">Étudiant</h1>
 
-  <div class="row-fluid page-menu-bar">
-    <%= link_to 'Editer', edit_student_path(@student), :class => "btn btn-mini btn-info" %>
-    <%= link_to 'Retour', students_path, :class => "btn btn-mini btn-info" %>
-  </div>
+<div class="row-fluid page-menu-bar">
+  <%= link_to 'Editer', edit_student_path(@student), :class => "btn btn-mini btn-info" %>
+  <%= link_to 'Retour', students_path, :class => "btn btn-mini btn-info" %>
+</div>
 
-  <div class="well">
-    <strong>Nom: </strong><%= @student.user.last_name.upcase %><br />
-    <strong>Prénom: </strong><%= @student.user.first_name.capitalize %><br />
-    <strong>Email: </strong><%= @student.user.email %><br />
-    <strong>Date de Naissance: </strong><%= @student.birthdate %><br />
-    <strong>Adresse: </strong><%= @student.address %><br />
-    <strong>Code Postal: </strong><%= @student.zip_code %><br />
-    <strong>Ville: </strong><%= @student.city %><br />
-    <strong>Numéro de Mobile: </strong><%= @student.mobile_phone_number %>
-  </div>
+<div class="well">
+  <strong>Nom: </strong><%= @student.user.last_name.upcase %><br />
+  <strong>Prénom: </strong><%= @student.user.first_name.capitalize %><br />
+  <strong>Email: </strong><%= @student.user.email %><br />
+  <strong>Date de Naissance: </strong><%= @student.birthdate %><br />
+  <strong>Adresse: </strong><%= @student.address %><br />
+  <strong>Code Postal: </strong><%= @student.zip_code %><br />
+  <strong>Ville: </strong><%= @student.city %><br />
+  <strong>Numéro de Mobile: </strong><%= @student.mobile_phone_number %>
 </div>
