@@ -1,0 +1,8 @@
+<p>Bonjour <%= @resource.email %>!</p>
+
+<p>Vous avez été invité à créer votre compte à <%= root_url %>. Vous pouvez accepter cette invitation en cliquant sur le lien ci-dessous.</p>
+
+<p><%= link_to "Accepter l'invitation", accept_invitation_url(@resource, :invitation_token => @resource.invitation_token) %></p>
+
+<p>Si vous ne souhaitez pas accepter cette invitation, veuillez ignorer cet email.<br />
+Votre compte ne sera pas créer tant que vous n'aurez pas accéder à cette page et validé vos informations personnelles.</p>
