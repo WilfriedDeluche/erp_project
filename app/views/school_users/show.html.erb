@@ -1,0 +1,11 @@
+<%= render "shared/private_sidebar" %>
+
+<h1>Utilisateur Service Pédagogique</h1>
+
+Nom: <%= @school_user.user.last_name.upcase %><br />
+Prénom: <%= @school_user.user.first_name.capitalize %><br />
+Email: <%= @school_user.user.email %><br />
+<br />
+
+<%= link_to 'Edit', edit_school_user_path(@school_user) %> |
+<%= link_to 'Back', school_users_path %>

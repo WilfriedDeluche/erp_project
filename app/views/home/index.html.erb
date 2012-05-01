@@ -11,3 +11,9 @@
   <li>Prénom : <%= current_user.first_name.capitalize %></li>
   <li>Email : <%= current_user.email %></li>
 </ul>
+
+<p>Connecté en tant que : <strong><%= current_user.rolable_type %></strong></p>
+
+<% if teacher_signed_in? %>
+  <p>Année d'arrivée: <%= current_user.rolable.arrival_year %></p>
+<% end %>

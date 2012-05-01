@@ -1,0 +1,46 @@
+<%= form_for(@teacher) do |f| %>
+  <%= rolable_error_messages!(@teacher, @user) %>
+
+  <%= fields_for @user do |uf| %>
+    <div>
+      <%= uf.label :last_name %>
+      <%= uf.text_field :last_name %>
+    </div>
+    
+    <div>
+      <%= uf.label :first_name %>
+      <%= uf.text_field :first_name %>
+    </div>
+    
+    <div>
+    <% if action_name == 'new' or action_name == 'create' %>
+      <%= uf.label :email %>
+      <%= uf.email_field :email %>
+    <% else %>
+      <%= uf.label :email %>
+      <div class="uneditable-input"><%= @user.email %></div>
+    <% end %>
+    </div>
+    
+    <% if action_name == "new" || action_name == "create" %>
+    <div>
+      <%= uf.label :password %>
+      <%= uf.password_field :password %>
+    </div>
+
+    <div>
+      <%= uf.label :password_confirmation %>
+      <%= uf.password_field :password_confirmation %>
+    </div>
+    <% end %>
+  <% end %>
+
+  <div>
+    <%= f.label :arrival_year %>
+    <%= f.text_field :arrival_year %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit :class => "btn btn-primary" %>
+  </div>
+<% end %>
