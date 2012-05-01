@@ -7,7 +7,7 @@ class SchoolUsersController < ApplicationController
   # GET /school_users
   # GET /school_users.json
   def index
-    @school_users = SchoolUser.all
+    @school_users = SchoolUser.all.select { |su| su unless su.user.nil? }
     respond_with @school_users
   end
 
@@ -85,6 +85,7 @@ class SchoolUsersController < ApplicationController
   def find_school_user
     begin
       @school_user = SchoolUser.find(params[:id])
+      raise RecordNotFound.new if @school_user.user.nil?
     rescue
       respond_to do |format|
         format.html { redirect_to school_users_path, alert: 'School user does not exist.' }

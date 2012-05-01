@@ -11,8 +11,8 @@
 
 <% @teachers.each do |teacher| %>
   <tr>
-    <td><%= teacher.user.last_name.upcase unless teacher.user.nil? %></td>
-    <td><%= teacher.user.first_name.capitalize unless teacher.user.nil? %></td>
+    <td><%= teacher.user.last_name.upcase %></td>
+    <td><%= teacher.user.first_name.capitalize %></td>
     <td>
       <%= link_to 'Show', teacher %>
       <%= link_to 'Edit', edit_teacher_path(teacher) %>

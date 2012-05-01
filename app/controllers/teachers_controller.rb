@@ -7,7 +7,7 @@ class TeachersController < ApplicationController
   # GET /teachers
   # GET /teachers.json
   def index
-    @teachers = Teacher.all
+    @teachers = Teacher.all.select { |t| t unless t.user.nil? }
     respond_with @teachers
   end
 
@@ -85,6 +85,7 @@ class TeachersController < ApplicationController
   def find_teacher
     begin
       @teacher = Teacher.find(params[:id])
+      raise RecordNotFound.new if @teacher.user.nil?
     rescue
       respond_to do |format|
         format.html { redirect_to teachers_path, alert: 'Teacher does not exist.' }
