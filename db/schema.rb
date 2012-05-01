@@ -11,10 +11,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120430065606) do
+ActiveRecord::Schema.define(:version => 20120501133658) do
 
   create_table "school_users", :force => true do |t|
-    t.string   "position"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

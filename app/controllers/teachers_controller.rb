@@ -85,6 +85,7 @@ class TeachersController < ApplicationController
   def find_teacher
     begin
       @teacher = Teacher.find(params[:id])
+      raise RecordNotFound.new if @teacher.user.nil?
     rescue
       respond_to do |format|
         format.html { redirect_to teachers_path, alert: 'Teacher does not exist.' }
