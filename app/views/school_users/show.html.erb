@@ -5,8 +5,8 @@
 <div class="well">
   <% if @school_user.user.is_admin %>
     <span class="label label-important">Administrateur</span><br />
+    <br />
   <% end %>
-  <br />
   <strong>Nom: </strong><%= @school_user.user.last_name.upcase %><br />
   <strong>Prénom: </strong><%= @school_user.user.first_name.capitalize %><br />
   <strong>Email: </strong><%= @school_user.user.email %><br />
