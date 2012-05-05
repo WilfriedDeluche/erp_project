@@ -3,6 +3,10 @@
 <h1 class="page-header">Professeur</h1>
 
 <div class="well">
+  <% if @teacher.user.is_admin %>
+    <span class="label label-important">Administrateur</span><br />
+  <% end %>
+  <br />
   <strong>Nom: </strong><%= @teacher.user.last_name.upcase %><br />
   <strong>Prénom: </strong><%= @teacher.user.first_name.capitalize %><br />
   <strong>Email: </strong><%= @teacher.user.email %><br />
