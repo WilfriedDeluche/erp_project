@@ -1,6 +1,6 @@
 class StudentsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :school_users_only
+  before_filter :school_users_only, :except => [:show, :index]
   before_filter :find_student, :only => [:show, :edit, :update, :destroy]
   respond_to :html, :json
   

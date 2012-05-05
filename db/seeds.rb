@@ -26,6 +26,13 @@ user = User.create! :email => 'pedago@ingesup.com', :password => 'ingesup', :pas
 end
 puts user.first_name << " " << user.last_name << " as " << user.rolable_type
 
+puts "#### RECRUITER ####"
+recruiter = Recruiter.create! :arrival_date => "03/06/2011"
+user = User.create! :email => 'recruiter@ingesup.com', :password => 'ingesup', :password_confirmation => 'ingesup', :first_name => 'Audrey', :last_name => 'Tauchon' do |u|
+  u.rolable = recruiter
+end
+puts user.first_name << " " << user.last_name << " as " << user.rolable_type
+
 puts "#### TEACHER ####"
 teacher = Teacher.create! :arrival_year => "2006"
 user2 = User.create! :email => 'teacher@ingesup.com', :password => 'ingesup', :password_confirmation => 'ingesup', :first_name => 'Marie', :last_name => 'Verriere' do |u|

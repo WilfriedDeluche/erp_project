@@ -1,10 +1,21 @@
-<p id="notice"><%= notice %></p>
+<%= render "shared/private_sidebar" %>
 
-<p>
-  <b>Arrival date:</b>
-  <%= @recruiter.arrival_date %>
-</p>
+<h1 class="page-header">Chargé de Placement</h1>
 
+<div class="well">
+  <% if @recruiter.user.is_admin %>
+    <span class="label label-important">Administrateur</span><br />
+    <br />
+  <% end %>
+  <strong>Nom: </strong><%= @recruiter.user.last_name.upcase %><br />
+  <strong>Prénom: </strong><%= @recruiter.user.first_name.capitalize %><br />
+  <strong>Email: </strong><%= @recruiter.user.email %><br />
+  <strong>Date d'arrivée: </strong><%= @recruiter.arrival_date %>
+</div>
 
-<%= link_to 'Edit', edit_recruiter_path(@recruiter) %> |
-<%= link_to 'Back', recruiters_path %>
+<div class="form-actions">
+  <%= link_to '← Retour', recruiters_path, :class => "btn btn-primary" %>
+  <% if current_user.is_admin %>
+    <%= link_to 'Editer', edit_recruiter_path(@recruiter), :class => "btn btn-primary" %>
+  <% end %>
+</div>
