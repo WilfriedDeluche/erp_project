@@ -15,6 +15,7 @@ puts "#### SCHOOL USER ADMIN ####"
 school_user = SchoolUser.create!
 user = User.create! :email => 'admin-pedago@ingesup.com', :password => 'ingesup', :password_confirmation => 'ingesup', :first_name => 'Jean', :last_name => 'Martin' do |u|
   u.rolable = school_user
+  u.invitation_accepted_at = DateTime.now
   u.is_admin = true
 end
 puts user.first_name << " " << user.last_name << " as " << user.rolable_type
@@ -39,5 +40,6 @@ puts "#### STUDENT ####"
 student = Student.create! :birthdate => "01/02/1989", :address => "21, avenue Victor Hugo", :zip_code => "75020", :city => "PARIS", :mobile_phone_number => "0688383885"
 user3 = User.create! :email => 'student@ingesup.com', :password => 'ingesup', :password_confirmation => 'ingesup', :first_name => 'Jean', :last_name => 'Dupond' do |u|
   u.rolable = student
+  u.invitation_accepted_at = DateTime.now
 end
 puts user3.first_name << " " << user3.last_name << " as " << user3.rolable_type

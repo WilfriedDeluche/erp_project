@@ -1,3 +1,5 @@
+<%= render "shared/private_sidebar" %>
+
 <h1 class="page-header">Valider votre compte</h1>
 
 <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put } do |f| %>
