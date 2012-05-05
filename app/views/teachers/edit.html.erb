@@ -2,7 +2,9 @@
 
 <h1 class="page-header">Modifier un Professeur</h1>
 
-<%= render 'form' %>
+<div class="row-fluid page-menu-bar">
+  <%= link_to 'Voir', @teacher, :class => "btn btn-mini btn-info" %>
+  <%= link_to 'Retour', teachers_path, :class => "btn btn-mini btn-info" %>
+</div>
 
-<%= link_to 'Show', @teacher %> |
-<%= link_to 'Back', teachers_path %>
+<%= render 'form' %>

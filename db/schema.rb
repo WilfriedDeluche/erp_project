@@ -18,6 +18,17 @@ ActiveRecord::Schema.define(:version => 20120501133658) do
     t.datetime "updated_at"
   end
 
+  create_table "students", :force => true do |t|
+    t.string   "birthdate"
+    t.string   "address"
+    t.string   "zip_code"
+    t.string   "city"
+    t.string   "home_phone_number"
+    t.string   "mobile_phone_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "teachers", :force => true do |t|
     t.integer  "arrival_year"
     t.datetime "created_at"

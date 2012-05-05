@@ -1,7 +1,9 @@
 <%= render "shared/private_sidebar" %>
 
 <h1 class="page-header">Nouveau Professeur</h1>
+  
+<div class="row-fluid page-menu-bar">
+  <%= link_to 'Retour', teachers_path, :class => "btn btn-mini btn-info" %>
+</div>
 
 <%= render 'form' %>
-
-<%= link_to 'Back', teachers_path %>

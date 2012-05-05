@@ -2,11 +2,14 @@
 
 <h1 class="page-header">Professeur</h1>
 
-Nom: <%= @teacher.user.last_name.upcase %><br />
-Prénom: <%= @teacher.user.first_name.capitalize %><br />
-Email: <%= @teacher.user.email %><br />
-Année d'Arrivée: <%= @teacher.arrival_year %><br />
-<br />
+<div class="row-fluid page-menu-bar">
+  <%= link_to 'Editer', edit_teacher_path(@teacher), :class => "btn btn-mini btn-info" %>
+  <%= link_to 'Retour', teachers_path, :class => "btn btn-mini btn-info" %>
+</div>
 
-<%= link_to 'Edit', edit_teacher_path(@teacher) %> |
-<%= link_to 'Back', teachers_path %>
+<div class="well">
+  <strong>Nom: </strong><%= @teacher.user.last_name.upcase %><br />
+  <strong>Prénom: </strong><%= @teacher.user.first_name.capitalize %><br />
+  <strong>Email: </strong><%= @teacher.user.email %><br />
+  <strong>Année d'Arrivée: </strong><%= @teacher.arrival_year %>
+</div>
