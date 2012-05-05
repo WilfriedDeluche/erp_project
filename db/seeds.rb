@@ -11,9 +11,17 @@ puts "#### ALL DATAS FROM CURRENT DATABASE DESTROYED ####"
 
 puts 'SETTING UP DEFAULT USERS'
 puts "..."
+puts "#### SCHOOL USER ADMIN ####"
+school_user = SchoolUser.create!
+user = User.create! :email => 'admin-pedago@ingesup.com', :password => 'ingesup', :password_confirmation => 'ingesup', :first_name => 'Jean', :last_name => 'Martin' do |u|
+  u.rolable = school_user
+  u.is_admin = true
+end
+puts user.first_name << " " << user.last_name << " as " << user.rolable_type
+
 puts "#### SCHOOL USER ####"
 school_user = SchoolUser.create!
-user = User.create! :email => 'pedago@ingesup.com', :password => 'ingesup', :password_confirmation => 'ingesup', :first_name => 'Jean', :last_name => 'Martin' do |u|
+user = User.create! :email => 'pedago@ingesup.com', :password => 'ingesup', :password_confirmation => 'ingesup', :first_name => 'Mamadou', :last_name => 'Koulibali' do |u|
   u.rolable = school_user
 end
 puts user.first_name << " " << user.last_name << " as " << user.rolable_type
