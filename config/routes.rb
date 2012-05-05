@@ -1,5 +1,7 @@
 ErpProject::Application.routes.draw do
   
+  resources :recruiters
+
   devise_for :users
   
   root :to => "PublicPages#school"
@@ -14,4 +16,5 @@ ErpProject::Application.routes.draw do
   resources :school_users
   resources :teachers
   resources :students
+  resources :recruiters
 end
