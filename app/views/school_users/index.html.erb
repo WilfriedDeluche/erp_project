@@ -2,15 +2,17 @@
 
 <h1 class="page-header">Service Pédagogique</h1>
 
-<div class="row page-menu-bar">
-  <%= link_to 'Nouveau', new_school_user_path, :class => "btn btn-mini btn-inverse" %>
-</div>
-
+<% if current_user.is_admin %>
+  <div class="row page-menu-bar">
+    <%= link_to 'Nouveau', new_school_user_path, :class => "btn btn-mini btn-inverse" %>
+  </div>
+<% end %>
 
 <table class="table table-bordered table-condensed">
   <tr>
     <th>Nom</th>
     <th>Prénom</th>
+    <th>Administrateur</th>
     <th>Actions</th>
   </tr>
 
@@ -18,6 +20,12 @@
   <tr>
     <td><%= school_user.user.last_name.upcase %></td>
     <td><%= school_user.user.first_name.capitalize %></td>
+    <% if school_user.user.is_admin %>
+      <td><span class="badge badge-info">Oui</span></td>
+    <% else %>
+      <td><span class="badge">Non</span></td>
+    <% end %>
+    
     <td>
       <%= link_to school_user, :class => "btn btn-mini" do %>
         <i class="icon-eye-open"></i>

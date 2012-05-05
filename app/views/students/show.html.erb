@@ -2,11 +2,6 @@
 
 <h1 class="page-header">Étudiant</h1>
 
-<div class="row-fluid page-menu-bar">
-  <%= link_to 'Editer', edit_student_path(@student), :class => "btn btn-mini btn-inverse" %>
-  <%= link_to 'Retour', students_path, :class => "btn btn-mini btn-inverse" %>
-</div>
-
 <div class="well">
   <strong>Nom: </strong><%= @student.user.last_name.upcase %><br />
   <strong>Prénom: </strong><%= @student.user.first_name.capitalize %><br />
@@ -16,4 +11,9 @@
   <strong>Code Postal: </strong><%= @student.zip_code %><br />
   <strong>Ville: </strong><%= @student.city %><br />
   <strong>Numéro de Mobile: </strong><%= @student.mobile_phone_number %>
+</div>
+
+<div class="form-actions">
+  <%= link_to '← Retour', students_path, :class => "btn btn-primary" %>
+  <%= link_to 'Editer', edit_student_path(@student), :class => "btn btn-primary" %>
 </div>

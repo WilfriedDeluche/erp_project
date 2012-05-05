@@ -11,6 +11,7 @@
     <th>Nom</th>
     <th>Prénom</th>
     <th>Ville</th>
+    <th>Adminisrateur</th>
     <th>Actions</th>
   </tr>
 
@@ -19,6 +20,11 @@
     <td><%= student.user.last_name.upcase %></td>
     <td><%= student.user.first_name.capitalize %></td>
     <td><%= student.city.capitalize %></td>
+    <% if student.user.is_admin %>
+      <td><span class="badge badge-info">Oui</span></td>
+    <% else %>
+      <td><span class="badge">Non</span></td>
+    <% end %>
     <td>
       <%= link_to student, :class => "btn btn-mini" do %>
         <i class="icon-eye-open"></i>
