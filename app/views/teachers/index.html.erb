@@ -2,8 +2,8 @@
 
 <h1 class="page-header">Liste des Professeurs</h1>
 
-<div class="row-fluid page-menu-bar">
-  <%= link_to 'Nouveau', new_teacher_path, :class => "btn btn-mini btn-info" %>
+<div class="row page-menu-bar">
+  <%= link_to 'Nouveau', new_teacher_path, :class => "btn btn-mini btn-inverse" %>
 </div>
 
 <table class="table table-bordered table-condensed">
@@ -18,9 +18,18 @@
     <td><%= teacher.user.last_name.upcase %></td>
     <td><%= teacher.user.first_name.capitalize %></td>
     <td>
-      <%= link_to 'Voir', teacher %>
-      <%= link_to 'Modifier', edit_teacher_path(teacher) %>
-      <%= link_to 'Supprimer', teacher, confirm: 'Êtes-vous sûr?', method: :delete %>
+      <%= link_to teacher, :class => "btn btn-mini" do %>
+        <i class="icon-eye-open"></i>
+        <!-- Voir -->
+      <% end %>
+      <%= link_to edit_teacher_path(teacher), :class => "btn btn-mini" do %>
+        <i class="icon-pencil"></i>
+        <!-- Modifier -->
+      <% end %>
+      <%= link_to teacher, confirm: 'Êtes-vous sûr?', method: :delete, :class => "btn btn-mini" do %>
+        <i class=" icon-trash"></i>
+        <!-- Supprimer -->
+      <% end %>
     </td>
   </tr>
 <% end %>

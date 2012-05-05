@@ -40,7 +40,8 @@
     <%= f.text_field :arrival_year %>
   </div>
   
-  <div class="actions">
+  <div class="form-actions">
+    <%= link_to ' ←Retour', teachers_path, :class => "btn btn-primary" %>
     <%= f.submit :class => "btn btn-primary" %>
   </div>
 <% end %>
