@@ -1,0 +1,23 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Étudiant</h1>
+
+<div class="well">
+  <% if @student.user.is_admin %>
+    <span class="label label-important">Administrateur</span><br />
+    <br />
+  <% end %>
+  <strong>Nom: </strong><%= @student.user.last_name.upcase %><br />
+  <strong>Prénom: </strong><%= @student.user.first_name.capitalize %><br />
+  <strong>Email: </strong><%= @student.user.email %><br />
+  <strong>Date de Naissance: </strong><%= @student.birthdate %><br />
+  <strong>Adresse: </strong><%= @student.address %><br />
+  <strong>Code Postal: </strong><%= @student.zip_code %><br />
+  <strong>Ville: </strong><%= @student.city %><br />
+  <strong>Numéro de Mobile: </strong><%= @student.mobile_phone_number %>
+</div>
+
+<div class="form-actions">
+  <%= link_to '← Retour', students_path, :class => "btn btn-primary" %>
+  <%= link_to 'Editer', edit_student_path(@student), :class => "btn btn-primary" %>
+</div>

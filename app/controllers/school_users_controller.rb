@@ -1,6 +1,7 @@
 class SchoolUsersController < ApplicationController
   before_filter :authenticate_user!
   before_filter :school_users_only
+  before_filter :admin_only, :only => [:edit, :update, :destroy, :create, :new]
   before_filter :find_school_user, :only => [:show, :edit, :update, :destroy]
   respond_to :html, :json
   

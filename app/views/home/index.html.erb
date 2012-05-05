@@ -1,19 +1,31 @@
 <%= render "shared/private_sidebar" %>
+
 <h1 class="page-header">Ingesup Platform</h1>
 
+<div class="well">
+  <p>Bienvenue sur la plateforme Ingesup</p>
 
-<p>Bienvenue sur la plateforme Ingesup</p>
+  <p>Voici vos informations personnelles:</p>
 
-<p>Voici vos informations personnelles:</p>
+  <ul>
+    <li>Nom : <strong><%= current_user.last_name.upcase %></strong></li>
+    <li>Prénom : <%= current_user.first_name.capitalize %></li>
+    <li>Email : <%= current_user.email %></li>
+  </ul>
 
-<ul>
-  <li>Nom : <strong><%= current_user.last_name.upcase %></strong></li>
-  <li>Prénom : <%= current_user.first_name.capitalize %></li>
-  <li>Email : <%= current_user.email %></li>
-</ul>
+  <p>Connecté en tant que : <strong><%= current_user.rolable_type %></strong></p>
 
-<p>Connecté en tant que : <strong><%= current_user.rolable_type %></strong></p>
+  <% if teacher_signed_in? %>
+    <p>Année d'arrivée: <%= current_user.rolable.arrival_year %></p>
+  <% end %>
 
-<% if teacher_signed_in? %>
-  <p>Année d'arrivée: <%= current_user.rolable.arrival_year %></p>
-<% end %>
+  <% if student_signed_in? %>
+    <p>Autres informations :
+      <ul>
+        <li>Date de naissance : <%= current_user.rolable.birthdate %></li>
+        <li>Ville : <%= current_user.rolable.city %></li>
+        <li>Mobile : <%= current_user.rolable.mobile_phone_number %>
+      </ul>
+    </p>
+  <% end %>
+</div>

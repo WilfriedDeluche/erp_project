@@ -28,3 +28,8 @@ body {
 	@include lifted;
 	@include drop-shadow;
 }
+
+.page-menu-bar {
+	text-align: right;
+	margin-bottom: 9px;
+}

@@ -13,4 +13,5 @@ ErpProject::Application.routes.draw do
   resources :home, :only => [:index]
   resources :school_users
   resources :teachers
+  resources :students
 end
