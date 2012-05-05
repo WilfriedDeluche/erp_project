@@ -11,13 +11,16 @@
     <th>Nom</th>
     <th>Prénom</th>
     <th>Ville</th>
-    <th>Adminisrateur</th>
+    <th>Administrateur</th>
     <th>Actions</th>
   </tr>
 
 <% @students.each do |student| %>
   <tr>
-    <td><%= student.user.last_name.upcase %></td>
+    <td>
+      <span class="badge badge-status <%= account_status(student.user) %>"></span>
+      <%= student.user.last_name.upcase %>
+    </td>
     <td><%= student.user.first_name.capitalize %></td>
     <td><%= student.city.capitalize %></td>
     <% if student.user.is_admin %>

@@ -36,6 +36,7 @@ class StudentsController < ApplicationController
     @student = Student.new(params[:student])
     @user = User.new(params[:user]) do |u|
       u.rolable = @student
+      u.skip_password_validation = true
     end
     
     valid = @user.valid? 
@@ -44,7 +45,9 @@ class StudentsController < ApplicationController
     respond_to do |format|
       if valid
         @student.save
-        @user.save
+        @user.invite! do |u|
+          u.invited_by_id = current_user.id
+        end
         format.html { redirect_to @student, notice: 'Student was successfully created.' }
         format.json { render json: @student, status: :created, location: @student }
       else
