@@ -26,4 +26,8 @@ module ApplicationHelper
 
     html.html_safe
   end
+  
+  def account_status(user)
+    (user.invitation_token.nil?) ? "badge-success" : "badge-warning"    
+  end
 end

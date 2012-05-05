@@ -1,6 +1,5 @@
 class SchoolUsersController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :school_users_only
   before_filter :admin_only, :only => [:edit, :update, :destroy, :create, :new]
   before_filter :find_school_user, :only => [:show, :edit, :update, :destroy]
   respond_to :html, :json
@@ -37,6 +36,7 @@ class SchoolUsersController < ApplicationController
     @school_user = SchoolUser.new(params[:school_user])
     @user = User.new(params[:user]) do |u|
       u.rolable = @school_user
+      u.skip_password_validation = true
     end
     
     valid = @user.valid? 
@@ -45,7 +45,9 @@ class SchoolUsersController < ApplicationController
     respond_to do |format|
       if valid
         @school_user.save
-        @user.save        
+        @user.invite! do |u|
+          u.invited_by_id = current_user.id
+        end        
         format.html { redirect_to @school_user, notice: 'School user was successfully created.' }
         format.json { render json: @school_user, status: :created, location: @school_user }
       else

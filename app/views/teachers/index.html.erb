@@ -16,13 +16,11 @@
 
 <% @teachers.each do |teacher| %>
   <tr>
-    <td><%= teacher.user.last_name.upcase %></td>
     <td>
-      <%= teacher.user.first_name.capitalize %>
-      <% unless teacher.user.invitation_token.nil? %>
-        <span class="label pull-right">Invité</span>
-      <% end %>
+      <span class="badge badge-status <%= account_status(teacher.user) %>"></span>
+      <%= teacher.user.last_name.upcase %>
     </td>
+    <td><%= teacher.user.first_name.capitalize %></td>
     <% if teacher.user.is_admin %>
       <td><span class="badge badge-info">Oui</span></td>
     <% else %>
