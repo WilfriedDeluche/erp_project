@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   validate :skip_password, :on => :create
 
   def skip_password
-    if self.skip_password_validation == true
+    if self.skip_password_validation
       errors[:password].clear
       errors[:password_confirmation].clear
     end 
