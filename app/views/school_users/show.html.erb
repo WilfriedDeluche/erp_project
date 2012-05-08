@@ -24,4 +24,9 @@
   <% if current_user.is_admin %>
     <%= link_to 'Editer', edit_school_user_path(@school_user), :class => "btn btn-primary" %>
   <% end %>
+  <% if @school_user.user.invitation_accepted_at.nil? %>
+    <%= link_to reinvite_user_school_user_path(@school_user), method: :put, :class => "btn" do %>
+      <i class="icon-envelope"></i> Envoyer un Email d'invitation
+    <% end %>
+  <% end %>
 </div>

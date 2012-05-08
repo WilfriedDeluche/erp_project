@@ -39,6 +39,12 @@
         <i class=" icon-trash"></i>
         <!-- Supprimer -->
       <% end %>
+      <% if teacher.user.invitation_accepted_at.nil? %>
+        <%= link_to reinvite_user_teacher_path(teacher), method: :put, :class => "btn btn-mini" do %>
+          <i class="icon-envelope"></i>
+          <!-- Envoyer email invitation -->
+        <% end %>
+      <% end %>
     </td>
   </tr>
 <% end %>

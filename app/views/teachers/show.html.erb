@@ -23,4 +23,9 @@
 <div class="form-actions">
   <%= link_to '← Retour', teachers_path, :class => "btn btn-primary" %>
   <%= link_to 'Editer', edit_teacher_path(@teacher), :class => "btn btn-primary" %>
+  <% if @teacher.user.invitation_accepted_at.nil? %>
+    <%= link_to reinvite_user_teacher_path(@teacher), method: :put, :class => "btn" do %>
+      <i class="icon-envelope"></i> Envoyer un Email d'invitation
+    <% end %>
+  <% end %>
 </div>

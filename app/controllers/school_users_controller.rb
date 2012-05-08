@@ -2,7 +2,7 @@ class SchoolUsersController < ApplicationController
   before_filter :authenticate_user!
   before_filter :school_users_only
   before_filter :admin_only, :only => [:edit, :update, :destroy, :create, :new]
-  before_filter :find_school_user, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_school_user, :only => [:show, :edit, :update, :destroy, :reinvite_user]
   respond_to :html, :json
   
   # GET /school_users
@@ -77,6 +77,22 @@ class SchoolUsersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to school_users_url }
       format.json { head :ok }
+    end
+  end
+  
+  # PUT /school_users/1/reinvite_user
+  def reinvite_user
+    begin
+      @school_user.user.invite! if @school_user.user.invitation_accepted_at.nil?
+      respond_to do |format|
+        format.html{redirect_to school_users_path, :notice => "Un email d'invitation vient d'etre envoye a l'utilisateur" }
+      end
+    rescue
+      @school_user.user.invitation_sent_at = nil
+      @school_user.user.save
+      respond_to do |format|
+        format.html{redirect_to school_users_path, :alert => "L'envoi de l'email d'invitation a echoue" }
+      end
     end
   end
 
