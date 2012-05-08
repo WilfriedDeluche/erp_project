@@ -42,16 +42,11 @@ class SchoolUsersController < ApplicationController
     
     valid = @user.valid? 
     valid = @school_user.valid? && valid
-    
-    respond_to do |format|
-      if valid
-        @school_user.save
-        @user.invite! do |u|
-          u.invited_by_id = current_user.id
-        end        
-        format.html { redirect_to @school_user, notice: 'School user was successfully created.' }
-        format.json { render json: @school_user, status: :created, location: @school_user }
-      else
+        
+    if valid
+      create_and_send_invitation(@user, @school_user, "SchoolUser")
+    else
+      respond_to do |format|
         format.html { render action: "new" }
         format.json { render json: @school_user.errors, status: :unprocessable_entity }
       end
