@@ -21,6 +21,14 @@
       <div class="uneditable-input"><%= @user.email %></div>
     <% end %>
     </div>
+    
+    <% if current_user.is_admin %>
+      <div>
+        <label class="checkbox" for="user_is_admin">
+          <%= uf.check_box :is_admin %> Administrateur
+        </label>
+      </div>
+    <% end %>
   <% end %>
 
   <div class="form-actions">

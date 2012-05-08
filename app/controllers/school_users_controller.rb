@@ -38,6 +38,7 @@ class SchoolUsersController < ApplicationController
     @user = User.new(params[:user]) do |u|
       u.rolable = @school_user
       u.skip_password_validation = true
+      u.is_admin = params[:user][:is_admin] if current_user.is_admin # is_admin is non accessible
     end
     
     valid = @user.valid? 
@@ -59,6 +60,7 @@ class SchoolUsersController < ApplicationController
     @user = @school_user.user
     respond_to do |format|
       if @school_user.update_attributes(params[:school_user]) && @user.update_attributes(params[:user])
+        @user.update_attribute(:is_admin, params[:user][:is_admin]) if current_user.is_admin # is_admin is non accessible
         format.html { redirect_to @school_user, notice: 'School user was successfully updated.' }
         format.json { head :ok }
       else
