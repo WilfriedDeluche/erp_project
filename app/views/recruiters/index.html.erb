@@ -18,7 +18,10 @@
 
 <% @recruiters.each do |recruiter| %>
   <tr>
-    <td><%= recruiter.user.last_name.upcase %></td>
+    <td>
+      <span class="badge badge-status <%= account_status(recruiter.user) %>"></span>
+      <%= recruiter.user.last_name.upcase %>
+    </td>
     <td><%= recruiter.user.first_name.capitalize %></td>
     <% if recruiter.user.is_admin %>
       <td><span class="badge badge-info">Oui</span></td>
@@ -38,6 +41,12 @@
         <%= link_to recruiter, confirm: 'Êtes-vous sûr?', method: :delete, :class => "btn btn-mini" do %>
           <i class=" icon-trash"></i>
           <!-- Supprimer -->
+        <% end %>
+      <% end %>
+      <% if recruiter.user.invitation_accepted_at.nil? %>
+        <%= link_to reinvite_user_recruiter_path(recruiter), method: :put, :class => "btn btn-mini" do %>
+          <i class="icon-envelope"></i>
+          <!-- Envoyer email invitation -->
         <% end %>
       <% end %>
     </td>

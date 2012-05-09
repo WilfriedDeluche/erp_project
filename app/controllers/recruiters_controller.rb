@@ -36,18 +36,17 @@ class RecruitersController < ApplicationController
     @recruiter = Recruiter.new(params[:recruiter])
     @user = User.new(params[:user]) do |u|
       u.rolable = @recruiter
+      u.skip_password_validation = true
+      u.is_admin = params[:user][:is_admin] if current_user.is_admin # is_admin is non accessible
     end
     
     valid = @user.valid? 
     valid = @recruiter.valid? && valid
     
-    respond_to do |format|
-      if valid
-        @recruiter.save
-        @user.save
-        format.html { redirect_to @recruiter, notice: 'Recruiter was successfully created.' }
-        format.json { render json: @recruiter, status: :created, location: @recruiter }
-      else
+    if valid
+      create_and_send_invitation(@user, @recruiter, "Recruiter")
+    else
+      respond_to do |format|
         format.html { render action: "new" }
         format.json { render json: @recruiter.errors, status: :unprocessable_entity }
       end
@@ -60,6 +59,7 @@ class RecruitersController < ApplicationController
     @user = @recruiter.user
     respond_to do |format|
       if @recruiter.update_attributes(params[:recruiter]) && @user.update_attributes(params[:user])
+        @user.update_attribute(:is_admin, params[:user][:is_admin]) if current_user.is_admin # is_admin is non accessible
         format.html { redirect_to @recruiter, notice: 'Recruiter was successfully updated.' }
         format.json { head :ok }
       else
@@ -79,6 +79,11 @@ class RecruitersController < ApplicationController
       format.html { redirect_to recruiters_url }
       format.json { head :ok }
     end
+  end
+  
+  # PUT /recruiters/1/reinvite_user
+  def reinvite_user
+    resend_invitation(@recruiter.user, "Recruiter")
   end
   
   private

@@ -79,7 +79,7 @@ class StudentsController < ApplicationController
     end
   end
   
-  # PUT /school_users/1/reinvite_user
+  # PUT /students/1/reinvite_user
   def reinvite_user
     resend_invitation(@student.user, "Student")
   end

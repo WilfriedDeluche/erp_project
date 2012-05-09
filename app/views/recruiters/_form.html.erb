@@ -22,21 +22,17 @@
     <% end %>
     </div>
     
-    <% if action_name == "new" || action_name == "create" %>
-    <div>
-      <%= uf.label :password %>
-      <%= uf.password_field :password %>
-    </div>
-
-    <div>
-      <%= uf.label :password_confirmation %>
-      <%= uf.password_field :password_confirmation %>
-    </div>
+    <% if current_user.is_admin %>
+      <div>
+        <label class="checkbox" for="user_is_admin">
+          <%= uf.check_box :is_admin %> Administrateur
+        </label>
+      </div>
     <% end %>
   <% end %>
   
   <div>
-    <%= f.label :arrival_date %><br />
+    <%= f.label :arrival_date %>
     <%= f.text_field :arrival_date %>
   </div>
   
