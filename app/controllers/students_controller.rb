@@ -1,7 +1,7 @@
 class StudentsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :school_users_only
-  before_filter :find_student, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_student, :only => [:show, :edit, :update, :destroy, :reinvite_user]
   respond_to :html, :json
   
   # GET /students
@@ -36,18 +36,16 @@ class StudentsController < ApplicationController
     @student = Student.new(params[:student])
     @user = User.new(params[:user]) do |u|
       u.rolable = @student
+      u.skip_password_validation = true
     end
     
     valid = @user.valid? 
     valid = @student.valid? && valid
-
-    respond_to do |format|
-      if valid
-        @student.save
-        @user.save
-        format.html { redirect_to @student, notice: 'Student was successfully created.' }
-        format.json { render json: @student, status: :created, location: @student }
-      else
+    
+    if valid
+      create_and_send_invitation(@user, @student, "Student")
+    else
+      respond_to do |format|
         format.html { render action: "new" }
         format.json { render json: @student.errors, status: :unprocessable_entity }
       end
@@ -79,6 +77,11 @@ class StudentsController < ApplicationController
       format.html { redirect_to students_url }
       format.json { head :ok }
     end
+  end
+  
+  # PUT /school_users/1/reinvite_user
+  def reinvite_user
+    resend_invitation(@student.user, "Student")
   end
   
   private

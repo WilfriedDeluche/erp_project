@@ -7,13 +7,25 @@
     <span class="label label-important">Administrateur</span><br />
     <br />
   <% end %>
+  
+  <%= account_status_for_show(@teacher.user) %>
+  
   <strong>Nom: </strong><%= @teacher.user.last_name.upcase %><br />
   <strong>Prénom: </strong><%= @teacher.user.first_name.capitalize %><br />
   <strong>Email: </strong><%= @teacher.user.email %><br />
-  <strong>Année d'Arrivée: </strong><%= @teacher.arrival_year %>
+  <strong>Année d'Arrivée: </strong><%= @teacher.arrival_year %><br />
+  
+  <% unless @teacher.user.invitation_accepted_at.nil? %>
+    <br /><span>Compte activé le <strong><%= @teacher.user.invitation_accepted_at.strftime("%d-%m-%Y") %></strong></span>
+  <% end %>
 </div>
 
 <div class="form-actions">
   <%= link_to '← Retour', teachers_path, :class => "btn btn-primary" %>
   <%= link_to 'Editer', edit_teacher_path(@teacher), :class => "btn btn-primary" %>
+  <% if @teacher.user.invitation_accepted_at.nil? %>
+    <%= link_to reinvite_user_teacher_path(@teacher), method: :put, :class => "btn" do %>
+      <i class="icon-envelope"></i> Envoyer un Email d'invitation
+    <% end %>
+  <% end %>
 </div>

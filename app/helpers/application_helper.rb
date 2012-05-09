@@ -26,4 +26,25 @@ module ApplicationHelper
 
     html.html_safe
   end
+  
+  def account_status(user)
+    return "badge-success" unless user.invitation_accepted_at.nil?
+    if user.invitation_sent_at.nil?
+      "badge-inverse"
+    elsif !user.invitation_token.nil?
+      "badge-warning"
+    end
+  end
+  
+  def account_status_for_show(user)
+    return unless user.invitation_accepted_at.nil?
+    content_tag(:span, :class => "label label-warning") do
+      if user.invitation_sent_at.nil?
+        "Cet utilisateur n'a pas encore recu d'invitation"
+      elsif !user.invitation_token.nil?
+        "Cet utilisateur n'a pas encore active son compte"
+      end
+    end + 
+    content_tag(:br)
+  end
 end

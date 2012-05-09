@@ -2,7 +2,7 @@ class SchoolUsersController < ApplicationController
   before_filter :authenticate_user!
   before_filter :school_users_only
   before_filter :admin_only, :only => [:edit, :update, :destroy, :create, :new]
-  before_filter :find_school_user, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_school_user, :only => [:show, :edit, :update, :destroy, :reinvite_user]
   respond_to :html, :json
   
   # GET /school_users
@@ -37,18 +37,17 @@ class SchoolUsersController < ApplicationController
     @school_user = SchoolUser.new(params[:school_user])
     @user = User.new(params[:user]) do |u|
       u.rolable = @school_user
+      u.skip_password_validation = true
+      u.is_admin = params[:user][:is_admin] if current_user.is_admin # is_admin is non accessible
     end
     
     valid = @user.valid? 
     valid = @school_user.valid? && valid
-    
-    respond_to do |format|
-      if valid
-        @school_user.save
-        @user.save        
-        format.html { redirect_to @school_user, notice: 'School user was successfully created.' }
-        format.json { render json: @school_user, status: :created, location: @school_user }
-      else
+        
+    if valid
+      create_and_send_invitation(@user, @school_user, "SchoolUser")
+    else
+      respond_to do |format|
         format.html { render action: "new" }
         format.json { render json: @school_user.errors, status: :unprocessable_entity }
       end
@@ -61,6 +60,7 @@ class SchoolUsersController < ApplicationController
     @user = @school_user.user
     respond_to do |format|
       if @school_user.update_attributes(params[:school_user]) && @user.update_attributes(params[:user])
+        @user.update_attribute(:is_admin, params[:user][:is_admin]) if current_user.is_admin # is_admin is non accessible
         format.html { redirect_to @school_user, notice: 'School user was successfully updated.' }
         format.json { head :ok }
       else
@@ -80,6 +80,11 @@ class SchoolUsersController < ApplicationController
       format.html { redirect_to school_users_url }
       format.json { head :ok }
     end
+  end
+  
+  # PUT /school_users/1/reinvite_user
+  def reinvite_user
+    resend_invitation(@school_user.user, "SchoolUser")
   end
 
   private
