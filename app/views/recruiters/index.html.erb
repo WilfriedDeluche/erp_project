@@ -1,0 +1,55 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Chargés de Placement</h1>
+
+<% if current_user.is_admin %>
+  <div class="row page-menu-bar">
+    <%= link_to 'Nouveau', new_recruiter_path, :class => "btn btn-mini btn-inverse" %>
+  </div>
+<% end %>
+
+<table class="table table-bordered table-condensed">
+  <tr>
+    <th>Nom</th>
+    <th>Prénom</th>
+    <th>Administrateur</th>
+    <th>Actions</th>
+  </tr>
+
+<% @recruiters.each do |recruiter| %>
+  <tr>
+    <td>
+      <span class="badge badge-status <%= account_status(recruiter.user) %>"></span>
+      <%= recruiter.user.last_name.upcase %>
+    </td>
+    <td><%= recruiter.user.first_name.capitalize %></td>
+    <% if recruiter.user.is_admin %>
+      <td><span class="badge badge-info">Oui</span></td>
+    <% else %>
+      <td><span class="badge">Non</span></td>
+    <% end %>
+    <td>
+      <%= link_to recruiter, :class => "btn btn-mini" do %>
+        <i class="icon-eye-open"></i>
+        <!-- Voir -->
+      <% end %>
+      <% if current_user.is_admin %>
+        <%= link_to  edit_recruiter_path(recruiter), :class => "btn btn-mini" do %>
+          <i class="icon-pencil"></i>
+          <!-- Modifier -->
+        <% end %>
+        <%= link_to recruiter, confirm: 'Êtes-vous sûr?', method: :delete, :class => "btn btn-mini" do %>
+          <i class=" icon-trash"></i>
+          <!-- Supprimer -->
+        <% end %>
+      <% end %>
+      <% if recruiter.user.invitation_accepted_at.nil? %>
+        <%= link_to reinvite_user_recruiter_path(recruiter), method: :put, :class => "btn btn-mini" do %>
+          <i class="icon-envelope"></i>
+          <!-- Envoyer email invitation -->
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+</table>

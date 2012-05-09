@@ -2,9 +2,11 @@
 
 <h1 class="page-header">Liste des Étudiants</h1>
 
-<div class="row page-menu-bar">
-  <%= link_to 'Nouveau', new_student_path, :class => "btn btn-mini btn-inverse" %>
-</div>
+<% if school_user_signed_in? || current_user.is_admin %>
+  <div class="row page-menu-bar">
+    <%= link_to 'Nouveau', new_student_path, :class => "btn btn-mini btn-inverse" %>
+  </div>
+<% end %>
 
 <table class="table table-bordered table-condensed">
   <tr>
@@ -27,13 +29,15 @@
         <i class="icon-eye-open"></i>
         <!-- Voir -->
       <% end %>
-      <%= link_to edit_student_path(student), :class => "btn btn-mini" do %>
-        <i class="icon-pencil"></i>
-        <!-- Modifier -->
-      <% end %>
-      <%= link_to student, confirm: 'Êtes-vous sûr?', method: :delete, :class => "btn btn-mini" do %>
-        <i class=" icon-trash"></i>
-        <!-- Supprimer -->
+      <% if school_user_signed_in? || current_user.is_admin %>
+        <%= link_to edit_student_path(student), :class => "btn btn-mini" do %>
+          <i class="icon-pencil"></i>
+          <!-- Modifier -->
+        <% end %>
+        <%= link_to student, confirm: 'Êtes-vous sûr?', method: :delete, :class => "btn btn-mini" do %>
+          <i class=" icon-trash"></i>
+          <!-- Supprimer -->
+        <% end %>
       <% end %>
       <% if student.user.invitation_accepted_at.nil? %>
         <%= link_to reinvite_user_student_path(student), method: :put, :class => "btn btn-mini" do %>

@@ -1,6 +1,6 @@
 class StudentsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :school_users_only
+  before_filter :school_users_only, :except => [:show, :index]
   before_filter :find_student, :only => [:show, :edit, :update, :destroy, :reinvite_user]
   respond_to :html, :json
   
@@ -79,7 +79,7 @@ class StudentsController < ApplicationController
     end
   end
   
-  # PUT /school_users/1/reinvite_user
+  # PUT /students/1/reinvite_user
   def reinvite_user
     resend_invitation(@student.user, "Student")
   end
