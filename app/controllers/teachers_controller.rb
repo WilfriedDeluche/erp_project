@@ -83,18 +83,7 @@ class TeachersController < ApplicationController
   
   # PUT /school_users/1/reinvite_user
   def reinvite_user
-    begin
-      @teacher.user.invite! if @teacher.user.invitation_accepted_at.nil?
-      respond_to do |format|
-        format.html{redirect_to teachers_path, :notice => "Un email d'invitation vient d'etre envoye a l'utilisateur" }
-      end
-    rescue
-      @teacher.user.invitation_sent_at = nil
-      @teacher.user.save
-      respond_to do |format|
-        format.html{redirect_to teachers_path, :alert => "L'envoi de l'email d'invitation a echoue" }
-      end
-    end
+    resend_invitation(@teacher.user, "Teacher")
   end
   
   private
