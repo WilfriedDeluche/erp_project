@@ -1,7 +1,7 @@
 class RecruitersController < ApplicationController
   before_filter :authenticate_user!
   before_filter :admin_only, :only => [:edit, :update, :destroy, :create, :new]
-  before_filter :find_recruiter, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_recruiter, :only => [:show, :edit, :update, :destroy, :reinvite_user]
   respond_to :html, :json
   
   # GET /recruiters

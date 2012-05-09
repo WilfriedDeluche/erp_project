@@ -40,4 +40,42 @@ class ApplicationController < ActionController::Base
       format.html { redirect_to home_index_path, alert: "Acces interdit" }
     end    
   end
+  
+  def create_and_send_invitation(user, rolable, model_name)
+    instance_name = model_name.underscore.gsub('_', ' ').capitalize
+    begin
+      rolable.save
+      user.invite! do |u|
+        u.invited_by_id = current_user.id
+      end 
+      respond_to do |format|
+        format.html { redirect_to rolable, notice: "#{instance_name} was successfully created." }
+        format.json { render json: rolable, status: :created, location: rolable }
+      end
+    rescue
+      notice = "#{instance_name} was successfully created."
+      invitation_failure(user, model_name, notice)
+    end
+  end
+  
+  def resend_invitation(user, model_name)
+    begin
+      user.invite! if user.invitation_accepted_at.nil?
+      respond_to do |format|
+        format.html{redirect_to url_for(:controller => model_name.to_s.underscore.pluralize, :action => 'index'), :notice => "Un email d'invitation vient d'etre envoye a l'utilisateur" }
+      end
+    rescue
+      notice = nil
+      invitation_failure(user, model_name, notice)
+    end
+  end
+  
+  def invitation_failure(user, model_name, notice)
+    user.invitation_sent_at = nil # set to nil again to know that the email has not been sent
+    user.save
+    respond_to do |format|
+      format.html { redirect_to url_for(:controller => model_name.to_s.underscore.pluralize, :action => 'index'), notice: notice , alert: "Un probleme est survenu lors de l'envoi de l'invitation. Contactez un administrateur." }
+      format.json { render status: :internal_error }          
+    end
+  end
 end

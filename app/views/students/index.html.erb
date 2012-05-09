@@ -13,20 +13,17 @@
     <th>Nom</th>
     <th>Prénom</th>
     <th>Ville</th>
-    <th>Adminisrateur</th>
     <th>Actions</th>
   </tr>
 
 <% @students.each do |student| %>
   <tr>
-    <td><%= student.user.last_name.upcase %></td>
+    <td>
+      <span class="badge badge-status <%= account_status(student.user) %>"></span>
+      <%= student.user.last_name.upcase %>
+    </td>
     <td><%= student.user.first_name.capitalize %></td>
     <td><%= student.city.capitalize %></td>
-    <% if student.user.is_admin %>
-      <td><span class="badge badge-info">Oui</span></td>
-    <% else %>
-      <td><span class="badge">Non</span></td>
-    <% end %>
     <td>
       <%= link_to student, :class => "btn btn-mini" do %>
         <i class="icon-eye-open"></i>
@@ -40,6 +37,12 @@
         <%= link_to student, confirm: 'Êtes-vous sûr?', method: :delete, :class => "btn btn-mini" do %>
           <i class=" icon-trash"></i>
           <!-- Supprimer -->
+        <% end %>
+      <% end %>
+      <% if student.user.invitation_accepted_at.nil? %>
+        <%= link_to reinvite_user_student_path(student), method: :put, :class => "btn btn-mini" do %>
+          <i class="icon-envelope"></i>
+          <!-- Envoyer email invitation -->
         <% end %>
       <% end %>
     </td>
