@@ -11,7 +11,13 @@ ErpProject::Application.routes.draw do
   end
   
   resources :home, :only => [:index]
-  resources :school_users
-  resources :teachers
-  resources :students
+  resources :school_users do
+    put "reinvite_user", :on => :member
+  end
+  resources :teachers do
+    put "reinvite_user", :on => :member
+  end
+  resources :students do
+    put "reinvite_user", :on => :member
+  end
 end
