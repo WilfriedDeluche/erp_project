@@ -1,0 +1,33 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Chargé de Placement</h1>
+
+<div class="well">
+  <% if @recruiter.user.is_admin %>
+    <span class="label label-important">Administrateur</span><br />
+    <br />
+  <% end %>
+  
+  <%= account_status_for_show(@recruiter.user) %>
+  
+  <strong>Nom: </strong><%= @recruiter.user.last_name.upcase %><br />
+  <strong>Prénom: </strong><%= @recruiter.user.first_name.capitalize %><br />
+  <strong>Email: </strong><%= @recruiter.user.email %><br />
+  <strong>Date d'arrivée: </strong><%= @recruiter.arrival_date %>
+  
+  <% unless @recruiter.user.invitation_accepted_at.nil? %>
+    <br /><span>Compte activé le <strong><%= @recruiter.user.invitation_accepted_at.strftime("%d-%m-%Y") %></strong></span>
+  <% end %>
+</div>
+
+<div class="form-actions">
+  <%= link_to '← Retour', recruiters_path, :class => "btn btn-primary" %>
+  <% if current_user.is_admin %>
+    <%= link_to 'Editer', edit_recruiter_path(@recruiter), :class => "btn btn-primary" %>
+  <% end %>
+  <% if @recruiter.user.invitation_accepted_at.nil? %>
+    <%= link_to reinvite_user_recruiter_path(@recruiter), method: :put, :class => "btn" do %>
+      <i class="icon-envelope"></i> Envoyer un Email d'invitation
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,43 @@
+<%= form_for(@recruiter) do |f| %>
+  <%= rolable_error_messages!(@recruiter, @user) %>
+  
+  <%= fields_for @user do |uf| %>
+    <div>
+      <%= uf.label :last_name %>
+      <%= uf.text_field :last_name %>
+    </div>
+    
+    <div>
+      <%= uf.label :first_name %>
+      <%= uf.text_field :first_name %>
+    </div>
+    
+    <div>
+    <% if action_name == 'new' or action_name == 'create' %>
+      <%= uf.label :email %>
+      <%= uf.email_field :email %>
+    <% else %>
+      <%= uf.label :email %>
+      <div class="uneditable-input"><%= @user.email %></div>
+    <% end %>
+    </div>
+    
+    <% if current_user.is_admin %>
+      <div>
+        <label class="checkbox" for="user_is_admin">
+          <%= uf.check_box :is_admin %> Administrateur
+        </label>
+      </div>
+    <% end %>
+  <% end %>
+  
+  <div>
+    <%= f.label :arrival_date %>
+    <%= f.text_field :arrival_date %>
+  </div>
+  
+  <div class="form-actions">
+    <%= link_to '← Retour', recruiters_path, :class => "btn btn-primary" %>
+    <%= f.submit :class => "btn btn-primary" %>
+  </div>
+<% end %>
