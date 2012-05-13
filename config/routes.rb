@@ -1,5 +1,7 @@
 ErpProject::Application.routes.draw do
   
+  resources :companies
+
   devise_for :users
   
   root :to => "PublicPages#school"
@@ -24,4 +26,6 @@ ErpProject::Application.routes.draw do
   resources :recruiters do
     put "reinvite_user", :on => :member
   end
+  
+  resources :companies
 end

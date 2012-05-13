@@ -1,0 +1,42 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Liste des Entreprises</h1>
+
+<% if recruiter_signed_in? || current_user.is_admin %>
+  <div class="row page-menu-bar">
+    <%= link_to 'Nouveau', new_company_path, :class => "btn btn-mini btn-inverse" %>
+  </div>
+<% end %>
+
+<table class="table table-bordered table-condensed">
+  <tr>
+    <th>Corporate name</th>
+    <th>City</th>
+    <th>Phone number</th>
+    <th>Contact</th>
+    <th>Actions</th>
+  </tr>
+
+<% @companies.each do |company| %>
+  <tr>
+    <td><%= company.corporate_name %></td>
+    <td><%= company.city %></td>
+    <td><%= company.phone_number %></td>
+    <td><%= contact_name(company) %></td>
+    <td>
+      <%= link_to company, :class => "btn btn-mini" do %>
+        <i class="icon-eye-open"></i>
+        <!-- Voir -->
+      <% end %>
+      <%= link_to edit_company_path(company), :class => "btn btn-mini" do %>
+        <i class="icon-pencil"></i>
+        <!-- Modifier -->
+      <% end %>
+      <%= link_to company, confirm: 'Êtes-vous sûr?', method: :delete, :class => "btn btn-mini" do %>
+        <i class=" icon-trash"></i>
+        <!-- Supprimer -->
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+</table>

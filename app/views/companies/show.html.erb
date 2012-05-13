@@ -1,0 +1,19 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Entreprise</h1>
+
+<div class="well">
+  <strong>Raison sociale: </strong><%= @company.corporate_name %><br />
+  <strong>Adresse: </strong><%= @company.address %><br />
+  <strong>Code Postal: </strong><%= @company.zip_code %><br />
+  <strong>Ville: </strong><%= @company.city.upcase %><br />
+  <strong>Numéro de Téléphone: </strong><%= @company.phone_number %><br />
+  <br />
+  <strong>Contact: </strong><%= contact_name(@company) %><br />
+  <strong>Email Contact: </strong><%= @company.contact_email %><br />
+</div>
+
+<div class="form-actions">
+  <%= link_to '← Retour', companies_path, :class => "btn btn-primary" %>
+  <%= link_to 'Editer', edit_company_path(@company), :class => "btn btn-primary" %>
+</div>

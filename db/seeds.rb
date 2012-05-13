@@ -1,11 +1,12 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
+#encoding: UTF-8
 
 # Initialize every resource
 User.destroy_all
 SchoolUser.destroy_all
 Teacher.destroy_all
+Recruiter.destroy_all
+Student.destroy_all
+Company.destroy_all
 
 puts "#### ALL DATAS FROM CURRENT DATABASE DESTROYED ####"
 
@@ -32,6 +33,7 @@ puts "#### RECRUITER ####"
 recruiter = Recruiter.create! :arrival_date => "03/06/2011"
 user = User.create! :email => 'recruiter@ingesup.com', :password => 'ingesup', :password_confirmation => 'ingesup', :first_name => 'Audrey', :last_name => 'Tauchon' do |u|
   u.rolable = recruiter
+  u.invitation_accepted_at = DateTime.now
 end
 puts user.first_name << " " << user.last_name << " as " << user.rolable_type
 
@@ -50,3 +52,15 @@ user3 = User.create! :email => 'student@ingesup.com', :password => 'ingesup', :p
   u.invitation_accepted_at = DateTime.now
 end
 puts user3.first_name << " " << user3.last_name << " as " << user3.rolable_type
+
+
+puts 'SETTING UP DEFAULT COMPANIES'
+puts "..."
+company1 = Company.create! :corporate_name => "Applidget", :address => "68, rue du Château d'Eau", :zip_code => "75010", :city => "PARIS",
+  :phone_number => "0123456789", :contact_first_name => "Tristan", :contact_last_name => "Verdier", :contact_email => "tristan.verdier@applidget.com"
+puts company1.corporate_name
+
+company2 = Company.create! :corporate_name => "Cap Gemini", :address => "Tour Europlaza 20, avenue André-Prothin", :zip_code => "92927", :city => "Paris-La Défense Cedex",
+  :phone_number => "0149673000"
+puts company2.corporate_name
+  
