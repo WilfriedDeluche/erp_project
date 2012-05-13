@@ -1,4 +1,5 @@
-class RecruiterStudent < ActiveRecord::Base
+class Recruitment < ActiveRecord::Base
+  
   belongs_to :student
   belongs_to :recruiter
   

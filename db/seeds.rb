@@ -65,5 +65,5 @@ puts company2.corporate_name
   
 puts "SETTING UP RECRUITER TO STUDENT"
 puts "..."
-rs = RecruiterStudent.create! :student_id => student.id, :recruiter_id => recruiter.id, :start_date => DateTime.now
+rs = Recruitment.create! :student_id => student.id, :recruiter_id => recruiter.id, :start_date => DateTime.now
 puts rs.student.user.first_name << " " << rs.student.user.last_name << "'s current recruiter is " << rs.recruiter.user.first_name << " " << rs.recruiter.user.last_name

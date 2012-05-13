@@ -26,17 +26,17 @@ ActiveRecord::Schema.define(:version => 20120513143133) do
     t.datetime "updated_at"
   end
 
-  create_table "recruiter_students", :force => true do |t|
-    t.integer  "student_id"
-    t.integer  "recruiter_id"
-    t.datetime "start_date"
-    t.datetime "end_date"
-  end
-
   create_table "recruiters", :force => true do |t|
     t.string   "arrival_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "recruitments", :force => true do |t|
+    t.integer  "student_id"
+    t.integer  "recruiter_id"
+    t.datetime "start_date"
+    t.datetime "end_date"
   end
 
   create_table "school_users", :force => true do |t|

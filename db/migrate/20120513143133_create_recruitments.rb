@@ -1,6 +1,6 @@
-class CreateRecruiterStudents < ActiveRecord::Migration
+class CreateRecruitments < ActiveRecord::Migration
   def change
-    create_table :recruiter_students do |t|
+    create_table :recruitments do |t|
       t.integer :student_id
       t.integer :recruiter_id
       t.datetime :start_date
