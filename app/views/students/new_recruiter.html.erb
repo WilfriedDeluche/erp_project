@@ -1,0 +1,16 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Nouveau Recruteur</h1>
+
+<%= form_for @student, :url => create_recruiter_student_path(@student) do |f| %>
+  <%= fields_for @recruiter do |uf| %>
+    <div>
+      <%= uf.collection_select :recruiter_id, @recruiters, :id, :name %>
+    </div>
+  <% end %>
+  
+  <div class="form-actions">
+    <%= link_to '← Retour', student_path(@student), :class => "btn btn-primary" %>
+    <%= f.submit :class => "btn btn-primary" %>
+  </div>
+<% end %>

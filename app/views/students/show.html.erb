@@ -19,6 +19,21 @@
   <% end %>
 </div>
 
+<div class="well">
+  <% if @current_recruiter && @current_recruiter.end_date.nil? %>
+    <strong>Chargé de Placement: </strong><%= @current_recruiter.recruiter.user.name %><br />
+    <strong>Depuis le: </strong><%= @current_recruiter.start_date.strftime("%d-%m-%Y à %Hh%M") %><br />
+  <% else %>
+    <h3>Cet étudiant n'est assigné à aucun chargé de placement</h3>
+  <% end %>
+  
+  <% if @recruiters_count > 0 %>
+    <div class="row-fluid">
+      <div class="span12" style="text-align: right;"><%= link_to "Historique", recruiters_list_student_path(@student) %></div>
+    </div>
+  <% end %>
+</div>
+
 <div class="form-actions">
   <%= link_to '← Retour', students_path, :class => "btn btn-primary" %>
   <% if school_user_signed_in? || current_user.is_admin %>

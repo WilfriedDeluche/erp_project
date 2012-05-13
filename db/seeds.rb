@@ -53,7 +53,6 @@ user3 = User.create! :email => 'student@ingesup.com', :password => 'ingesup', :p
 end
 puts user3.first_name << " " << user3.last_name << " as " << user3.rolable_type
 
-
 puts 'SETTING UP DEFAULT COMPANIES'
 puts "..."
 company1 = Company.create! :corporate_name => "Applidget", :address => "68, rue du Château d'Eau", :zip_code => "75010", :city => "PARIS",
@@ -64,3 +63,7 @@ company2 = Company.create! :corporate_name => "Cap Gemini", :address => "Tour Eu
   :phone_number => "0149673000"
 puts company2.corporate_name
   
+puts "SETTING UP RECRUITER TO STUDENT"
+puts "..."
+rs = RecruiterStudent.create! :student_id => student.id, :recruiter_id => recruiter.id, :start_date => DateTime.now
+puts rs.student.user.first_name << " " << rs.student.user.last_name << "'s current recruiter is " << rs.recruiter.user.first_name << " " << rs.recruiter.user.last_name
