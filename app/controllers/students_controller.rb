@@ -1,7 +1,7 @@
 class StudentsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :school_users_only, :except => [:show, :index]
-  before_filter :find_student, :only => [:show, :edit, :update, :destroy, :reinvite_user, :recruiters_list, :new_recruiter]
+  before_filter :find_student, :only => [:show, :edit, :update, :destroy, :reinvite_user, :recruiters_list, :new_recruiter, :create_recruiter]
   respond_to :html, :json
   
   # GET /students
@@ -101,7 +101,32 @@ class StudentsController < ApplicationController
   
   # POST /students/1/
   def create_recruiter
+    @current_recruiter = @student.recruiter_students.order("start_date DESC").first
     
+    @recruiter = @student.recruiter_students.build(params[:recruiter_student]) do |rec|
+      rec.start_date = DateTime.now
+    end
+    
+    respond_to do |format|
+      if @current_recruiter && @recruiter.recruiter.id == @current_recruiter.recruiter.id
+        format.html { redirect_to new_recruiter_student_path(@student), alert: "Vous avez choisi le charge de placement actuel. Aucun changement n'a ete opere." }
+        format.json { render head: :ok }
+      elsif @recruiter.valid?
+        if @current_recruiter && !@current_recruiter.end_date.nil?
+          @current_recruiter.end_date = DateTime.now
+          @current_recruiter.save
+        end
+        @recruiter.save
+      
+        format.html { redirect_to student_path(@student), notice: "Student's recruiter has been changed" }
+        format.json { render head: :ok }
+      else
+        @recruiters = Recruiter.all
+        
+        format.html { render action: "new_recruiter" }
+        format.json { render json: @new_recruiter.errors, status: :unprocessable_entity }
+      end
+    end
   end
   
   private

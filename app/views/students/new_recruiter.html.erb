@@ -2,15 +2,25 @@
 
 <h1 class="page-header">Nouveau Recruteur</h1>
 
-<%= form_for @student, :url => create_recruiter_student_path(@student) do |f| %>
+<div class="alert alert-info">
+Cette action est irréversible. Le chargé de placement actuel ne pourra plus gérer cet étudiant dès lors que vous assignerez cet étudiant à nouveau chargé de placement.
+</div>
+
+<%= form_for @recruiter, :url => create_recruiter_student_path(@student) do |f| %>
+  <div>
+    <%= f.label :first_name, "Etudiant" %>
+    <div class="uneditable-input"><%= @student.user.name %></div>
+  </div>
+  
   <%= fields_for @recruiter do |uf| %>
     <div>
+      <%= uf.label :recruiter_id, "Chargé de Placement" %>
       <%= uf.collection_select :recruiter_id, @recruiters, :id, :name %>
     </div>
   <% end %>
   
   <div class="form-actions">
     <%= link_to '← Retour', student_path(@student), :class => "btn btn-primary" %>
-    <%= f.submit :class => "btn btn-primary" %>
+    <%= f.submit :class => "btn btn-primary", :confirm => "Êtes-vous sûr ?" %>
   </div>
 <% end %>
