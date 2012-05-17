@@ -27,7 +27,7 @@
     <h3>Cet étudiant n'est assigné à aucun chargé de placement</h3>
   <% end %>
   
-  <% if @recruiters_count > 0 %>
+  <% if @recruiters_count > 1 && (school_user_signed_in? || current_user.is_admin) %>
     <div class="row-fluid">
       <div class="span12" style="text-align: right;"><%= link_to "Historique", student_recruitments_path(@student) %></div>
     </div>
@@ -44,5 +44,7 @@
       <i class="icon-envelope"></i> Envoyer un Email d'invitation
     <% end %>
   <% end %>
-  <%= link_to 'Nouvel Assignement', new_student_recruitment_path(@student), :class => "btn" %>
+  <% if school_user_signed_in? || current_user.is_admin %>
+    <%= link_to 'Nouvel Assignement', new_student_recruitment_path(@student), :class => "btn" %>
+  <% end %>
 </div>
