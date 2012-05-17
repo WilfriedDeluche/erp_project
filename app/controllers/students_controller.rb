@@ -21,7 +21,7 @@ class StudentsController < ApplicationController
   def show
     @current_recruiter = @student.recruitments.order("start_date DESC").first
     @recruiters_count = @student.recruitments.count
-    @current_contract = @student.contracts.where("start_date < '#{Date.today}'").first
+    @current_contract = @student.contracts.where("start_date < '#{Date.today}' AND end_date > '#{Date.today}'").first
     @contracts_count = @student.contracts.count
     respond_with @student
   end

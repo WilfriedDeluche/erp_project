@@ -3,9 +3,9 @@
 <h1 class="page-header">Contrat</h1>
 
 <div class="well">
-  <strong>Type de Contrat: </strong><%= @contract.kind %><br />
-  <strong>Début de Contrat: </strong><%= @contract.start_date %><br />
-  <strong>Fin de Contrat: </strong><%= @contract.end_date %>
+  <strong>Type de Contrat: </strong><%= CONTRACTS.select{ |hash| hash[:code] == @contract.kind }.first[:name] %><br />
+  <strong>Début de Contrat: </strong><%= @contract.start_date.strftime("%d-%m-%Y") %><br />
+  <strong>Fin de Contrat: </strong><%= @contract.end_date.strftime("%d-%m-%Y") %>
 </div>
 
 <div class="well">

@@ -36,7 +36,9 @@
 
 <div class="well">
   <% if @current_contract %>
-      En <%= @current_contract.kind %> avec <strong><%= @current_contract.company.corporate_name %></strong> entre le <%= @current_contract.start_date %> et le <%= @current_contract.end_date %>
+      En <strong><%= CONTRACTS.select{ |hash| hash[:code] == @current_contract.kind }.first[:name] %></strong> avec <strong><%= @current_contract.company.corporate_name %></strong>.<br />
+      <strong>Début de contrat : </strong><%= @current_contract.start_date.strftime("%d-%m-%Y") %><br /> 
+      <strong>Fin de contrat : </strong><%= @current_contract.end_date.strftime("%d-%m-%Y") %>
   <% else %>
     <h3>Cet étudiant n'est pas sous contrat avec une entreprise</h3>
   <% end %>
