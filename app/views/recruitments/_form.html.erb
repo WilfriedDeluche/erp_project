@@ -1,17 +1,20 @@
-<%= form_for(@recruitment) do |f| %>
-  <% if @recruitment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@recruitment.errors.count, "error") %> prohibited this recruitment from being saved:</h2>
+<%= form_for [@student,@recruitment] do |f| %>
+  <%= error_messages!(@recruitment) %>
 
-      <ul>
-      <% @recruitment.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+  <div>
+    <%= f.label :first_name, "Etudiant" %>
+    <div class="uneditable-input"><%= @student.user.name %></div>
+  </div>
+  
+  <%= fields_for @recruitment do |uf| %>
+    <div>
+      <%= uf.label :recruiter_id, "Chargé de Placement" %>
+      <%= uf.collection_select :recruiter_id, @recruiters, :id, :name %>
     </div>
   <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
+  
+  <div class="form-actions">
+    <%= link_to '← Retour', student_path(@student), :class => "btn btn-primary" %>
+    <%= f.submit :class => "btn btn-primary", :confirm => "Êtes-vous sûr ?" %>
   </div>
 <% end %>

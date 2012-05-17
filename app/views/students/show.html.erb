@@ -34,6 +34,20 @@
   <% end %>
 </div>
 
+<div class="well">
+  <% if @current_contract %>
+      En <%= @current_contract.kind %> avec <strong><%= @current_contract.company.corporate_name %></strong> entre le <%= @current_contract.start_date %> et le <%= @current_contract.end_date %>
+  <% else %>
+    <h3>Cet étudiant n'est pas sous contrat avec une entreprise</h3>
+  <% end %>
+  
+  <% if @contracts_count > 0 && (recruiter_signed_in? || current_user.is_admin)%>
+    <div class="row-fluid">
+      <div class="span12" style="text-align: right;"><%= link_to "Historique", student_contracts_path(@student) %></div>
+    </div>
+  <% end %>
+</div>
+
 <div class="form-actions">
   <%= link_to '← Retour', students_path, :class => "btn btn-primary" %>
   <% if school_user_signed_in? || current_user.is_admin %>
@@ -46,5 +60,8 @@
   <% end %>
   <% if school_user_signed_in? || current_user.is_admin %>
     <%= link_to 'Nouvel Assignement', new_student_recruitment_path(@student), :class => "btn" %>
+  <% end %>
+  <% if recruiter_signed_in? || current_user.is_admin %>
+    <%= link_to "Nouveau Contrat", new_student_contract_path(@student), :class => "btn" %>
   <% end %>
 </div>

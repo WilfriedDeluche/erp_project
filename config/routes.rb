@@ -1,5 +1,7 @@
 ErpProject::Application.routes.draw do
   
+  resources :contracts
+
   resources :companies
 
   devise_for :users
@@ -24,6 +26,7 @@ ErpProject::Application.routes.draw do
     put "reinvite_user", :on => :member
     
     resources :recruitments, :only => [:index, :new, :create]
+    resources :contracts
   end
   resources :recruiters do
     put "reinvite_user", :on => :member
