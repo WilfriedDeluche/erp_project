@@ -11,6 +11,9 @@ Recruitment.destroy_all
 
 first_names = %w(AURELIE LAETITA ALAIN NICOLAS FELICIA IGNACIO ELODIE ARTHUR LAURENCE MARIE PATRICIA AURELIE MATHIEU LINDA LISA JENNIFER JEAN FRANCOIS MICHAEL WILLIAM DAVID RICHARD CHARLES THOMAS)
 last_names = %w(MARTIN DUPONT JANVIER BERGER DUJARDIN LEMAITRE VIARD COTILLARD MOUNIER HERAUT BOUYER SARDIN RIVERIN GOMES FERRERA VIGNAUT WAGNER ZEPETA AGUILA BRIANCON DUCHOMMIER)
+companies_name = ["APPLIDGET", "CAPGEMINI", "LOREAL", "SUBWAY", "AIRLIQUIDE", "MICROSOFT", "APPLE", "GOOGLE", "PRESTANCE", "YSANCE"]
+contracts = %w(contrat_pro stage apprentissage)
+
 
 puts "#### ALL DATAS FROM CURRENT DATABASE DESTROYED ####"
 
@@ -104,20 +107,32 @@ puts "60 other Students"
 
 puts 'SETTING UP DEFAULT COMPANIES'
 puts "..."
-company1 = Company.create! :corporate_name => "Applidget", :address => "68, rue du Château d'Eau", :zip_code => "75010", :city => "PARIS",
-  :phone_number => "0123456789", :contact_first_name => "Tristan", :contact_last_name => "Verdier", :contact_email => "tristan.verdier@applidget.com"
-puts company1.corporate_name
-
-company2 = Company.create! :corporate_name => "Cap Gemini", :address => "Tour Europlaza 20, avenue André-Prothin", :zip_code => "92927", :city => "Paris-La Défense Cedex",
-  :phone_number => "0149673000"
-puts company2.corporate_name
+companies_name.each do |name|
+  first_name = first_names.sample
+  last_name = last_names.sample
+  company = Company.create! :corporate_name => name, :address => "68, rue du Château d'Eau", :zip_code => "75010", :city => "PARIS",
+    :phone_number => "0123456789", :contact_first_name => "#{first_name.capitalize}", :contact_last_name => "#{last_name.capitalize}", :contact_email => "#{first_name.downcase}.#{last_name.downcase}@#{name.downcase}.com"
+  puts company.corporate_name
+end
   
-puts "SETTING UP ONE RECRUITER TO STUDENTS"
+puts "SETTING UP ONE RECRUITER TO STUDENTS ONE CONTRACT BETWEEN STUDENTS AND COMPANIES"
 puts "..."
 recruiters = Recruiter.all
-count = recruiters.size
+nb_rec = recruiters.size
+companies = Company.all
+nb_comp = companies.size
+
 Student.all.each do |student|
-  random_recruiter = recruiters[rand(0..count-1)]
+  random_recruiter = recruiters[rand(0..nb_rec-1)]
   rs = Recruitment.create! :student_id => student.id, :recruiter_id => random_recruiter.id, :start_date => DateTime.now
   puts rs.student.user.first_name << " " << rs.student.user.last_name << "'s current recruiter is " << rs.recruiter.user.first_name << " " << rs.recruiter.user.last_name
+
+  to_contract = rand(0..1)
+  if to_contract == 1
+    type_contract = contracts.sample
+    random_company = companies[rand(0..nb_comp-1)]
+    contract = Contract.create! :student_id => student.id, :recruiter_id => random_recruiter.id, :company_id => random_company.id, 
+        :start_date => Date.today - 250.days, :end_date => Date.today + 120.days, :kind => type_contract
+    puts contract.student.user.first_name << " " << contract.student.user.last_name << " en contrat avec " << contract.company.corporate_name
+  end
 end
