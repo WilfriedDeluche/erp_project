@@ -29,7 +29,7 @@
   
   <% if @recruiters_count > 0 %>
     <div class="row-fluid">
-      <div class="span12" style="text-align: right;"><%= link_to "Historique", recruiters_list_student_path(@student) %></div>
+      <div class="span12" style="text-align: right;"><%= link_to "Historique", student_recruitments_path(@student) %></div>
     </div>
   <% end %>
 </div>
@@ -44,5 +44,5 @@
       <i class="icon-envelope"></i> Envoyer un Email d'invitation
     <% end %>
   <% end %>
-  <%= link_to 'Nouvel Assignement', new_recruiter_student_path(@student), :class => "btn" %>
+  <%= link_to 'Nouvel Assignement', new_student_recruitment_path(@student), :class => "btn" %>
 </div>

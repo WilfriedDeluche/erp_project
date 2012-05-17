@@ -22,9 +22,8 @@ ErpProject::Application.routes.draw do
   end
   resources :students do
     put "reinvite_user", :on => :member
-    get "recruiters_list", :on => :member
-    get "new_recruiter", :on => :member
-    post "create_recruiter", :on => :member
+    
+    resources :recruitments, :only => [:index, :new, :create]
   end
   resources :recruiters do
     put "reinvite_user", :on => :member

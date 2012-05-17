@@ -10,7 +10,7 @@
 </div>
 
 <h3>Liste des Chargés de Placement</h3>
-<% if @recruiters_list.any? %>
+<% if @recruitments.any? %>
   <table class="table table-bordered table-condensed">
     <tr>
       <th>Nom</th>
@@ -19,13 +19,13 @@
       <th>Fin</th>
     </tr>
   
-    <% @recruiters_list.each do |recruiter| %>
+    <% @recruitments.each do |recruitment| %>
     <tr>
-      <td><%= recruiter.recruiter.user.name %></td>
-      <td><%= recruiter.recruiter.user.email %></td>
-      <td><%= recruiter.start_date.strftime("%d-%m-%Y à %Hh%M") %></td>
-      <% if recruiter.end_date %>
-        <td><%= recruiter.end_date.strftime("%d-%m-%Y à %Hh%M") %></td>
+      <td><%= recruitment.recruiter.user.name %></td>
+      <td><%= recruitment.recruiter.user.email %></td>
+      <td><%= recruitment.start_date.strftime("%d-%m-%Y à %Hh%M") %></td>
+      <% if recruitment.end_date %>
+        <td><%= recruitment.end_date.strftime("%d-%m-%Y à %Hh%M") %></td>
       <% else %>
         <td>-</td>
       <% end %>
@@ -36,7 +36,7 @@
   <h4>Cet étudiant n'a aucun historique de chargés de placement</h4>
 <% end %> 
 <div class="row page-menu-bar">
-  <%= link_to 'Nouvel Assignement', new_recruiter_student_path(@student), :class => "btn btn-mini btn-inverse" %>
+  <%= link_to 'Nouvel Assignement', new_student_recruitment_path(@student), :class => "btn btn-mini btn-inverse" %>
 </div>
 
 <div class="form-actions">
