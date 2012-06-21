@@ -1,8 +1,9 @@
+# encoding: utf-8
 class StudentsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :school_users_only, :except => [:show, :index]
   before_filter :find_class, :only => [:show]
-  before_filter :find_student, :only => [:show, :edit, :update, :destroy, :reinvite_user]
+  before_filter :find_student, :only => [:show, :edit, :update, :destroy, :reinvite_user, :new_class]
   before_filter :own_recruiter_only, :only => [:show]
   respond_to :html, :json
   
@@ -24,7 +25,7 @@ class StudentsController < ApplicationController
     @recruiters_count = @student.recruitments.count
     @current_contract = @student.contracts.where("start_date < '#{Date.today}' AND end_date > '#{Date.today}'").first
     @contracts_count = @student.contracts.count
-    @current_class = @student.klasses.order("created_at DESC").first
+    @current_class = @student.klasses.order("year DESC").first
     respond_with @student
   end
 
@@ -68,7 +69,17 @@ class StudentsController < ApplicationController
   def update
     @user = @student.user
     respond_to do |format|
-      if @student.update_attributes(params[:student]) && @user.update_attributes(params[:user])
+      if params[:student][:klass_ids]
+        begin
+          klass = Klass.find(params[:student][:klass_ids])
+          @dobloon_year = @student.klasses.detect { |k| k.year == klass.year }
+          @student.klasses.delete(@dobloon_year) if @dobloon_year
+          @student.klasses << klass
+          format.html { redirect_to student_path(@student), :notice => "Nouvel assignement" }
+        rescue
+          format.html { redirect_to new_class_student_path(@student), :alert => "La classe choisie n'existe pas" }
+        end
+      elsif @student.update_attributes(params[:student]) && @user.update_attributes(params[:user])
         format.html { redirect_to @student, notice: 'Student was successfully updated.' }
         format.json { head :ok }
       else
@@ -93,6 +104,13 @@ class StudentsController < ApplicationController
   # PUT /students/1/reinvite_user
   def reinvite_user
     resend_invitation(@student.user, "Student")
+  end
+  
+  # GET /students/1/new_class
+  def new_class
+    @student_classes = @student.klasses.order("year DESC")
+    @classes = Klass.order("year DESC")
+    respond_with @student
   end
   
   private

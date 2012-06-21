@@ -8,4 +8,8 @@ class Klass < ActiveRecord::Base
   validates_format_of :year, :with => /\A20[0-9]{2}\Z/
   
   attr_accessible :training_id, :year
+  
+  def name
+    "#{self.training.section.upcase} #{self.training.level} - #{self.year}"
+  end
 end

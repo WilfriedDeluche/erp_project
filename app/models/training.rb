@@ -6,6 +6,6 @@ class Training < ActiveRecord::Base
   attr_accessible :name, :section, :level
   
   def short_name
-    "#{section.upcase} #{level}"    
+    "#{section.upcase} #{level}"
   end
 end
