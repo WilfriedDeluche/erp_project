@@ -19,7 +19,7 @@
     <%= f.text_field :end_date %>
   </div>
   <div>
-    <%= f.label :kind %>
+    <%= f.label :kind, "Contract Type" %>
     <%= select(:contract, :kind, Hash[*CONTRACTS.collect{ |pair| [ pair[:name], pair[:code]]}.flatten], { :prompt => "Sélectionnez" }) %>
   </div>
     

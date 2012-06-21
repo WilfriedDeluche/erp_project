@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   end
   
   def recruiters_only
-    access_denies unless current_user.rolable_type == "Recruiter" && !current_user.rolable.nil?
+    access_denied unless current_user.rolable_type == "Recruiter" && !current_user.rolable.nil?
   end
   
   def access_denied
