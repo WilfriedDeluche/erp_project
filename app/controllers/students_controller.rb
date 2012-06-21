@@ -1,6 +1,7 @@
 class StudentsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :school_users_only, :except => [:show, :index]
+  before_filter :find_class, :only => [:show]
   before_filter :find_student, :only => [:show, :edit, :update, :destroy, :reinvite_user]
   before_filter :own_recruiter_only, :only => [:show]
   respond_to :html, :json
@@ -23,6 +24,7 @@ class StudentsController < ApplicationController
     @recruiters_count = @student.recruitments.count
     @current_contract = @student.contracts.where("start_date < '#{Date.today}' AND end_date > '#{Date.today}'").first
     @contracts_count = @student.contracts.count
+    @current_class = @student.klasses.order("created_at DESC").first
     respond_with @student
   end
 
@@ -96,7 +98,11 @@ class StudentsController < ApplicationController
   private
   def find_student
     begin
-      @student = Student.find(params[:id])
+      if @class
+        @student = @class.students.find(params[:id])
+      else
+        @student = Student.find(params[:id])
+      end
       raise RecordNotFound.new if @student.user.nil?
     rescue
       respond_to do |format|
@@ -113,6 +119,18 @@ class StudentsController < ApplicationController
         format.html { redirect_to students_path, alert: 'You are not in charge of this student.' }
         format.json { render head: :not_found }
       end 
+    end
+  end
+  
+  def find_class
+    return unless params[:class_id]
+    begin
+      @class = Klass.find(params[:class_id])
+    rescue
+      respond_to do |format|
+        format.html { redirect_to classes_path, alert: "Cette classe n'existe pas." }
+        format.json { render head: :not_found }
+      end
     end
   end
 end

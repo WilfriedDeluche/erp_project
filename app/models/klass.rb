@@ -1,6 +1,7 @@
 class Klass < ActiveRecord::Base
     
   belongs_to :training
+  has_and_belongs_to_many :students
   
   validates_presence_of :training_id, :year
   validates_uniqueness_of :year, :scope => :training_id

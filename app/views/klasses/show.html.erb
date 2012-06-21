@@ -1,11 +1,49 @@
 <%= render "shared/private_sidebar" %>
 
-<h1 class="page-header">Classe</h1>
+<h1 class="page-header">Classe <small><%= @class.training.short_name %> - <%=@class.year %></small></h1>
 
-<div class="well">
-  <strong>Formation: </strong><%= @class.training.short_name %><br />
-  <strong>Année: </strong><%=@class.year %><br />
-</div>
+<% if @students.any? %>
+  <p><strong>Effectif: <%= pluralize(@students.size, 'étudiant') %></strong></p>
+  <table class="table table-bordered table-condensed">
+    <tr>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Actions</th>
+    </tr>
+
+  <% @students.each do |student| %>
+    <tr>
+      <td>
+        <span class="badge badge-status <%= account_status(student.user) %>"></span>
+        <%= student.user.last_name.upcase %>
+      </td>
+      <td><%= student.user.first_name.capitalize %></td>
+      <td>
+        <%= link_to class_student_path(@class, student), :class => "btn btn-mini" do %>
+          <i class="icon-eye-open"></i>
+          <!-- Voir -->
+        <% end %>
+        <% if school_user_signed_in? || current_user.is_admin %>
+          <%= link_to edit_student_path(student), :class => "btn btn-mini" do %>
+            <i class="icon-pencil"></i>
+            <!-- Modifier -->
+          <% end %>
+          <%= link_to student, confirm: 'Êtes-vous sûr?', method: :delete, :class => "btn btn-mini" do %>
+            <i class=" icon-trash"></i>
+            <!-- Supprimer -->
+          <% end %>
+        <% end %>
+        <% if student.user.invitation_accepted_at.nil? %>
+          <%= link_to reinvite_user_student_path(student), method: :put, :class => "btn btn-mini" do %>
+            <i class="icon-envelope"></i>
+            <!-- Envoyer email invitation -->
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+<% end %>
 
 <div class="form-actions">
   <%= link_to '← Retour', classes_path, :class => "btn btn-primary" %>

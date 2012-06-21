@@ -10,6 +10,7 @@ Company.destroy_all
 Recruitment.destroy_all
 Contract.destroy_all
 Training.destroy_all
+Klass.destroy_all
 
 first_names = %w(AURELIE LAETITA ALAIN NICOLAS FELICIA IGNACIO ELODIE ARTHUR LAURENCE MARIE PATRICIA AURELIE MATHIEU LINDA LISA JENNIFER JEAN FRANCOIS MICHAEL WILLIAM DAVID RICHARD CHARLES THOMAS)
 last_names = %w(MARTIN DUPONT JANVIER BERGER DUJARDIN LEMAITRE VIARD COTILLARD MOUNIER HERAUT BOUYER SARDIN RIVERIN GOMES FERRERA VIGNAUT WAGNER ZEPETA AGUILA BRIANCON DUCHOMMIER)
@@ -155,3 +156,15 @@ if trainings.any?
     end
   end
 end
+
+puts "..."
+puts "PUTTING STUDENTS INTO CLASSES"
+puts "..."
+classes = Klass.all
+nb_cl = classes.size
+
+Student.all.each do |student|
+  student.klasses << classes[rand(0..nb_cl-1)] # adds a record in join table "klasses_students"
+end
+
+
