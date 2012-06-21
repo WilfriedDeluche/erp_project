@@ -14,6 +14,7 @@ class RecruitersController < ApplicationController
   # GET /recruiters/1
   # GET /recruiters/1.json
   def show
+    @recruitements = @recruiter.recruitments.where(:end_date => nil)
     respond_with @recruiter
   end
 

@@ -1,0 +1,20 @@
+<%= form_for [@student,@recruitment] do |f| %>
+  <%= error_messages!(@recruitment) %>
+
+  <div>
+    <%= f.label :first_name, "Etudiant" %>
+    <div class="uneditable-input"><%= @student.user.name %></div>
+  </div>
+  
+  <%= fields_for @recruitment do |uf| %>
+    <div>
+      <%= uf.label :recruiter_id, "Chargé de Placement" %>
+      <%= uf.collection_select :recruiter_id, @recruiters, :id, :name %>
+    </div>
+  <% end %>
+  
+  <div class="form-actions">
+    <%= link_to '← Retour', student_path(@student), :class => "btn btn-primary" %>
+    <%= f.submit :class => "btn btn-primary", :confirm => "Êtes-vous sûr ?" %>
+  </div>
+<% end %>

@@ -2,18 +2,27 @@ class StudentsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :school_users_only, :except => [:show, :index]
   before_filter :find_student, :only => [:show, :edit, :update, :destroy, :reinvite_user]
+  before_filter :own_recruiter_only, :only => [:show]
   respond_to :html, :json
   
   # GET /students
   # GET /students.json
   def index
-    @students = Student.all.select { |s| s unless s.user.nil? }
+    unless current_user.is_recruiter?
+      @students = Student.all.select { |s| s unless s.user.nil? }
+    else
+      @students = current_user.rolable.recruitments.where(:end_date => nil).map { |recruitment| recruitment.student }
+    end
     respond_with @students
   end
 
   # GET /students/1
   # GET /students/1.json
   def show
+    @current_recruiter = @student.recruitments.order("start_date DESC").first
+    @recruiters_count = @student.recruitments.count
+    @current_contract = @student.contracts.where("start_date < '#{Date.today}' AND end_date > '#{Date.today}'").first
+    @contracts_count = @student.contracts.count
     respond_with @student
   end
 
@@ -94,6 +103,16 @@ class StudentsController < ApplicationController
         format.html { redirect_to students_path, alert: 'Student does not exist.' }
         format.json { render head: :not_found }
       end
+    end
+  end
+  
+  def own_recruiter_only
+    return unless current_user.is_recruiter?
+    unless current_user.rolable.recruitments.where(:student_id => @student.id, :end_date => nil).any?
+      respond_to do |format|
+        format.html { redirect_to students_path, alert: 'You are not in charge of this student.' }
+        format.json { render head: :not_found }
+      end 
     end
   end
 end

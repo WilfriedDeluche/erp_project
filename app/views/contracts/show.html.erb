@@ -1,0 +1,40 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Contrat</h1>
+
+<div class="well">
+  <strong>Type de Contrat: </strong><%= CONTRACTS.select{ |hash| hash[:code] == @contract.kind }.first[:name] %><br />
+  <strong>Début de Contrat: </strong><%= @contract.start_date.strftime("%d-%m-%Y") %><br />
+  <strong>Fin de Contrat: </strong><%= @contract.end_date.strftime("%d-%m-%Y") %>
+</div>
+
+<div class="well">
+  <h3>Etudiant</h3>
+  <strong>Nom: </strong><%= @student.user.last_name.upcase %><br />
+  <strong>Prénom: </strong><%= @student.user.first_name.capitalize %><br />
+  <strong>Email: </strong><%= @student.user.email %><br />
+</div>
+
+<div class="well">
+  <h3>Entreprise</h3>
+  <strong>Raison Sociale: </strong><%= @contract.company.corporate_name.upcase %><br />
+  <strong>Adresse: </strong><%= @contract.company.address %><br />
+  <strong>Code Postal: </strong><%= @contract.company.zip_code %><br />
+  <strong>Ville: </strong><%= @contract.company.city.upcase %><br />
+  <strong>Numéro de Téléphone: </strong><%= @contract.company.phone_number %><br />
+  <br />
+  <strong>Contact: </strong><%= contact_name(@contract.company) %><br />
+  <strong>Email Contact: </strong><%= @contract.company.contact_email %><br />
+</div>
+
+<div class="well">
+  <h3>Chargé de Placement</h3>
+  <strong>Nom: </strong><%= @contract.recruiter.user.last_name.upcase %><br />
+  <strong>Prénom: </strong><%= @contract.recruiter.user.first_name.capitalize %><br />
+  <strong>Email: </strong><%= @contract.recruiter.user.email %><br />
+</div>
+
+<div class="form-actions">
+  <%= link_to '← Retour', student_contracts_path(@student), :class => "btn btn-primary" %>
+  <%= link_to 'Editer', edit_student_contract_path(@student,@contract), :class => "btn" %>
+</div>

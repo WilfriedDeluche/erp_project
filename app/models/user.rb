@@ -21,4 +21,12 @@ class User < ActiveRecord::Base
       errors[:password_confirmation].clear
     end 
   end
+  
+  def name
+    "#{self.first_name.capitalize} #{self.last_name.upcase}"
+  end
+  
+  def is_recruiter?
+    self.rolable_type == "Recruiter"
+  end
 end

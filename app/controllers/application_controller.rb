@@ -35,6 +35,10 @@ class ApplicationController < ActionController::Base
     access_denied unless current_user.is_admin
   end
   
+  def recruiters_only
+    access_denied unless current_user.rolable_type == "Recruiter" && !current_user.rolable.nil?
+  end
+  
   def access_denied
     respond_to do |format|
       format.html { redirect_to home_index_path, alert: "Acces interdit" }
