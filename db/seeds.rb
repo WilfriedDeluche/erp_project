@@ -9,11 +9,15 @@ Student.destroy_all
 Company.destroy_all
 Recruitment.destroy_all
 Contract.destroy_all
+Training.destroy_all
 
 first_names = %w(AURELIE LAETITA ALAIN NICOLAS FELICIA IGNACIO ELODIE ARTHUR LAURENCE MARIE PATRICIA AURELIE MATHIEU LINDA LISA JENNIFER JEAN FRANCOIS MICHAEL WILLIAM DAVID RICHARD CHARLES THOMAS)
 last_names = %w(MARTIN DUPONT JANVIER BERGER DUJARDIN LEMAITRE VIARD COTILLARD MOUNIER HERAUT BOUYER SARDIN RIVERIN GOMES FERRERA VIGNAUT WAGNER ZEPETA AGUILA BRIANCON DUCHOMMIER)
 companies_name = ["APPLIDGET", "CAPGEMINI", "LOREAL", "SUBWAY", "AIRLIQUIDE", "MICROSOFT", "APPLE", "GOOGLE", "PRESTANCE", "YSANCE"]
 contracts = %w(contrat_pro stage apprentissage)
+trainings = { "Système d'Ingénierie et Génie Logiciel" => "SIGL", 
+              "Temps Réel et Systèmes Embarqués" => "TRSE", 
+              "Systèmes, Réseaux et Télécommunication" => "SRT" }
 
 
 puts "#### ALL DATAS FROM CURRENT DATABASE DESTROYED ####"
@@ -135,5 +139,17 @@ Student.all.each do |student|
     contract = Contract.create! :student_id => student.id, :recruiter_id => random_recruiter.id, :company_id => random_company.id, 
         :start_date => Date.today - 250.days, :end_date => Date.today + 120.days, :kind => type_contract
     puts contract.student.user.first_name << " " << contract.student.user.last_name << " en contrat avec " << contract.company.corporate_name
+  end
+end
+
+puts "..."
+puts "SETTING UP TRAININGS"
+puts "..."
+if trainings.any?
+  trainings.each do |name, section|
+    3.times do |n|
+      t = Training.create! :name => name, :section => section, :level => n+1
+      puts "Formation #{t.name} : #{t.section}#{t.level}"
+    end
   end
 end

@@ -5,7 +5,11 @@
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
     <p><%= f.email_field :email, :class => "label", :placeholder => "Email" %></p>
     <p><%= f.password_field :password, :class => "label", :placeholder => "Password" %></p>
-
+    
+    <label class="checkbox" for="user_remember_me">
+      <%= f.check_box :remember_me %> Se souvenir de moi
+    </label>
+    
     <div><%= f.submit "Se connecter", :class => "btn pull-right" %></div>
   <% end %>
 

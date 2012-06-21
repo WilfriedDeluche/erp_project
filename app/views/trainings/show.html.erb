@@ -1,0 +1,14 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Formation</h1>
+
+<div class="well">
+  <strong>Intitulé de la Formation: </strong><%= @training.name %><br />
+  <strong>Section: </strong><%=@training.section.upcase %><br />
+  <strong>Niveau: </strong><%= @training.level %><br />
+</div>
+
+<div class="form-actions">
+  <%= link_to '← Retour', trainings_path, :class => "btn btn-primary" %>
+  <%= link_to 'Editer', edit_training_path(@training), :class => "btn btn-primary" %>
+</div>
