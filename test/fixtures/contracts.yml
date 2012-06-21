@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  student_id: 1
+  company_id: 1
+  recruiter_id: 1
+  start_date: 
+  end_date: 
+  type: 
+
+two:
+  student_id: 1
+  company_id: 1
+  recruiter_id: 1
+  start_date: 
+  end_date: 
+  type: 

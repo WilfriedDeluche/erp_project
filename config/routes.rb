@@ -20,8 +20,13 @@ ErpProject::Application.routes.draw do
   end
   resources :students do
     put "reinvite_user", :on => :member
+    
+    resources :recruitments, :only => [:index, :new, :create]
+    resources :contracts
   end
   resources :recruiters do
     put "reinvite_user", :on => :member
   end
+  
+  resources :companies
 end

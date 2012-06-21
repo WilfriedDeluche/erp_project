@@ -1,0 +1,47 @@
+<%= form_for(@company) do |f| %>
+  <%= error_messages!(@company) %>
+  
+  <div class="row">
+    <div class="span4">
+      <div>
+        <%= f.label :corporate_name %>
+        <%= f.text_field :corporate_name %>
+      </div>
+      <div>
+        <%= f.label :address %>
+        <%= f.text_field :address %>
+      </div>
+      <div>
+        <%= f.label :zip_code %>
+        <%= f.number_field :zip_code %>
+      </div>
+      <div>
+        <%= f.label :city %>
+        <%= f.text_field :city %>
+      </div>
+      <div>
+        <%= f.label :phone_number %>
+        <%= f.text_field :phone_number %>
+      </div>
+    </div>
+    
+    <div class="span4">
+      <div>
+        <%= f.label :contact_first_name %>
+        <%= f.text_field :contact_first_name %>
+      </div>
+      <div>
+        <%= f.label :contact_last_name %>
+        <%= f.text_field :contact_last_name %>
+      </div>
+      <div>
+        <%= f.label :contact_email %>
+        <%= f.text_field :contact_email %>
+      </div>
+    </div>
+  </div>
+  <div class="form-actions">
+    <%= link_to '← Retour', companies_path, :class => "btn btn-primary" %>
+    <%= f.submit :class => "btn btn-primary" %>
+  </div>
+<% end %>

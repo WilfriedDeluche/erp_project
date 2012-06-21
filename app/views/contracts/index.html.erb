@@ -1,0 +1,52 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Liste des Contrats</h1>
+
+<div class="row page-menu-bar">
+  <% if recruiter_signed_in? || current_user.is_admin %>
+    <%= link_to 'Nouveau', new_student_contract_path(@student), :class => "btn btn-mini btn-inverse" %>
+  <% end %>
+  <% if @student %>
+    <%= link_to '← Retour', student_path(@student), :class => "btn btn-mini btn-inverse" %>
+  <% end %>
+</div>
+
+<% if @contracts.any? %>
+<table class="table table-bordered table-condensed">
+  <tr>
+    <th>Entreprise</th>
+    <th>Recruteur</th>
+    <th>Type de Contrat</th>
+    <th>Début</th>
+    <th>Fin</th>
+    <th>Actions</th>
+  </tr>
+
+<% @contracts.each do |contract| %>
+  <tr>
+    <td><%= contract.company.corporate_name %></td>
+    <td><%= "#{contract.recruiter.user.first_name.capitalize} #{contract.recruiter.user.last_name.upcase}" %></td>
+    <td><%= CONTRACTS.select{ |hash| hash[:code] == contract.kind }.first[:name]  %></td>
+    <td><%= contract.start_date.strftime("%d-%m-%Y") %></td>
+    <td><%= contract.end_date.strftime("%d-%m-%Y") %></td>
+    <td>
+      <%= link_to student_contract_path(@student,contract), :class => "btn btn-mini" do %>
+        <i class="icon-eye-open"></i>
+        <!-- Voir -->
+      <% end %>
+      <%= link_to edit_student_contract_path(@student, contract), :class => "btn btn-mini" do %>
+        <i class="icon-pencil"></i>
+        <!-- Modifier -->
+      <% end %>
+      <%= link_to student_contract_path(@student,contract), confirm: 'Êtes-vous sûr?', method: :delete, :class => "btn btn-mini" do %>
+        <i class=" icon-trash"></i>
+        <!-- Supprimer -->
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<% else %>
+  <h2>Aucun contrat</h2>
+<% end %>

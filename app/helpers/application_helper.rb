@@ -17,14 +17,31 @@ module ApplicationHelper
                       :count => resource.errors.count + user.errors.count,
                       :resource => resource.class.model_name.human.downcase)
 
-    html = <<-HTML
+    html = error_html(sentence, messages)
+    html.html_safe
+  end
+  
+  def error_messages!(resource)
+    return "" if resource.errors.empty?
+    messages = ""
+
+    if !resource.errors.empty?
+      messages = resource.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
+    end
+
+    sentence = I18n.t("errors.messages.not_saved", :count => resource.errors.count, :resource => resource.class.model_name.human.downcase)
+
+    html = error_html(sentence, messages)
+    html.html_safe
+  end
+  
+  def error_html(sentence, messages)
+    <<-HTML
     <div id="error_explanation">
     <h2>#{sentence}</h2>
     <ul>#{messages}</ul>
     </div>
     HTML
-
-    html.html_safe
   end
   
   def account_status(user)

@@ -1,0 +1,11 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Nouveau Recruteur</h1>
+
+<% if @current_recruiter %>
+  <div class="alert alert-info">
+  Cette action est irréversible. Le chargé de placement actuel ne pourra plus gérer cet étudiant dès lors que vous assignerez cet étudiant à nouveau chargé de placement.
+  </div>
+<% end %>
+
+<%= render 'form' %>

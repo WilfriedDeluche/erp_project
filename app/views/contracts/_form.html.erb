@@ -1,0 +1,30 @@
+<%= form_for [@student,@contract] do |f| %>
+  <%= error_messages!(@contract) %>
+
+  <div>
+    <%= f.label :student_id %>
+    <div class="uneditable-input"><%= @student.user.name %></div>
+  </div>
+  
+  <div>
+    <%= f.label :company_id %>
+    <%= f.collection_select :company_id, @companies, :id, :corporate_name, { :prompt => "Sélectionnez" } %>
+  </div>
+  <div>
+    <%= f.label :start_date %>
+    <%= f.text_field :start_date %>
+  </div>
+  <div>
+    <%= f.label :end_date %>
+    <%= f.text_field :end_date %>
+  </div>
+  <div>
+    <%= f.label :kind, "Contract Type" %>
+    <%= select(:contract, :kind, Hash[*CONTRACTS.collect{ |pair| [ pair[:name], pair[:code]]}.flatten], { :prompt => "Sélectionnez" }) %>
+  </div>
+    
+  <div class="form-actions">
+    <%= link_to '← Retour', @student, :class => "btn btn-primary" %>
+    <%= f.submit :class => "btn btn-primary" %>
+  </div>
+<% end %>

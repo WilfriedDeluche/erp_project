@@ -19,6 +19,37 @@
   <% end %>
 </div>
 
+<div class="well">
+  <% if @current_recruiter && @current_recruiter.end_date.nil? %>
+    <strong>Chargé de Placement: </strong><%= @current_recruiter.recruiter.user.name %><br />
+    <strong>Depuis le: </strong><%= @current_recruiter.start_date.strftime("%d-%m-%Y à %Hh%M") %><br />
+  <% else %>
+    <h3>Cet étudiant n'est assigné à aucun chargé de placement</h3>
+  <% end %>
+  
+  <% if @recruiters_count > 1 && (school_user_signed_in? || current_user.is_admin) %>
+    <div class="row-fluid">
+      <div class="span12" style="text-align: right;"><%= link_to "Historique", student_recruitments_path(@student) %></div>
+    </div>
+  <% end %>
+</div>
+
+<div class="well">
+  <% if @current_contract %>
+      En <strong><%= CONTRACTS.select{ |hash| hash[:code] == @current_contract.kind }.first[:name] %></strong> avec <strong><%= @current_contract.company.corporate_name %></strong>.<br />
+      <strong>Début de contrat : </strong><%= @current_contract.start_date.strftime("%d-%m-%Y") %><br /> 
+      <strong>Fin de contrat : </strong><%= @current_contract.end_date.strftime("%d-%m-%Y") %>
+  <% else %>
+    <h3>Cet étudiant n'est pas sous contrat avec une entreprise</h3>
+  <% end %>
+  
+  <% if @contracts_count > 0 && (recruiter_signed_in? || current_user.is_admin)%>
+    <div class="row-fluid">
+      <div class="span12" style="text-align: right;"><%= link_to "Historique", student_contracts_path(@student) %></div>
+    </div>
+  <% end %>
+</div>
+
 <div class="form-actions">
   <%= link_to '← Retour', students_path, :class => "btn btn-primary" %>
   <% if school_user_signed_in? || current_user.is_admin %>
@@ -28,5 +59,11 @@
     <%= link_to reinvite_user_student_path(@student), method: :put, :class => "btn" do %>
       <i class="icon-envelope"></i> Envoyer un Email d'invitation
     <% end %>
+  <% end %>
+  <% if school_user_signed_in? || current_user.is_admin %>
+    <%= link_to 'Nouvel Assignement', new_student_recruitment_path(@student), :class => "btn" %>
+  <% end %>
+  <% if recruiter_signed_in? || current_user.is_admin %>
+    <%= link_to "Nouveau Contrat", new_student_contract_path(@student), :class => "btn" %>
   <% end %>
 </div>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  student_id: 1
+  recruiter_id: 1
+  start_date: 2012-05-13 16:31:33
+  end_date: 2012-05-13 16:31:33
+
+two:
+  student_id: 1
+  recruiter_id: 1
+  start_date: 2012-05-13 16:31:33
+  end_date: 2012-05-13 16:31:33

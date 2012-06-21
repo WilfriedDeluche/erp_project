@@ -20,6 +20,25 @@
   <% end %>
 </div>
 
+<h2>Liste des Etudiants</h2>
+<% if @recruitements.any? %>
+  <table class="table table-bordered table-condensed">
+    <tr>
+      <td>Name</th>
+      <td>Depuis le</th>
+    </tr>
+    
+    <% @recruitements.each do |recruitment| %>
+      <tr>
+        <td><%= recruitment.student.user.name %></td>
+        <td><%= recruitment.start_date.strftime("%d-%m-%Y à %Hh%M") %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <h4>Aucun étudiant assigné</h4>
+<% end %>
+
 <div class="form-actions">
   <%= link_to '← Retour', recruiters_path, :class => "btn btn-primary" %>
   <% if current_user.is_admin %>
