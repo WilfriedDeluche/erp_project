@@ -1,5 +1,9 @@
 ErpProject::Application.routes.draw do
   
+  resources :contracts
+
+  resources :companies
+
   devise_for :users
   
   root :to => "PublicPages#school"
@@ -29,5 +33,4 @@ ErpProject::Application.routes.draw do
   end
   
   resources :companies
-  resources :contracts
 end
