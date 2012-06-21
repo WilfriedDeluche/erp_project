@@ -1,0 +1,18 @@
+<%= form_for @class, :url => form_url(@class) do |f| %>
+  <%= error_messages!(@class) %>
+  
+  <div>
+    <%= f.label :training_id, "Formation" %>
+    <%= f.collection_select :training_id, @trainings, :id, :short_name, { :prompt => "Sélectionnez" } %>
+  </div>
+  
+  <div>
+    <%= f.label :year, "Année" %>
+    <%= f.number_field :year %>
+  </div>
+  
+  <div class="form-actions">
+    <%= link_to '← Retour', classes_path, :class => "btn btn-primary" %>
+    <%= f.submit submit_text(@class), :class => "btn btn-primary" %>
+  </div>
+<% end %>

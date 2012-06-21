@@ -31,4 +31,7 @@ ErpProject::Application.routes.draw do
   resources :companies
   
   resources :trainings
+  
+  resources :classes, :controller => "klasses"
+
 end

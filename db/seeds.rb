@@ -143,13 +143,15 @@ Student.all.each do |student|
 end
 
 puts "..."
-puts "SETTING UP TRAININGS"
+puts "SETTING UP TRAININGS & CLASSES"
 puts "..."
 if trainings.any?
   trainings.each do |name, section|
     3.times do |n|
       t = Training.create! :name => name, :section => section, :level => n+1
       puts "Formation #{t.name} : #{t.section}#{t.level}"
+      k = Klass.create! :training_id => t.id, :year => 2011
+      puts "Classe created for #{k.training.section}#{k.training.level} : #{k.year}" 
     end
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120621120916) do
+ActiveRecord::Schema.define(:version => 20120621142418) do
 
   create_table "companies", :force => true do |t|
     t.string   "corporate_name"
@@ -33,6 +33,13 @@ ActiveRecord::Schema.define(:version => 20120621120916) do
     t.date     "start_date"
     t.date     "end_date"
     t.string   "kind"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "klasses", :force => true do |t|
+    t.integer  "training_id"
+    t.integer  "year"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

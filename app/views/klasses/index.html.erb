@@ -1,0 +1,45 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Liste des Classes</h1>
+
+<div class="row page-menu-bar">
+  <% if school_user_signed_in? || current_user.is_admin %>
+    <%= link_to 'Nouveau', new_class_path, :class => "btn btn-mini btn-inverse" %>
+  <% end %>
+</div>
+
+<% if @classes.any? %>
+  <table class="table table-bordered table-condensed">
+    <tr>
+      <th>Formation</th>
+      <th>Année</th>
+      <th>Actions</th>
+    </tr>
+
+  <% @classes.each do |c| %>
+    <tr>
+      <td><%= c.training.short_name %></td>
+      <td><%= c.year %></td>
+      <td>
+        <%= link_to class_path(c), :class => "btn btn-mini" do %>
+          <i class="icon-eye-open"></i>
+          <!-- Voir -->
+        <% end %>
+        <% if school_user_signed_in? || current_user.is_admin %>
+          <%= link_to edit_class_path(c), :class => "btn btn-mini" do %>
+            <i class="icon-pencil"></i>
+            <!-- Modifier -->
+          <% end %>
+          <%= link_to class_path(c), confirm: 'Êtes-vous sûr?', method: :delete, :class => "btn btn-mini" do %>
+            <i class=" icon-trash"></i>
+            <!-- Supprimer -->
+          <% end %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+
+<% else %>
+  <h2>Aucune classe</h2>
+<% end %>

@@ -1,0 +1,15 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Classe</h1>
+
+<div class="well">
+  <strong>Formation: </strong><%= @class.training.short_name %><br />
+  <strong>Année: </strong><%=@class.year %><br />
+</div>
+
+<div class="form-actions">
+  <%= link_to '← Retour', classes_path, :class => "btn btn-primary" %>
+  <% if school_user_signed_in? || current_user.is_admin %>
+    <%= link_to 'Editer', edit_class_path(@class), :class => "btn btn-primary" %>
+  <% end %>
+</div>
