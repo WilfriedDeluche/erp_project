@@ -7,7 +7,7 @@
   <strong>Description: </strong><br /><%= @subject.description %><br />
 </div>
 
-<% unless school_user_signed_in? || current_user.is_admin %>
+<% if school_user_signed_in? || current_user.is_admin %>
   <div class="well">
     <% if @teachers.any? %>
       <h3 style="margin-bottom: 10px;">Professeurs enseignant cette matière</h3>

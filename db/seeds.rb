@@ -149,10 +149,11 @@ puts "..."
 teachers = Teacher.all
 nb_teachers = teachers.size
 subjects.each do |subject|
-  s = Subject.create! :name => subject, :description => lorem
+  teachers_list = {}
   rand(0..5).times do
-    s.teachers << teachers[rand(0..nb_teachers-1)]
+    teachers_list[teachers[rand(0..nb_teachers-1)].id.to_s] = "1"
   end
+  s = Subject.create! :name => subject, :description => lorem, :teachers_list => teachers_list
   puts subject
 end
 puts "#{subjects.size} SUBJECTS"

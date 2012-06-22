@@ -13,6 +13,6 @@ class Subject < ActiveRecord::Base
   def update_teachers
     return if teachers_list.nil?
     teachers.delete_all
-    teachers_list.keys.collect{ |id| Teacher.find_by_id(id) }.each { |t| self.teachers << t }
+    teachers_list.keys.uniq.collect{ |id| Teacher.find_by_id(id) }.each { |t| self.teachers << t }
   end
 end
