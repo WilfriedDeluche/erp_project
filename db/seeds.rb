@@ -174,7 +174,7 @@ Student.all.each do |student|
 end
 
 puts "..."
-puts "SETTING UP DEFAULT SUBJECTS"
+puts "SETTING UP DEFAULT SUBJECTS - ASSIGNING THEM TO TEACHERS AND CLASSES"
 puts "..."
 teachers = Teacher.all
 nb_teachers = teachers.size
@@ -183,7 +183,11 @@ subjects.each do |subject|
   rand(0..5).times do
     teachers_list[teachers[rand(0..nb_teachers-1)].id.to_s] = "1"
   end
-  s = Subject.create! :name => subject, :description => lorem, :teachers_list => teachers_list
+  classes_list = {}
+  rand(1..4).times do
+    classes_list[classes[rand(0..nb_cl-1)].id.to_s] = "1"
+  end
+  s = Subject.create! :name => subject, :description => lorem, :teachers_list => teachers_list, :classes_list => classes_list
   puts subject
 end
 puts "#{subjects.size} SUBJECTS"
