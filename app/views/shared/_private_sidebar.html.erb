@@ -75,6 +75,15 @@
     </li>
   <% end %>
   
+  <% if student_signed_in? %>
+    <li>
+      <%= link_to class_path(@current_class) do %>
+        <i class="icon-list-alt"></i>
+        Ma Classe
+      <% end %>
+    </li>
+  <% end %>
+    
   <li>
     <%= link_to classes_path do %>
       <i class="icon-list-alt"></i>

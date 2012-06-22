@@ -10,6 +10,8 @@ class SubjectsController < ApplicationController
   def index
     if teacher_signed_in?
       @subjects = current_user.rolable.subjects # teachers can only see the subjects they're assigned to
+    elsif student_signed_in?
+      @subjects = @current_class.subjects # students can only see the subjects their current class is registered to
     else
       @subjects = Subject.all
     end
