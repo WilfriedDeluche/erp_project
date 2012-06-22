@@ -9,12 +9,17 @@ Student.destroy_all
 Company.destroy_all
 Recruitment.destroy_all
 Contract.destroy_all
+Subject.destroy_all
 
 first_names = %w(AURELIE LAETITA ALAIN NICOLAS FELICIA IGNACIO ELODIE ARTHUR LAURENCE MARIE PATRICIA AURELIE MATHIEU LINDA LISA JENNIFER JEAN FRANCOIS MICHAEL WILLIAM DAVID RICHARD CHARLES THOMAS)
 last_names = %w(MARTIN DUPONT JANVIER BERGER DUJARDIN LEMAITRE VIARD COTILLARD MOUNIER HERAUT BOUYER SARDIN RIVERIN GOMES FERRERA VIGNAUT WAGNER ZEPETA AGUILA BRIANCON DUCHOMMIER)
 companies_name = ["APPLIDGET", "CAPGEMINI", "LOREAL", "SUBWAY", "AIRLIQUIDE", "MICROSOFT", "APPLE", "GOOGLE", "PRESTANCE", "YSANCE"]
 contracts = %w(contrat_pro stage apprentissage)
+subjects = ["C++ Niveau 1", "C++ Niveau 2", "ASP.NET Niveau 1", "ASP.NET Niveau 2", "Ruby", "Ruby on Rails", "UML", "Merise", "JAVA",
+            "Management de Projet", "Méthode Agile", "JBOSS", "JEE", "MongoDB", "Design Patterns Niveau 1", "Design Patterns Niveau 2",
+            "C# Niveau 1", "C# Niveau 2", "PHP", "Javascript"]
 
+lorem = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
 puts "#### ALL DATAS FROM CURRENT DATABASE DESTROYED ####"
 
@@ -137,3 +142,13 @@ Student.all.each do |student|
     puts contract.student.user.first_name << " " << contract.student.user.last_name << " en contrat avec " << contract.company.corporate_name
   end
 end
+
+puts "..."
+puts "SETTING UP DEFAULT SUBJECTS"
+puts "..."
+subjects.each do |subject|
+  Subject.create! :name => subject, :description => lorem
+  puts subject
+end
+puts "#{subjects.size} SUBJECTS"
+

@@ -29,4 +29,6 @@ ErpProject::Application.routes.draw do
   end
   
   resources :companies
+  
+  resources :subjects
 end

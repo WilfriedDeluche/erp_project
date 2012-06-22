@@ -1,0 +1,16 @@
+<%= form_for(@subject) do |f| %>
+  <%= error_messages!(@subject) %>
+
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :description %>
+    <%= f.text_area :description, :cols => 40, :rows => 10 %>
+  </div>
+  <div class="form-actions">
+    <%= link_to '← Retour', @subject, :class => "btn btn-primary" %>
+    <%= f.submit submit_text(@subject), :class => "btn btn-primary" %>
+  </div>
+<% end %>

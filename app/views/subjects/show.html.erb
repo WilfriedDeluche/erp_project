@@ -1,0 +1,15 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Matière</h1>
+
+<div class="well">
+  <strong>Nom: </strong><%= @subject.name %><br />
+  <strong>Description: </strong><br /><%= @subject.description %><br />
+</div>
+
+<div class="form-actions">
+  <%= link_to '← Retour', subjects_path, :class => "btn btn-primary" %>
+  <% if school_user_signed_in? || current_user.is_admin %>
+    <%= link_to 'Editer', edit_subject_path(@subject), :class => "btn btn-primary" %>
+  <% end %>
+</div>

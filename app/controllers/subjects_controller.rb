@@ -1,0 +1,85 @@
+# encoding: utf-8
+class SubjectsController < ApplicationController
+  before_filter :authenticate_user!
+  before_filter :school_users_only, :except => [:show, :index]
+  before_filter :find_subject, :only => [:show, :edit, :update, :destroy]
+  respond_to :html, :json
+  
+  # GET /subjects
+  # GET /subjects.json
+  def index
+    @subjects = Subject.all
+    respond_with @subjects
+  end
+
+  # GET /subjects/1
+  # GET /subjects/1.json
+  def show
+    respond_with @subject
+  end
+
+  # GET /subjects/new
+  # GET /subjects/new.json
+  def new
+    @subject = Subject.new
+    respond_with @subject
+  end
+
+  # GET /subjects/1/edit
+  def edit
+    respond_with @subject
+  end
+
+  # POST /subjects
+  # POST /subjects.json
+  def create
+    @subject = Subject.new(params[:subject])
+
+    respond_to do |format|
+      if @subject.save
+        format.html { redirect_to @subject, notice: 'La matière a bien été créée.' }
+        format.json { render json: @subject, status: :created, location: @subject }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @subject.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /subjects/1
+  # PUT /subjects/1.json
+  def update
+    respond_to do |format|
+      if @subject.update_attributes(params[:subject])
+        format.html { redirect_to @subject, notice: 'La matière a bien été mise à jour.' }
+        format.json { head :ok }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @subject.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /subjects/1
+  # DELETE /subjects/1.json
+  def destroy
+    @subject.destroy
+
+    respond_to do |format|
+      format.html { redirect_to subjects_url }
+      format.json { head :ok }
+    end
+  end
+  
+  private
+  def find_subject
+    begin
+      @subject = Subject.find(params[:id])
+    rescue
+      respond_to do |format|
+        format.html { redirect_to subjects_path, alert: "La matière n'existe pas." }
+        format.json { render head: :not_found }
+      end
+    end
+  end
+end
