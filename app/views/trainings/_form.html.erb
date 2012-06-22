@@ -1,0 +1,23 @@
+<%= form_for(@training) do |f| %>
+  <%= error_messages!(@training) %>
+  
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  
+  <div>
+    <%= f.label :section %>
+    <%= f.text_field :section %>
+  </div>
+  
+  <div>
+    <%= f.label :level %>
+    <%= f.select :level, (1..3).to_a, { :prompt => "Sélectionnez le niveau" }  %>
+  </div>
+  
+  <div class="form-actions">
+    <%= link_to '← Retour', trainings_path, :class => "btn btn-primary" %>
+    <%= f.submit submit_text(@training), :class => "btn btn-primary" %>
+  </div>
+<% end %>
