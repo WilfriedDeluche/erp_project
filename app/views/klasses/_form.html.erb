@@ -8,7 +8,7 @@
   
   <div>
     <%= f.label :year, "Année" %>
-    <%= f.number_field :year %>
+    <%= f.select :year, (2009..Time.now.year+10).to_a, { :prompt => "Sélectionnez l'année" } %>
   </div>
   
   <div class="form-actions">

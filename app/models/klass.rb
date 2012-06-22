@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Klass < ActiveRecord::Base
     
   belongs_to :training
