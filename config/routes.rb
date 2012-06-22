@@ -20,6 +20,7 @@ ErpProject::Application.routes.draw do
   end
   resources :students do
     put "reinvite_user", :on => :member
+    get "new_class", :on => :member
     
     resources :recruitments, :only => [:index, :new, :create]
     resources :contracts
@@ -29,4 +30,11 @@ ErpProject::Application.routes.draw do
   end
   
   resources :companies
+  
+  resources :trainings
+  
+  resources :classes, :controller => "klasses" do
+    resources :students, :only => [:show]
+  end
+
 end

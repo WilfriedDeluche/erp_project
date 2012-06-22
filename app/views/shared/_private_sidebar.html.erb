@@ -65,4 +65,20 @@
       <% end %>
     </li>
   <% end %>
+  
+  <% if school_user_signed_in? %>
+    <li>
+      <%= link_to trainings_path do %>
+        <i class="icon-list-alt"></i>
+        Formations
+      <% end %>
+    </li>
+  <% end %>
+  
+  <li>
+    <%= link_to classes_path do %>
+      <i class="icon-list-alt"></i>
+      Classes
+    <% end %>
+  </li>
 <% end %>
