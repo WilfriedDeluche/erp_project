@@ -18,6 +18,17 @@
       <h3>Aucune professeur n'enseigne cette matière</h3>
     <% end %>
   </div>
+  
+  <div class="well">
+    <% if @classes.any? %>
+      <h3 style="margin-bottom: 10px;">Classes inscrites dans cette matière</h3>
+      <% @classes.each do |k| %>
+        <%= k.name %><br />
+      <% end %>
+    <% else %>
+      <h3>Aucune classe n'est inscrite dans cette matière</h3>
+    <% end %>
+  </div>
 <% end %>
 
 <div class="form-actions">

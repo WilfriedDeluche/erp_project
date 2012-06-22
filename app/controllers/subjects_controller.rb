@@ -20,6 +20,7 @@ class SubjectsController < ApplicationController
   # GET /subjects/1.json
   def show
     @teachers = @subject.teachers
+    @classes = @subject.klasses
     respond_with @subject
   end
 
@@ -28,12 +29,14 @@ class SubjectsController < ApplicationController
   def new
     @subject = Subject.new
     get_all_teachers
+    get_all_classes
     respond_with @subject
   end
 
   # GET /subjects/1/edit
   def edit
     get_all_teachers
+    get_all_classes
     respond_with @subject
   end
 
@@ -49,6 +52,7 @@ class SubjectsController < ApplicationController
       else
         format.html do
           get_all_teachers
+          get_all_classes
           render action: "new"
         end
         format.json { render json: @subject.errors, status: :unprocessable_entity }
@@ -59,6 +63,8 @@ class SubjectsController < ApplicationController
   # PUT /subjects/1
   # PUT /subjects/1.json
   def update
+    params[:subject][:teachers_list] ||= {}
+    params[:subject][:classes_list] ||= {}
     respond_to do |format|
       if @subject.update_attributes(params[:subject])
         format.html { redirect_to @subject, notice: 'La matière a bien été mise à jour.' }
@@ -66,6 +72,7 @@ class SubjectsController < ApplicationController
       else
         format.html do
           get_all_teachers
+          get_all_classes
           render action: "edit"
         end
         format.json { render json: @subject.errors, status: :unprocessable_entity }
@@ -98,5 +105,9 @@ class SubjectsController < ApplicationController
   
   def get_all_teachers
     @teachers = Teacher.all
+  end
+  
+  def get_all_classes
+    @classes = Klass.all
   end
 end
