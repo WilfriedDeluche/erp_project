@@ -20,6 +20,17 @@
   <% end %>
 </div>
 
+<div class="well">
+  <% if @subjects.any? %>
+    <h3 style="margin-bottom: 10px;">Matières enseignées par ce professeur</h3>
+    <% @subjects.each do |subject| %>
+      <%= subject.name %><br />
+    <% end %>
+  <% else %>
+    <h3>Aucune matière n'est enseignée par ce professeur</h3>
+  <% end %>
+</div>
+
 <div class="form-actions">
   <%= link_to '← Retour', teachers_path, :class => "btn btn-primary" %>
   <%= link_to 'Editer', edit_teacher_path(@teacher), :class => "btn btn-primary" %>

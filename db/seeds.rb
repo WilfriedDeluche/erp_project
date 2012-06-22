@@ -146,8 +146,13 @@ end
 puts "..."
 puts "SETTING UP DEFAULT SUBJECTS"
 puts "..."
+teachers = Teacher.all
+nb_teachers = teachers.size
 subjects.each do |subject|
-  Subject.create! :name => subject, :description => lorem
+  s = Subject.create! :name => subject, :description => lorem
+  rand(0..5).times do
+    s.teachers << teachers[rand(0..nb_teachers-1)]
+  end
   puts subject
 end
 puts "#{subjects.size} SUBJECTS"
