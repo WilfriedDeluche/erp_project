@@ -22,11 +22,13 @@ class SubjectsController < ApplicationController
   # GET /subjects/new.json
   def new
     @subject = Subject.new
+    get_all_teachers
     respond_with @subject
   end
 
   # GET /subjects/1/edit
   def edit
+    get_all_teachers
     respond_with @subject
   end
 
@@ -36,11 +38,15 @@ class SubjectsController < ApplicationController
     @subject = Subject.new(params[:subject])
 
     respond_to do |format|
+      debugger
       if @subject.save
         format.html { redirect_to @subject, notice: 'La matière a bien été créée.' }
         format.json { render json: @subject, status: :created, location: @subject }
       else
-        format.html { render action: "new" }
+        format.html do
+          get_all_teachers
+          render action: "new"
+        end
         format.json { render json: @subject.errors, status: :unprocessable_entity }
       end
     end
@@ -54,7 +60,10 @@ class SubjectsController < ApplicationController
         format.html { redirect_to @subject, notice: 'La matière a bien été mise à jour.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html do
+          get_all_teachers
+          render action: "edit"
+        end
         format.json { render json: @subject.errors, status: :unprocessable_entity }
       end
     end
@@ -81,5 +90,9 @@ class SubjectsController < ApplicationController
         format.json { render head: :not_found }
       end
     end
+  end
+  
+  def get_all_teachers
+    @teachers = Teacher.all
   end
 end
