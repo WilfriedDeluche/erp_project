@@ -1,0 +1,37 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Étudiant <small><%= @student.user.name %></small></h1>
+
+<h2>Historique classes</h2>
+<% if @student_classes.any? %>
+  <table class="table table-bordered table-condensed">
+    <tr>
+      <th>Formation</th>
+      <th>Année</th>
+    </tr>
+
+  <% @student_classes.each do |cl| %>
+    <tr>
+      <td><%= cl.training.short_name %></td>
+      <td><%= cl.year %></td>
+    </tr>
+  <% end %>
+  </table>
+
+<% else %>
+  <h3>Cet étudiant n'a jamais été assigné à une classe</h3>
+<% end %>
+
+<h2>Assignement à un nouvelle classe</h2>
+<%= form_for @student, :url => student_path(@student) do |f| %>
+  <%= error_messages!(@student) %>
+  
+    <div>
+      <%= f.collection_select :klass_ids, @classes, :id, :name, { :prompt => "Sélectionnez" } %>
+    </div>
+  
+  <div class="form-actions">
+    <%= link_to '← Retour', student_path(@student), :class => "btn btn-primary" %>
+    <%= f.submit :class => "btn btn-primary" %>
+  </div>
+<% end %>
