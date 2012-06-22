@@ -8,7 +8,11 @@ class SubjectsController < ApplicationController
   # GET /subjects
   # GET /subjects.json
   def index
-    @subjects = Subject.all
+    if teacher_signed_in?
+      @subjects = current_user.rolable.subjects # teachers can only see the subjects they're assigned to
+    else
+      @subjects = Subject.all
+    end
     respond_with @subjects
   end
 
