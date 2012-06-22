@@ -7,6 +7,17 @@
   <strong>Description: </strong><br /><%= @subject.description %><br />
 </div>
 
+<div class="well">
+  <% if @teachers.any? %>
+    <h3 style="margin-bottom: 10px;">Professeurs enseignant cette matière</h3>
+    <% @teachers.each do |t| %>
+      <%= t.user.name %><br />
+    <% end %>
+  <% else %>
+    <h3>Aucune professeur n'enseigne cette matière</h3>
+  <% end %>
+</div>
+
 <div class="form-actions">
   <%= link_to '← Retour', subjects_path, :class => "btn btn-primary" %>
   <% if school_user_signed_in? || current_user.is_admin %>

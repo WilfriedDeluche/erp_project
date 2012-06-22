@@ -15,6 +15,7 @@ class SubjectsController < ApplicationController
   # GET /subjects/1
   # GET /subjects/1.json
   def show
+    @teachers = @subject.teachers
     respond_with @subject
   end
 
@@ -38,7 +39,6 @@ class SubjectsController < ApplicationController
     @subject = Subject.new(params[:subject])
 
     respond_to do |format|
-      debugger
       if @subject.save
         format.html { redirect_to @subject, notice: 'La matière a bien été créée.' }
         format.json { render json: @subject, status: :created, location: @subject }
