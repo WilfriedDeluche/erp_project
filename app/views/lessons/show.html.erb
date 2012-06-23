@@ -1,0 +1,12 @@
+<%= render "shared/private_sidebar" %>
+<h1 class="page-header"><%= @lesson.subject.name %></h1>
+<div class="well">
+  <b>Professeur : </b><%= @lesson.teacher.name %><br />
+  <b>Classe : </b><%= @lesson.klass.name %><br />
+  <b>Début du cour : </b><%= @lesson.start_date %><br />
+  <b>Fin du cour : </b><%= @lesson.end_date %>
+</div>
+<div class="form-actions">
+  <%= link_to '← Retour', lessons_path, :class => "btn btn-primary" %>
+  <%= link_to "Edit", edit_lesson_path, :class => "btn btn-primary" %>
+</div>

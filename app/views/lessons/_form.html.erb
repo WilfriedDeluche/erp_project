@@ -1,0 +1,35 @@
+<%= form_for(@lesson) do |f| %>
+  <div>
+    <%= f.label :klass_id, "Matière" %>
+    <%= f.collection_select :subject_id, @subjects, :id, :name, { :prompt => "Sélectionnez" } %>
+  </div>
+  
+  <div>
+    <%= f.label :teacher_id, "Professeur" %>
+    <%= f.collection_select :teacher_id, @teachers, :id, :name, { :prompt => "Sélectionnez" } %>
+  </div>
+  
+  <div>
+    <%= f.label :klass_id, "Classe" %>
+    <%= f.collection_select :klass_id, @classes, :id, :name, { :prompt => "Sélectionnez" } %>
+  </div>
+  
+  <div>
+    <%= f.label :start_date %>
+    <%= f.datetime_select :start_date %>
+  </div>
+  
+  <div>
+    <%= f.label :end_date %>
+    <%= f.datetime_select :end_date %>
+  </div>
+  
+  <div>
+    <%= f.label :is_test %>
+    <%= f.check_box :is_test %>
+  </div>
+  
+  <div class="form-actions">
+    <%= f.submit submit_text(@lesson), :class => "btn btn-primary" %>
+  </div>
+<% end %>

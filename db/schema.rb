@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120623120912) do
+ActiveRecord::Schema.define(:version => 20120623142644) do
+
+  create_table "articles", :force => true do |t|
+    t.string   "name"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "companies", :force => true do |t|
     t.string   "corporate_name"
@@ -65,12 +72,18 @@ ActiveRecord::Schema.define(:version => 20120623120912) do
   create_table "lessons", :force => true do |t|
     t.integer  "subject_id"
     t.integer  "teacher_id"
-    t.integer  "klasse_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.boolean  "is_test"
+    t.boolean  "is_test",    :default => false
+    t.integer  "klass_id"
+  end
+
+  create_table "people", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "recruiters", :force => true do |t|
@@ -145,13 +158,13 @@ ActiveRecord::Schema.define(:version => 20120623120912) do
     t.datetime "updated_at"
     t.integer  "rolable_id"
     t.string   "rolable_type"
+    t.boolean  "is_admin",                             :default => false
     t.string   "invitation_token",       :limit => 60
     t.datetime "invitation_sent_at"
     t.datetime "invitation_accepted_at"
     t.integer  "invitation_limit"
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
-    t.boolean  "is_admin",                             :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
