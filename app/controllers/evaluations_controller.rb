@@ -1,26 +1,30 @@
 # encoding: utf-8
 class EvaluationsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :school_users_only, :except => [:show, :index]
+  before_filter :teachers_or_school_users_only, :except => [:index]
+  before_filter :find_class
   before_filter :find_evaluation, :only => [:show, :edit, :update, :destroy]
   respond_to :html, :json
+  respond_to :js, :only => [:index]
   
   # GET /evaluations
   # GET /evaluations.json
   def index
-    @evaluations = Evaluation.all
-    respond_with @evaluations
-  end
-
-  # GET /evaluations/1
-  # GET /evaluations/1.json
-  def show
-    respond_with @evaluation
+    if @class
+      @students = @class.students
+      get_all_subjects
+      @selected_subject = (params[:subject_id]) ? params[:subject_id] : @subjects.first
+    end
+    respond_with @subject
   end
 
   # GET /evaluations/new
   # GET /evaluations/new.json
   def new
+    if @class
+      @students = @class.students
+      get_all_subjects
+    end
     @evaluation = Evaluation.new
     respond_with @evaluation
   end
@@ -33,16 +37,22 @@ class EvaluationsController < ApplicationController
   # POST /evaluations
   # POST /evaluations.json
   def create
-    @evaluation = Evaluation.new(params[:evaluation])
-
-    respond_to do |format|
-      if @evaluation.save
-        format.html { redirect_to @evaluation, notice: "L'évaluation a été créée avec succès." }
-        format.json { render json: @evaluation, status: :created, location: @evaluation }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @evaluation.errors, status: :unprocessable_entity }
+    @students = params[:evaluation][:student]
+    @subject_id = params[:evaluation][:subject_id]
+    @scale = params[:evaluation][:scale]
+    
+    @students.each do |s| 
+      unless s.second[:grade].empty?
+        Evaluation.create(:student_id => s.first, 
+          :subject_id => @subject_id, 
+          :scale => @scale, 
+          :grade => s.second[:grade])
       end
+    end
+    
+    respond_to do |format|
+      format.html { redirect_to class_evaluations_path(@class), notice: "L'évaluation a été créée avec succès." }
+      format.json { render json: @evaluation, status: :created, location: @evaluation }
     end
   end
 
@@ -71,6 +81,7 @@ class EvaluationsController < ApplicationController
     end
   end
   
+  private
   def find_evaluation
     begin
       @evaluation = Evaluation.find(params[:id])
@@ -79,6 +90,26 @@ class EvaluationsController < ApplicationController
         format.html { redirect_to evaluations_path, alert: "L'évaluation n'existe pas." }
         format.json { render head: :not_found }
       end
+    end
+  end
+  
+  def find_class
+    return unless params[:class_id]
+    begin
+      @class = Klass.find(params[:class_id])
+    rescue
+      respond_to do |format|
+        format.html { redirect_to classes_path, alert: "Cette classe n'existe pas." }
+        format.json { render head: :not_found }
+      end
+    end
+  end
+  
+  def get_all_subjects
+    if teacher_signed_in?
+      @subjects = @class.subjects.select { |s| s if current_user.rolable.subjects.include?(s) }
+    else
+      @subjects = @class.subjects
     end
   end
 end

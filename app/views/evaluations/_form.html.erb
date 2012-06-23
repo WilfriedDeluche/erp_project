@@ -1,29 +1,32 @@
-<%= form_for(@evaluation) do |f| %>
-  <% if @evaluation.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@evaluation.errors.count, "error") %> prohibited this evaluation from being saved:</h2>
+<%= form_for [@class,@evaluation], :url => class_evaluations_path(@class)  do |f| %>
 
-      <ul>
-      <% @evaluation.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+  <%= f.label :subject_id, "Matière" %>
+  <%= collection_select(:evaluation, :subject_id, @subjects, :id, :name) %>
+  
+  <%= f.label :scale, "Barème" %>
+  <%= f.select :scale,  options_for_select((5..100).to_a, :selected => "20") %>
+  
+  <table class="table table-bordered table-condensed">
+    <tr>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Note</th>
+    </tr>
+
+  <% @students.each do |student| %>
+    <tr>
+      <td>
+        <span class="badge badge-status <%= account_status(student.user) %>"></span>
+        <%= student.user.last_name.upcase %>
+      </td>
+      <td><%= student.user.first_name.capitalize %></td>
+      <td><input name="evaluation[student][<%= student.id %>][grade]" value="" type="text" class="span1" /></td>
+    </tr>
   <% end %>
-
-  <div class="field">
-    <%= f.label :student_id %><br />
-    <%= f.number_field :student_id %>
-  </div>
-  <div class="field">
-    <%= f.label :subject_id %><br />
-    <%= f.number_field :subject_id %>
-  </div>
-  <div class="field">
-    <%= f.label :grade %><br />
-    <%= f.text_field :grade %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  </table>
+  
+  <div class="form-actions">
+    <%= link_to '← Retour', class_path(@class), :class => "btn btn-primary" %>
+    <%= f.submit "Enregistrer les Notes", :confirm => "Êtes-vous sûr d'avoir bien saisi les données", :class => "btn btn-primary" %>
   </div>
 <% end %>

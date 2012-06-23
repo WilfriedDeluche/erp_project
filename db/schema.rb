@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(:version => 20120623121528) do
     t.integer  "student_id"
     t.integer  "subject_id"
     t.float    "grade"
-    t.float    "scale"
+    t.integer  "scale"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

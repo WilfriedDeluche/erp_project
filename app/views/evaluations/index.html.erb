@@ -1,27 +1,22 @@
-<h1>Listing evaluations</h1>
+<%= render "shared/private_sidebar" %>
 
-<table>
-  <tr>
-    <th>Student</th>
-    <th>Subject</th>
-    <th>Grade</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<h1 class="page-header">
+  Liste des Évaluations
+  <% if @class %>
+    <small><%= @class.training.short_name %> - <%=@class.year %></small>
+  <% end %>
+</h1>
 
-<% @evaluations.each do |evaluation| %>
-  <tr>
-    <td><%= evaluation.student_id %></td>
-    <td><%= evaluation.subject_id %></td>
-    <td><%= evaluation.grade %></td>
-    <td><%= link_to 'Show', evaluation %></td>
-    <td><%= link_to 'Edit', edit_evaluation_path(evaluation) %></td>
-    <td><%= link_to 'Destroy', evaluation, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+<div class="row page-menu-bar">
+  <% if school_user_signed_in? || teacher_signed_in? || current_user.is_admin %>
+    <%= link_to 'Nouvelle Évaluation', new_class_evaluation_path(@class), :class => "btn btn-mini btn-inverse" %>
+  <% end %>
+</div>
+
+<%= form_tag class_evaluations_path(@class), :method => 'get', :id => 'search_form', :class => 'form-search' do %>
+  <%= select_tag("subject_id", options_from_collection_for_select(@subjects, "id", "name")) %>
 <% end %>
-</table>
 
-<br />
-
-<%= link_to 'New Evaluation', new_evaluation_path %>
+<div id="liveTable">
+  <%= render :partial => "student_list",  :locals => { :subject => @selected_subject } %>
+</div>

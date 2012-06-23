@@ -4,7 +4,7 @@ class CreateEvaluations < ActiveRecord::Migration
       t.integer :student_id
       t.integer :subject_id
       t.float :grade
-      t.float :scale
+      t.integer :scale
 
       t.timestamps
     end

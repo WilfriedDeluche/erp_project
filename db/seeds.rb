@@ -26,6 +26,8 @@ trainings = { "Système d'Ingénierie et Génie Logiciel" => "SIGL",
               "Temps Réel et Systèmes Embarqués" => "TRSE", 
               "Systèmes, Réseaux et Télécommunication" => "SRT" }
 
+grades = %w(0 1 2 3 4 5 6 6.5 7 7.5 8 8.5 9 9.5 10 10.5 11 11.5 12 12.5 13 13.5 14 14.5 15 15.5 16 16.5 17 17.5 18 18.5 19 19.5 20)
+
 lorem = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
 puts "#### ALL DATAS FROM CURRENT DATABASE DESTROYED ####"
@@ -192,3 +194,13 @@ subjects.each do |subject|
 end
 puts "#{subjects.size} SUBJECTS"
 
+puts "..."
+puts "SETTING DEFAULT EVALUATION TO STUDENTS"
+
+classes.each do |klass|
+  klass.subjects.each do |subject|
+    klass.students.each do |student|
+      Evaluation.create! :student_id => student.id, :subject_id => subject.id, :scale => 20, :grade => grades.sample
+    end
+  end
+end

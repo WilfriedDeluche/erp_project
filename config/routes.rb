@@ -34,11 +34,13 @@ ErpProject::Application.routes.draw do
   resources :trainings
   
   resources :classes, :controller => "klasses" do
-    resources :students, :only => [:show]
+    resources :students, :only => [:show] do
+      resources :evaluations, :only => [:index, :edit, :update, :destroy]
+    end
+    resources :evaluations, :except => [:show]
   end
 
   resources :subjects do
-    resources :evaluations
   end
   
   resources :evaluations
