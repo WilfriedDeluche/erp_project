@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  before_filter :find_current_class
   
   helper_method :teacher_signed_in?, :school_user_signed_in?, :student_signed_in?, :recruiter_signed_in?
   
@@ -81,5 +82,10 @@ class ApplicationController < ActionController::Base
       format.html { redirect_to url_for(:controller => model_name.to_s.underscore.pluralize, :action => 'index'), notice: notice , alert: "Un probleme est survenu lors de l'envoi de l'invitation. Contactez un administrateur." }
       format.json { render status: :internal_error }          
     end
+  end
+  
+  def find_current_class
+    return unless student_signed_in?
+    @current_class = current_user.rolable.klasses.order("year DESC").first
   end
 end
