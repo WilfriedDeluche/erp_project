@@ -1,3 +1,22 @@
 <%= render "shared/private_sidebar" %>
 <h1 class="page-header">Emploi du temps</h1>
 <%= link_to 'Ajouter', new_lesson_path, :class => "btn btn-mini btn-inverse" %>
+
+<div id="calendar">
+  <h2 id="month">
+    <%= link_to "<", :month => (@date.beginning_of_month-1) %>
+    <%=h @date.strftime("%B %Y")%>
+    <%= link_to ">", :month => (@date.end_of_month+1)%>
+  </h2>
+  <%= calendar_for @lessons, :year => @date.year, :month => @date.month do |calendar| %>
+    <%= calendar.head("Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche")%>
+    <%= calendar.day(:day_method => :start_date) do |date, lessons| %>
+      <%= date.day %>
+      <ul>
+        <% for lesson in lessons %>
+          <li><%= link_to h(lesson.subject.name), lesson %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+</div>

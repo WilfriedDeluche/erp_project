@@ -5,6 +5,7 @@ class LessonsController < ApplicationController
   
   def index
     @lessons = Lesson.all
+    @date = params[:month] ? Date.parse(params[:month]) : Date.today
   end
   
   def show
@@ -21,7 +22,7 @@ class LessonsController < ApplicationController
      @lesson = Lesson.new(params[:lesson])
       respond_to do |format|
         if @lesson.save
-          format.html { redirect_to lesson_path(@lesson), notice: 'Le cour a bien été créé' }
+          format.html { redirect_to lessons_path(@lesson), notice: 'Le cour a bien été créé' }
           format.json { render json: @lesson, status: :created, location: @lesson }
         else
           format.html do
