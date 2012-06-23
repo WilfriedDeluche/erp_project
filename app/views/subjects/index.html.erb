@@ -19,7 +19,7 @@
   <% @subjects.each do |subject| %>
     <tr>
       <td class="span3"><strong><%= subject.name %></strong></td>
-      <td><%= truncate(subject.description, :length => 75, :omission => '...') %></td>
+      <td class="span5"><%= truncate(subject.description, :length => 75, :omission => '...') %></td>
       <td>
         <%= link_to subject, :class => "btn btn-mini" do %>
           <i class="icon-eye-open"></i>
