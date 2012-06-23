@@ -38,5 +38,6 @@ ErpProject::Application.routes.draw do
   end
 
   resources :subjects
+  resources :lessons
 
 end
