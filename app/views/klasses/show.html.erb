@@ -31,6 +31,17 @@
           <!-- Voir -->
         <% end %>
         <% if school_user_signed_in? || current_user.is_admin %>
+          <% if @class %>
+            <%= link_to class_student_evaluations_path(@class, student), :class => "btn btn-mini" do %>
+              <i class=" icon-th"></i>
+              <!-- Voir les Notes -->
+            <% end %>
+          <% else %>
+            <%= link_to student_evaluations_path(student), :class => "btn btn-mini" do %>
+              <i class=" icon-th"></i>
+              <!-- Voir les Notes -->
+            <% end %>
+          <% end %>
           <%= link_to edit_student_path(student), :class => "btn btn-mini" do %>
             <i class="icon-pencil"></i>
             <!-- Modifier -->

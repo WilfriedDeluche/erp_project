@@ -3,6 +3,7 @@ class EvaluationsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :teachers_or_school_users_only, :except => [:index]
   before_filter :find_class
+  before_filter :find_student
   before_filter :find_evaluation, :only => [:show, :edit, :update, :destroy]
   respond_to :html, :json
   respond_to :js, :only => [:index]
@@ -10,12 +11,21 @@ class EvaluationsController < ApplicationController
   # GET /evaluations
   # GET /evaluations.json
   def index
-    if @class
+    if @student
+      unless teacher_signed_in?
+        @evaluations = @student.evaluations.order("subject_id ASC")
+      else
+        @evaluations = @student.evaluations.order("subject_id ASC").select do |e| 
+          e if current_user.rolable.subjects.map { |s| s.id }.include?(e.subject_id)
+        end
+      end
+      respond_with @evaluations
+    elsif @class
       @students = @class.students
       get_all_subjects
       @selected_subject = (params[:subject_id]) ? params[:subject_id] : @subjects.first
+      respond_with @subject
     end
-    respond_with @subject
   end
 
   # GET /evaluations/new
@@ -51,7 +61,7 @@ class EvaluationsController < ApplicationController
     end
     
     respond_to do |format|
-      format.html { redirect_to class_evaluations_path(@class), notice: "L'évaluation a été créée avec succès." }
+      format.html { redirect_to class_evaluations_path(@class), notice: "Les notes ont été ajoutées avec succès." }
       format.json { render json: @evaluation, status: :created, location: @evaluation }
     end
   end
@@ -61,7 +71,7 @@ class EvaluationsController < ApplicationController
   def update
     respond_to do |format|
       if @evaluation.update_attributes(params[:evaluation])
-        format.html { redirect_to @evaluation, notice: "L'évaluation a été mise à jour avec succès." }
+        format.html { redirect_to student_evaluations_path(@student), notice: "La note a été mise à jour avec succès." }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -76,7 +86,7 @@ class EvaluationsController < ApplicationController
     @evaluation.destroy
 
     respond_to do |format|
-      format.html { redirect_to evaluations_url }
+      format.html { redirect_to student_evaluations_path(@student) }
       format.json { head :ok }
     end
   end
@@ -100,6 +110,26 @@ class EvaluationsController < ApplicationController
     rescue
       respond_to do |format|
         format.html { redirect_to classes_path, alert: "Cette classe n'existe pas." }
+        format.json { render head: :not_found }
+      end
+    end
+  end
+  
+  def find_student
+    return unless params[:student_id] || student_signed_in?
+    begin
+      unless @class
+        @student = Student.find(params[:student_id] || current_user.rolable)
+      else
+        @student = @class.students.find(params[:student_id])
+      end
+    rescue
+      respond_to do |format|
+        unless @class
+          format.html { redirect_to students_path, alert: "Cette étudiant n'existe pas." }
+        else
+          format.html { redirect_to class_evaluations_path(@class), alert: "Cette étudiant n'existe pas dans cette classe." }
+        end
         format.json { render head: :not_found }
       end
     end
