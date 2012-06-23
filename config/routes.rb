@@ -37,6 +37,9 @@ ErpProject::Application.routes.draw do
     resources :students, :only => [:show]
   end
 
-  resources :subjects
-
+  resources :subjects do
+    resources :evaluations
+  end
+  
+  resources :evaluations
 end

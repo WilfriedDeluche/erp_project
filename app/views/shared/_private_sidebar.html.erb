@@ -99,4 +99,13 @@
       <% end %>
     </li>
   <% end %>
+  
+  <% if school_user_signed_in? || student_signed_in? || teacher_signed_in? %>
+    <li>
+      <%= link_to evaluations_path do %>
+        <i class="icon-list-alt"></i>
+        Notes
+      <% end %>
+    </li>
+  <% end %>
 <% end %>
