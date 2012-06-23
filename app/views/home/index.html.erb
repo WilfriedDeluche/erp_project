@@ -27,5 +27,13 @@
         <li>Mobile : <%= current_user.rolable.mobile_phone_number %>
       </ul>
     </p>
+    
+    <p>
+      <% unless @current_class.nil? %>
+        Inscrit en classe de <strong><%= @current_class.name %></strong>
+      <% else %>
+        <h4>Vous n'êtes inscrit dans aucune classe</h4>
+      <% end %>
+    </p>
   <% end %>
 </div>

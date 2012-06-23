@@ -1,0 +1,39 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Matière</h1>
+
+<div class="well">
+  <strong>Nom: </strong><%= @subject.name %><br />
+  <strong>Description: </strong><br /><%= @subject.description %><br />
+</div>
+
+<% if school_user_signed_in? || current_user.is_admin %>
+  <div class="well">
+    <% if @teachers.any? %>
+      <h3 style="margin-bottom: 10px;">Professeurs enseignant cette matière</h3>
+      <% @teachers.each do |t| %>
+        <%= t.user.name %><br />
+      <% end %>
+    <% else %>
+      <h3>Aucune professeur n'enseigne cette matière</h3>
+    <% end %>
+  </div>
+  
+  <div class="well">
+    <% if @classes.any? %>
+      <h3 style="margin-bottom: 10px;">Classes inscrites dans cette matière</h3>
+      <% @classes.each do |k| %>
+        <%= k.name %><br />
+      <% end %>
+    <% else %>
+      <h3>Aucune classe n'est inscrite dans cette matière</h3>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="form-actions">
+  <%= link_to '← Retour', subjects_path, :class => "btn btn-primary" %>
+  <% if school_user_signed_in? || current_user.is_admin %>
+    <%= link_to 'Editer', edit_subject_path(@subject), :class => "btn btn-primary" %>
+  <% end %>
+</div>

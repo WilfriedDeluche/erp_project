@@ -14,6 +14,7 @@ class TeachersController < ApplicationController
   # GET /teachers/1
   # GET /teachers/1.json
   def show
+    @subjects = @teacher.subjects
     respond_with @teacher
   end
 
