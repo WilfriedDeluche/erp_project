@@ -55,7 +55,7 @@
 
   <div class="row page-menu-bar">
     <% if school_user_signed_in? || teacher_signed_in? || current_user.is_admin %>
-      <%= link_to 'Nouvelle Évaluation', new_class_evaluation_path(@class), :class => "btn btn-mini btn-inverse" %>
+      <%= link_to 'Ajouter des Notes', new_class_evaluation_path(@class), :class => "btn btn-mini btn-inverse" %>
     <% end %>
   </div>
 
