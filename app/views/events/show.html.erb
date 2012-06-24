@@ -2,7 +2,14 @@
 
 <h1 class="page-header">Événement <small><%= @event.name %></small></h1>
 
-<div class="well">  
+<div class="well">
+  <div class="pull-right">
+    <% unless @user_attends %>
+      <span class="label label-important">Vous ne participez pas à cet événement</span>
+    <% else %>
+      <span class="label label-success">Vous participez à cet événement</span>
+    <% end %>
+  </div>
   <strong>Début: </strong><%= @event.start_date.strftime("%d-%m-%Y à %Hh%M") %><br />
   <strong>Fin: </strong><%= @event.end_date.strftime("%d-%m-%Y à %Hh%M") %><br />
   <strong>Lieu: </strong><%= simple_format(@event.location) %>
@@ -23,9 +30,49 @@
   <% end %>
 </div>
 
+<h2 class="page-header">Liste des Participants</h2>
+
+<% if @attendees.any? %>
+  <% if @attendee %>
+    <%= error_messages!(@attendee) %>
+  <% end %>
+  <table class="table table-bordered table-condensed">
+    <tr>
+      <th>Étudiant</th>
+      <th>Classe</th>
+      <% if @user_owns %>
+        <th>Actions</th>
+      <% end %>
+    </tr>
+
+  <% @attendees.each do |attendee| %>
+    <tr>
+      <td><%= attendee.student.user.name %></td>
+      <td><%= attendee.student.klasses.order("year DESC").first.name %></td>
+      <% if @user_owns %>
+        <td>
+          <%= link_to event_attendee_path(@event, attendee), confirm: 'Êtes-vous sûr?', method: :delete, :class => "btn btn-mini" do %>
+            <i class=" icon-trash"></i>
+            <!-- Supprimer -->
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+  </table>
+
+<% else %>
+  <h3>Cet événement ne compte aucun participant</h3>
+<% end %>
+
 <div class="form-actions">
   <%= link_to '← Retour', events_path, :class => "btn btn-primary" %>
-  <% if @student_admin %>
+  <% if @user_owns %>
     <%= link_to 'Editer', edit_event_path(@event), :class => "btn btn-primary" %>
+  <% end %>
+  <% unless @user_attends %>
+    <%= link_to "Participer à cet événement", attend_event_path(@event), :method => "put", :class => "btn" %>
+  <% else %>
+    <%= link_to "Ne plus participer à cet événement", unattend_event_path(@event), :method => "put", :class => "btn" %>
   <% end %>
 </div>

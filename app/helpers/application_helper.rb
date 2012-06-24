@@ -54,6 +54,14 @@ module ApplicationHelper
     end
   end
   
+  def attend_event_status(event, student)
+    unless event.attendees.where(:student_id => student.id).any?
+      "badge-important"
+    else
+      "badge-success"
+    end
+  end
+  
   def account_status_for_show(user)
     return unless user.invitation_accepted_at.nil?
     content_tag(:span, :class => "label label-warning") do

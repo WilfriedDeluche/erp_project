@@ -233,7 +233,7 @@ all_event_owners = all_captains + all_student_union_members
 event_suff_size = event_suff.size
 all_event_owners.each do |owner|
   class_id = (owner.is_captain) ? (owner.klasses.order("year DESC").first.id) : nil
-  Event.create! :name => "#{event_pref.sample} #{event_suff[rand(event_suff_size)]}", 
+  e = Event.create! :name => "#{event_pref.sample} #{event_suff[rand(event_suff_size)]}", 
           :start_date => DateTime.now + 25.days,
           :end_date => DateTime.now + 25.days + 7.hours,
           :description => lorem,
@@ -241,5 +241,23 @@ all_event_owners.each do |owner|
           :klass_id => class_id do |event|
             event.student_id = owner.id
           end
+          
+  unless e.klass_id.nil?
+    klass_students = e.klass.students
+    klass_students_size = klass_students.size
+  end
+  
+  rand(6).times do
+    if e.klass_id.nil?
+      student = all_students[rand(student_size)] #random student from school for Public Event
+    else
+      random = rand(klass_students_size)
+      student = klass_students[random]
+      klass_students.delete_at(random) if student
+    end
+    if student
+      Attendee.create! :event_id => e.id, :student_id => student.id
+    end
+  end
 end
 

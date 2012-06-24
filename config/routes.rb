@@ -40,7 +40,10 @@ ErpProject::Application.routes.draw do
   resources :subjects
   
   resources :events do
-    resources :attendees
+    put "attend", :on => :member
+    put "unattend", :on => :member
+    
+    resources :attendees, :only => [:destroy]
   end
 
 end
