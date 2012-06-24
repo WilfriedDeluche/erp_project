@@ -24,6 +24,7 @@ ErpProject::Application.routes.draw do
     
     resources :recruitments, :only => [:index, :new, :create]
     resources :contracts
+    resources :evaluations, :only => [:index, :edit, :update, :destroy]
   end
   resources :recruiters do
     put "reinvite_user", :on => :member
@@ -34,10 +35,15 @@ ErpProject::Application.routes.draw do
   resources :trainings
   
   resources :classes, :controller => "klasses" do
-    resources :students, :only => [:show]
+    resources :students, :only => [:show] do
+      resources :evaluations, :only => [:index]
+    end
+    resources :evaluations, :except => [:show]
   end
 
   resources :subjects
+  
+  resources :evaluations, :only => [:index]
   
   resources :events do
     put "attend", :on => :member
@@ -45,5 +51,5 @@ ErpProject::Application.routes.draw do
     
     resources :attendees, :only => [:destroy]
   end
-
+    
 end

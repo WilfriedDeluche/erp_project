@@ -2,6 +2,13 @@
 
 <h1 class="page-header">Classe <small><%= @class.training.short_name %> - <%=@class.year %></small></h1>
 
+<div class="row page-menu-bar">
+  <% if school_user_signed_in? || teacher_signed_in? || current_user.is_admin %>
+    <%= link_to 'Ajouter des Notes', new_class_evaluation_path(@class), :class => "btn btn-mini btn-inverse" %>
+    <%= link_to 'Consulter les Notes', class_evaluations_path(@class), :class => "btn btn-mini btn-inverse" %>
+  <% end %>
+</div>
+
 <% if @students.any? %>
   <p><strong>Effectif: <%= pluralize(@students.size, 'étudiant') %></strong></p>
   <table class="table table-bordered table-condensed">
@@ -27,6 +34,17 @@
           <!-- Voir -->
         <% end %>
         <% if school_user_signed_in? || current_user.is_admin %>
+          <% if @class %>
+            <%= link_to class_student_evaluations_path(@class, student), :class => "btn btn-mini" do %>
+              <i class=" icon-th"></i>
+              <!-- Voir les Notes -->
+            <% end %>
+          <% else %>
+            <%= link_to student_evaluations_path(student), :class => "btn btn-mini" do %>
+              <i class=" icon-th"></i>
+              <!-- Voir les Notes -->
+            <% end %>
+          <% end %>
           <%= link_to edit_student_path(student), :class => "btn btn-mini" do %>
             <i class="icon-pencil"></i>
             <!-- Modifier -->

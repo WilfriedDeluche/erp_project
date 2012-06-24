@@ -2,7 +2,8 @@ class Subject < ActiveRecord::Base
   
   has_and_belongs_to_many :teachers
   has_and_belongs_to_many :klasses
-    
+  has_many :evaluations
+  
   validates_presence_of :name, :description
   attr_accessible :name, :description, :teachers_list, :classes_list
   

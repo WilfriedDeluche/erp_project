@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  student_id: 1
+  subject_id: 1
+  grade: 1.5
+
+two:
+  student_id: 1
+  subject_id: 1
+  grade: 1.5

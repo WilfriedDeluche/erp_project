@@ -33,6 +33,10 @@ class ApplicationController < ActionController::Base
     access_denied unless current_user.rolable_type == "SchoolUser" && !current_user.rolable.nil?
   end
   
+  def teachers_or_school_users_only
+    access_denied unless %w(SchoolUser Teacher).include?(current_user.rolable_type) && !current_user.rolable.nil?
+  end
+  
   def admin_only
     access_denied unless current_user.is_admin
   end
