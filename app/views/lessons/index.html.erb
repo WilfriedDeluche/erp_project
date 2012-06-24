@@ -1,6 +1,9 @@
 <%= render "shared/private_sidebar" %>
 <h1 class="page-header">Emploi du temps</h1>
-<%= link_to 'Ajouter', new_lesson_path, :class => "btn btn-mini btn-inverse" %>
+<div class="row page-menu-bar">
+  <%= link_to 'Ajouter', new_lesson_path, :class => "btn btn-mini btn-inverse" %>
+</div>
+
 
 <div id="calendar">
   <h2 id="month">
