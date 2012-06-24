@@ -25,11 +25,13 @@
           <i class="icon-eye-open"></i>
           <!-- Voir -->
         <% end %>
-        <% if school_user_signed_in? || current_user.is_admin %>
+        <% if school_user_signed_in? || teacher_signed_in? || current_user.is_admin %>
           <%= link_to edit_subject_path(subject), :class => "btn btn-mini" do %>
             <i class="icon-pencil"></i>
             <!-- Modifier -->
           <% end %>
+        <% end %>
+        <% if school_user_signed_in? || current_user.is_admin %>
           <%= link_to subject, confirm: 'Êtes-vous sûr?', method: :delete, :class => "btn btn-mini" do %>
             <i class=" icon-trash"></i>
             <!-- Supprimer -->
