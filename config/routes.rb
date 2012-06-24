@@ -42,7 +42,7 @@ ErpProject::Application.routes.draw do
   end
 
   resources :subjects
-  
+  resources :lessons
   resources :evaluations, :only => [:index]
   
   resources :events do
@@ -51,5 +51,4 @@ ErpProject::Application.routes.draw do
     
     resources :attendees, :only => [:destroy]
   end
-    
 end

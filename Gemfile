@@ -11,6 +11,8 @@ gem 'json'
 gem 'devise'
 gem 'devise_invitable', '~> 1.0.0'
 
+gem "watu_table_builder", :require => "table_builder"
+
 gem 'thin'
 
 # Gems used only for assets and not required
