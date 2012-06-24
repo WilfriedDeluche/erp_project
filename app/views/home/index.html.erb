@@ -37,3 +37,31 @@
     </p>
   <% end %>
 </div>
+
+
+<h2 class="label header label-info">Prochains Événements</h2>
+
+<% if @events.any? %>
+  <% @events.each do |event| %>
+    <div class="well">
+      <div class="pull-right">
+        <%= link_to "Plus d'Infos", event_path(event), :class => "btn btn-primary" %>
+      </div>
+      <h2><%= event.name %></h2>
+      <div>
+        <h3 class="inline"><small>Quand ? </small></h3>
+        Du <strong><%= event.start_date.strftime("%d-%m-%Y à %Hh%M") %></strong> au 
+        <strong><%= event.end_date.strftime("%d-%m-%Y à %Hh%M") %></strong>
+      </div>
+      <div>
+        <h3 class="inline"><small>Où ? </small></h3>
+        <strong><%= event.location %></strong>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <h4><em>Vous ne participez à aucun événement</em></h4>
+  <div class="pull-right">
+    <%= link_to "Voir tous les Événements", events_path, :class => "btn" %>
+  </div>
+<% end %>
