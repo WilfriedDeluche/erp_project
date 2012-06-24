@@ -46,14 +46,6 @@ ActiveRecord::Schema.define(:version => 20120624093051) do
     t.datetime "updated_at"
   end
 
-  create_table "events", :force => true do |t|
-    t.string   "name"
-    t.datetime "start_at"
-    t.datetime "end_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "klasses", :force => true do |t|
     t.integer  "training_id"
     t.integer  "year"
@@ -156,13 +148,13 @@ ActiveRecord::Schema.define(:version => 20120624093051) do
     t.datetime "updated_at"
     t.integer  "rolable_id"
     t.string   "rolable_type"
+    t.boolean  "is_admin",                             :default => false
     t.string   "invitation_token",       :limit => 60
     t.datetime "invitation_sent_at"
     t.datetime "invitation_accepted_at"
     t.integer  "invitation_limit"
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
-    t.boolean  "is_admin",                             :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
