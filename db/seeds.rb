@@ -192,3 +192,29 @@ subjects.each do |subject|
 end
 puts "#{subjects.size} SUBJECTS"
 
+puts "..."
+puts "SETTING UP CLASSES CAPTAIN"
+puts "..."
+classes.each do |klass|
+  students_klass = klass.students
+  size = students_klass.size
+  2.times do
+    random_student = students_klass[rand(size)]
+    random_student.is_captain = true
+    random_student.save!
+  end
+  puts "2 captains created for Class #{klass.name}"
+end
+
+puts "..."
+puts "SETTING UP STUDENT UNION MEMBERS"
+puts "..."
+all_students = Student.all
+student_size = Student.all.size
+10.times do
+  random_student = all_students[rand(student_size)]
+  random_student.is_student_union_member = true
+  random_student.save!
+end
+puts "10 student union members created"
+

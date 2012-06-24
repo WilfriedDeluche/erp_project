@@ -20,6 +20,10 @@
 </div>
 
 <div class="well">
+  <div style="line-height: 25px;">
+    <%= student_is_captain(@student) %>
+    <%= student_is_student_union_member(@student) %>
+  </div>
   <% if @current_class %>
     <strong>Classe: </strong><%= @current_class.training.short_name %> - <%= @current_class.year %>
   <% else %>

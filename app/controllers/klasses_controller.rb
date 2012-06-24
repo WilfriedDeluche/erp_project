@@ -15,7 +15,7 @@ class KlassesController < ApplicationController
   # GET /classes/1
   # GET /classes/1.json
   def show
-    @students = @class.students
+    @students = @class.students.order("created_at ASC")
     respond_with @class
   end
 

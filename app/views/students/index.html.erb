@@ -21,6 +21,9 @@
     <td>
       <span class="badge badge-status <%= account_status(student.user) %>"></span>
       <%= student.user.last_name.upcase %>
+      <div class="pull-right">
+        <%= student_is_student_union_member(student) %>
+      </div>
     </td>
     <td><%= student.user.first_name.capitalize %></td>
     <td><%= student.city.capitalize %></td>

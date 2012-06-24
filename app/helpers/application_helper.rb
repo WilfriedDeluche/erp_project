@@ -1,3 +1,4 @@
+# encoding: utf-8
 module ApplicationHelper
   def rolable_error_messages!(resource, user)
     return "" if resource.errors.empty? && user.errors.empty?
@@ -63,5 +64,9 @@ module ApplicationHelper
       end
     end + 
     content_tag(:br)
+  end
+  
+  def submit_text(object)
+    (object.persisted?) ? "Mettre à jour" : "Créer"
   end
 end
