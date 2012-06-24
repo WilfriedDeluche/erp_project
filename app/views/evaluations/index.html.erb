@@ -1,0 +1,69 @@
+<%= render "shared/private_sidebar" %>
+
+<% if @student %>
+  <h1 class="page-header">
+    Liste des Notes <small><%= @student.user.name %></small>
+  </h1>
+  
+  <table class="table table-bordered table-condensed">
+    <tr>
+      <th>Matière</th>
+      <th>Notes</th>
+      <% if school_user_signed_in? || teacher_signed_in? || current_user.is_admin %>
+      <th>Actions</th>
+      <% end %>
+    </tr>
+
+  <% @evaluations.each do |evaluation| %>
+    <tr>
+      <td><%= evaluation.subject.name %></td>
+      <td><%= evaluation.grade %>/<%= evaluation.scale %></td>
+      <% if school_user_signed_in? || teacher_signed_in? || current_user.is_admin %>
+      <td>
+        
+          <%= link_to edit_student_evaluation_path(@student, evaluation), :class => "btn btn-mini" do %>
+            <i class="icon-pencil"></i>
+            <!-- Modifier -->
+          <% end %>
+          <%= link_to student_evaluation_path(@student, evaluation), confirm: 'Êtes-vous sûr?', method: :delete, :class => "btn btn-mini" do %>
+            <i class=" icon-trash"></i>
+            <!-- Supprimer -->
+          <% end %>
+      </td>
+      <% end %>
+    </tr>
+  <% end %>
+  </table>
+  
+  <% if school_user_signed_in? || teacher_signed_in? || current_user.is_admin %>
+    <div class="form-actions">
+      <% if @class %>
+        <%= link_to '← Retour', class_path(@class), :class => "btn btn-primary" %>
+      <% else %>
+        <%= link_to '← Retour', students_path, :class => "btn btn-primary" %>
+      <% end %>
+    </div>
+  <% end %>
+  
+<% else %>
+  <h1 class="page-header">
+    Liste des Évaluations
+    <% if @class %>
+      <small><%= @class.training.short_name %> - <%=@class.year %></small>
+    <% end %>
+  </h1>
+
+  <div class="row page-menu-bar">
+    <% if school_user_signed_in? || teacher_signed_in? || current_user.is_admin %>
+      <%= link_to 'Ajouter des Notes', new_class_evaluation_path(@class), :class => "btn btn-mini btn-inverse" %>
+    <% end %>
+  </div>
+
+  <%= form_tag class_evaluations_path(@class), :method => 'get', :id => 'search_form', :class => 'form-search' do %>
+    <%= select_tag("subject_id", options_from_collection_for_select(@subjects, "id", "name")) %>
+  <% end %>
+
+  <div id="liveTable">
+    <%= render :partial => "student_list",  :locals => { :subject => @selected_subject } %>
+  </div>
+<% end %>

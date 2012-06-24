@@ -5,6 +5,7 @@ class Student < ActiveRecord::Base
   has_many :recruiters, :through => :recruitments
   has_many :contracts
   has_many :companies, :through => :contracts
+  has_many :evaluations
   
   has_and_belongs_to_many :klasses
   
