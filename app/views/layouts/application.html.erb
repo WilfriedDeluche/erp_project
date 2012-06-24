@@ -4,6 +4,11 @@
   <title>ErpProject</title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("[rel=popover]").popover();
+    });
+  </script>
   <%= csrf_meta_tags %>
 </head>
 <body>
