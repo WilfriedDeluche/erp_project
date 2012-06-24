@@ -11,9 +11,6 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 20120624093051) do
-=======
 ActiveRecord::Schema.define(:version => 20120624123308) do
 
   create_table "attendees", :force => true do |t|
@@ -22,7 +19,6 @@ ActiveRecord::Schema.define(:version => 20120624123308) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
->>>>>>> master
 
   create_table "companies", :force => true do |t|
     t.string   "corporate_name"
@@ -57,8 +53,6 @@ ActiveRecord::Schema.define(:version => 20120624123308) do
     t.datetime "updated_at"
   end
 
-<<<<<<< HEAD
-=======
   create_table "events", :force => true do |t|
     t.string   "name"
     t.datetime "start_date"
@@ -71,7 +65,6 @@ ActiveRecord::Schema.define(:version => 20120624123308) do
     t.datetime "updated_at"
   end
 
->>>>>>> master
   create_table "klasses", :force => true do |t|
     t.integer  "training_id"
     t.integer  "year"
