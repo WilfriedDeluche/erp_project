@@ -6,6 +6,8 @@ class Klass < ActiveRecord::Base
   has_and_belongs_to_many :subjects
   has_many :events
   
+  has_many :lessons
+  
   validates_presence_of :training_id, :year
   validates_uniqueness_of :year, :scope => :training_id
   validates_format_of :year, :with => /\A20[0-9]{2}\Z/
@@ -14,5 +16,9 @@ class Klass < ActiveRecord::Base
   
   def name
     "#{self.training.section.upcase} #{self.training.level} - #{self.year}"
+  end
+  
+  def name_and_level
+    "#{self.training.section.upcase} #{self.training.level}"
   end
 end
