@@ -12,7 +12,7 @@
     <%= link_to ">", :month => (@date.end_of_month+1)%>
   </h2>
   <%= calendar_for @lessons, :year => @date.year, :month => @date.month do |calendar| %>
-    <%= calendar.head("Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche")%>
+    <%= calendar.head("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi")%>
     <%= calendar.day(:day_method => :start_date) do |date, lessons| %>
       <%= date.day %>
       <ul>

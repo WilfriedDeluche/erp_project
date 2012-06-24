@@ -99,12 +99,12 @@
       <% end %>
     </li>
   <% end %>
-  
-  <li>
-    <%= link_to lessons_path do %>
-      <i class="icon-list-alt"></i>
-      Cours
-    <% end %>
-  </li>
-  
+  <% if school_user_signed_in? %>
+    <li>
+      <%= link_to lessons_path do %>
+        <i class="icon-list-alt"></i>
+        Cours
+      <% end %>
+    </li>
+  <% end %>
 <% end %>

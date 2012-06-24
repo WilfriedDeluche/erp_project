@@ -1,5 +1,6 @@
 # encoding: utf-8
 class LessonsController < ApplicationController
+  before_filter :school_users_only
   before_filter :find_lesson, :only => [:show, :edit, :update, :destroy]
   before_filter :find_all_sujects_klasses_and_teachers, :only => [:new, :edit]
   
