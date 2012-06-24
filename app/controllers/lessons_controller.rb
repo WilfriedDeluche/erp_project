@@ -1,12 +1,14 @@
 # encoding: utf-8
 class LessonsController < ApplicationController
-  before_filter :students_or_school_users_only
+  before_filter :students_or_school_users_or_teacher_only
   before_filter :find_lesson, :only => [:show, :edit, :update, :destroy]
   before_filter :find_all_sujects_klasses_and_teachers, :only => [:new, :edit]
   
   def index
     if student_signed_in?
       @lessons = Lesson.find_all_by_klass_id(current_user.rolable.klasses.order("year DESC").first.id)
+    elsif teacher_signed_in?
+      @lessons = Lesson.find_all_by_teacher_id(current_user.rolable.id)
     elsif school_user_signed_in?
       @lessons = Lesson.order("start_date ASC").all
     end

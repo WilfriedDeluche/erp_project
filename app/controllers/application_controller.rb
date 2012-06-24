@@ -28,8 +28,8 @@ class ApplicationController < ActionController::Base
     @is_recruiter_in
   end
   
-  def students_or_school_users_only
-    access_denied unless %w(SchoolUser Student).include?(current_user.rolable_type) && !current_user.rolable.nil?
+  def students_or_school_users_or_teacher_only
+    access_denied unless %w(SchoolUser Student Teacher).include?(current_user.rolable_type) && !current_user.rolable.nil?
   end
   
   def school_users_only
