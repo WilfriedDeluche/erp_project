@@ -6,6 +6,7 @@ class Student < ActiveRecord::Base
   has_many :contracts
   has_many :companies, :through => :contracts
   has_many :events
+  has_many :attendees
   
   has_and_belongs_to_many :klasses
   

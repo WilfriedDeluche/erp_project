@@ -4,6 +4,8 @@ class Event < ActiveRecord::Base
   belongs_to :student
   belongs_to :klass
   
+  has_many :attendees
+  
   validates_presence_of :name, :start_date, :end_date, :location, :student_id
   validate :start_date_before_end_date
   

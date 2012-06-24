@@ -1,5 +1,7 @@
 ErpProject::Application.routes.draw do
   
+  resources :attendees
+
   resources :events
 
   devise_for :users
