@@ -11,5 +11,7 @@
 </div>
 <div class="form-actions">
   <%= link_to '← Retour', lessons_path, :class => "btn btn-primary" %>
-  <%= link_to "Edit", edit_lesson_path, :class => "btn btn-primary" %>
+  <% if school_user_signed_in? %>
+    <%= link_to "Edit", edit_lesson_path, :class => "btn btn-primary" %>
+  <% end %>
 </div>

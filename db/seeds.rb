@@ -191,4 +191,3 @@ subjects.each do |subject|
   puts subject
 end
 puts "#{subjects.size} SUBJECTS"
-

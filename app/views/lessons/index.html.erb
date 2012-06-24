@@ -1,9 +1,11 @@
 <%= render "shared/private_sidebar" %>
 <h1 class="page-header">Emploi du temps</h1>
-<div class="row page-menu-bar">
-  <%= link_to 'Ajouter', new_lesson_path, :class => "btn btn-mini btn-inverse" %>
-</div>
 
+<% if school_user_signed_in? %>
+  <div class="row page-menu-bar">
+    <%= link_to 'Ajouter', new_lesson_path, :class => "btn btn-mini btn-inverse" %>
+  </div>
+<% end %>
 
 <div id="calendar">
   <h2 id="month">
@@ -17,7 +19,12 @@
       <%= date.day %>
       <ul>
         <% for lesson in lessons %>
-          <li><%= link_to h(lesson.klass_and_lesson), lesson, "rel" => "popover", "data-original-title" => "#{if_exam(lesson)} #{lesson.start_time} à #{lesson.end_time}" ,"data-content" => "<b>Classe : </b>#{lesson.klass.name_and_level}<br /><b>Cour : </b>#{lesson.subject.name}<br /><b>Professeur : </b>#{lesson.teacher.name}" %></li>
+          <li class="well" style="margin-bottom:5px;">
+            <% if lesson.is_test %>
+              <i class="icon-warning-sign"></i>
+            <% end %>
+            <%= link_to h(lesson.klass_and_lesson), lesson, "rel" => "popover", "data-original-title" => "#{if_exam(lesson)} #{lesson.start_time} à #{lesson.end_time}" ,"data-content" => "<b>Classe : </b>#{lesson.klass.name_and_level}<br /><b>Cour : </b>#{lesson.subject.name}<br /><b>Professeur : </b>#{lesson.teacher.name}" %>
+          </li>
         <% end %>
       </ul>
     <% end %>
