@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :find_current_class
@@ -42,6 +43,14 @@ class ApplicationController < ActionController::Base
   
   def recruiters_only
     access_denied unless current_user.rolable_type == "Recruiter" && !current_user.rolable.nil?
+  end
+  
+  def students_only
+    access_denied unless current_user.rolable_type == "Student" && !current_user.rolable.nil?
+  end
+  
+  def captain_or_union_member_only
+    access_denied unless current_user.rolable.is_captain || current_user.rolable.is_student_union_member
   end
   
   def access_denied
@@ -91,5 +100,14 @@ class ApplicationController < ActionController::Base
   def find_current_class
     return unless student_signed_in?
     @current_class = current_user.rolable.klasses.order("year DESC").first
+  end
+  
+  def owner_only
+    unless @event.student_id == current_user.rolable.id
+      respond_to do |format|
+        format.html { redirect_to events_path, alert: "Vous n'avez pas les droits pour gérer cet événement." }
+        format.json { render head: :not_found }
+      end
+    end
   end
 end

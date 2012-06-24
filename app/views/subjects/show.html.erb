@@ -1,10 +1,9 @@
 <%= render "shared/private_sidebar" %>
 
-<h1 class="page-header">Matière</h1>
+<h1 class="page-header">Matière <small><%= @subject.name %></small></h1>
 
 <div class="well">
-  <strong>Nom: </strong><%= @subject.name %><br />
-  <strong>Description: </strong><br /><%= @subject.description %><br />
+  <%= @subject.description %>
 </div>
 
 <% if school_user_signed_in? || current_user.is_admin %>

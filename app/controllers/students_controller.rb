@@ -11,7 +11,7 @@ class StudentsController < ApplicationController
   # GET /students.json
   def index
     unless current_user.is_recruiter?
-      @students = Student.all.select { |s| s unless s.user.nil? }
+      @students = Student.order("created_at ASC").select { |s| s unless s.user.nil? }
     else
       @students = current_user.rolable.recruitments.where(:end_date => nil).map { |recruitment| recruitment.student }
     end

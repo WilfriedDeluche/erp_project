@@ -4,61 +4,75 @@
     <div class="span4">
       <%= fields_for @user do |uf| %>
         <div>
-          <%= uf.label :last_name %>
+          <%= uf.label :last_name, "Nom" %>
           <%= uf.text_field :last_name %>
         </div>
     
         <div>
-          <%= uf.label :first_name %>
+          <%= uf.label :first_name, "Prénom" %>
           <%= uf.text_field :first_name %>
         </div>
     
         <div>
         <% if action_name == 'new' or action_name == 'create' %>
-          <%= uf.label :email %>
+          <%= uf.label :email, "Email" %>
           <%= uf.email_field :email %>
         <% else %>
-          <%= uf.label :email %>
+          <%= uf.label :email, "Email" %>
           <div class="uneditable-input"><%= @user.email %></div>
         <% end %>
         </div>
       <% end %>
+      
+      <div>
+        <label for="student_is_captain" class="checkbox">
+    		  <%= f.check_box :is_captain %>
+    		  <span>Délégué</span>
+    		</label>        
+      </div>
+      
+      <div>
+        <label for="student_is_student_union_member" class="checkbox">
+    		  <%= f.check_box :is_student_union_member %>
+    		  <span>Membre du BDE</span>
+    		</label>        
+      </div>
     </div>
   
     <div class="span4">
       <div>
-        <%= f.label :birthdate %>
+        <%= f.label :birthdate, "Année de naissance" %>
         <%= f.text_field :birthdate %>
       </div>
   
       <div>
-        <%= f.label :address %>
+        <%= f.label :address, "Adresse" %>
         <%= f.text_field :address %>
       </div>
   
       <div>
-        <%= f.label :zip_code %>
+        <%= f.label :zip_code, "Code Postal" %>
         <%= f.text_field :zip_code %>
       </div>
   
       <div>
-        <%= f.label :city %>
+        <%= f.label :city, "Ville" %>
         <%= f.text_field :city %>
       </div>
   
       <div>
-        <%= f.label :mobile_phone_number %>
+        <%= f.label :mobile_phone_number, "Numéro de mobile" %>
         <%= f.text_field :mobile_phone_number %>
       </div>
   
       <div>
-        <%= f.label :home_phone_number %>
+        <%= f.label :home_phone_number, "Numéro de fixe" %>
         <%= f.text_field :home_phone_number %>
       </div>
     </div>
   </div>
   <div class="form-actions">
     <%= link_to '← Retour', students_path, :class => "btn btn-primary" %>
-    <%= f.submit :class => "btn btn-primary" %>
+    <%= f.submit submit_text(@student), :class => "btn btn-primary" %>
   </div>
 <% end %>

@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120623121528) do
+ActiveRecord::Schema.define(:version => 20120624123308) do
+
+  create_table "attendees", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "student_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "companies", :force => true do |t|
     t.string   "corporate_name"
@@ -42,6 +49,18 @@ ActiveRecord::Schema.define(:version => 20120623121528) do
     t.integer  "subject_id"
     t.float    "grade"
     t.integer  "scale"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "events", :force => true do |t|
+    t.string   "name"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.text     "location"
+    t.integer  "student_id"
+    t.integer  "klass_id"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -90,6 +109,8 @@ ActiveRecord::Schema.define(:version => 20120623121528) do
     t.string   "mobile_phone_number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_captain",              :default => false
+    t.boolean  "is_student_union_member", :default => false
   end
 
   create_table "subjects", :force => true do |t|

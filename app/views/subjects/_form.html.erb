@@ -1,42 +1,48 @@
 <%= form_for(@subject) do |f| %>
   <%= error_messages!(@subject) %>
-
+  
   <div>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.label :name, "Nom" %>
+    <% unless teacher_signed_in? %>
+      <%= f.text_field :name %>
+    <% else %>
+      <span class="uneditable-input"><%= @subject.name %></span>
+    <% end %>
   </div>
   <div>
-    <%= f.label :description %>
-    <%= f.text_area :description, :cols => 40, :rows => 10 %>
+    <%= f.label :description, "Description" %>
+    <%= f.text_area :description, :rows => 10, :class => "span6" %>
   </div>
   
-  <div style="margin-top: 15px;">
-    <h3>Professeurs enseignant cette matière</h3>
-    <br />
-  	<% @teachers.each do |teacher| %>
-  	  <label for="subject_teachers_list_<%= teacher.id %>" class="checkbox">
-  		  <%= check_box_tag(
-            "subject[teachers_list][#{teacher.id}]", 
-            "1", 
-            @subject.teachers.detect{|t| t == teacher}) %>
-    		<%= "#{teacher.user.name}" %>
-  		</label>
-  	<% end %>
-  </div>
+  <% unless teacher_signed_in? %>
+    <div style="margin-top: 15px;">
+      <h3>Professeurs enseignant cette matière</h3>
+      <br />
+    	<% @teachers.each do |teacher| %>
+    	  <label for="subject_teachers_list_<%= teacher.id %>" class="checkbox">
+    		  <%= check_box_tag(
+              "subject[teachers_list][#{teacher.id}]", 
+              "1", 
+              @subject.teachers.detect{|t| t == teacher}) %>
+      		<%= "#{teacher.user.name}" %>
+    		</label>
+    	<% end %>
+    </div>
   
-  <div style="margin-top: 15px;">
-    <h3>Classes inscrites dans cette matière</h3>
-    <br />
-  	<% @classes.each do |klass| %>
-  	  <label for="subject_classes_list_<%= klass.id %>" class="checkbox">
-  		  <%= check_box_tag(
-            "subject[classes_list][#{klass.id}]", 
-            "1", 
-            @subject.klasses.detect{|k| k == klass}) %>
-    		<%= "#{klass.name}" %>
-  		</label>
-  	<% end %>
-  </div>
+    <div style="margin-top: 15px;">
+      <h3>Classes inscrites dans cette matière</h3>
+      <br />
+    	<% @classes.each do |klass| %>
+    	  <label for="subject_classes_list_<%= klass.id %>" class="checkbox">
+    		  <%= check_box_tag(
+              "subject[classes_list][#{klass.id}]", 
+              "1", 
+              @subject.klasses.detect{|k| k == klass}) %>
+      		<%= "#{klass.name}" %>
+    		</label>
+    	<% end %>
+    </div>
+  <% end %>
   
   <div class="form-actions">
     <%= link_to '← Retour', @subject, :class => "btn btn-primary" %>

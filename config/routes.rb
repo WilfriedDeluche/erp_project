@@ -1,5 +1,5 @@
 ErpProject::Application.routes.draw do
-  
+
   devise_for :users
   
   root :to => "PublicPages#school"
@@ -41,8 +41,15 @@ ErpProject::Application.routes.draw do
     resources :evaluations, :except => [:show]
   end
 
-  resources :subjects do
-  end
+  resources :subjects
   
   resources :evaluations, :only => [:index]
+  
+  resources :events do
+    put "attend", :on => :member
+    put "unattend", :on => :member
+    
+    resources :attendees, :only => [:destroy]
+  end
+    
 end
