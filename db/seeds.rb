@@ -28,6 +28,10 @@ trainings = { "Système d'Ingénierie et Génie Logiciel" => "SIGL",
 
 lorem = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
+event_pref = %w(Soirée Journée Week-end Salon Congrès Fête)
+event_suff = ["Poker", "Portes ouvertes", "du Sport", "de la Musique", "des Geeks", "des Jeux Vidéos", "des Gamers",
+      "Ruby", "MongoDB", "de la Tartiflette", "de la Culture"]
+
 puts "#### ALL DATAS FROM CURRENT DATABASE DESTROYED ####"
 
 puts 'SETTING UP DEFAULT USERS'
@@ -217,4 +221,23 @@ student_size = Student.all.size
   random_student.save!
 end
 puts "10 student union members created"
+
+puts "..."
+puts "SETTING UP DEFAULT EVENTS"
+puts "..."
+all_captains = all_students.select { |s| s.is_captain }
+all_student_union_members = all_students.select { |s| s.is_student_union_member }
+all_event_owners = all_captains + all_student_union_members
+event_suff_size = event_suff.size
+all_event_owners.each do |owner|
+  class_id = (owner.is_captain) ? (owner.klasses.order("year DESC").first.id) : nil
+  Event.create! :name => "#{event_pref.sample} #{event_suff[rand(event_suff_size)]}", 
+          :start_date => DateTime.now + 25.days,
+          :end_date => DateTime.now + 25.days + 7.hours,
+          :description => lorem,
+          :location => "Paris",
+          :klass_id => class_id do |event|
+            event.student_id = owner.id
+          end
+end
 

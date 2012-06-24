@@ -1,0 +1,47 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Liste des Événements</h1>
+
+<div class="row page-menu-bar">
+  <% if @student_admin %>
+    <%= link_to 'Nouveau', new_event_path, :class => "btn btn-mini btn-inverse" %>
+  <% end %>
+</div>
+
+<% if @events.any? %>
+  <table class="table table-bordered table-condensed">
+    <tr>
+      <th>Nom</th>
+      <th>Début</th>
+      <th>Fin</th>
+      <th>Actions</th>
+    </tr>
+
+    <% @events.each do |event| %>
+      <tr>
+        <td><%= event.name %></td>
+        <td><%= event.start_date.strftime("%d-%m-%Y à %Hh%M") %></td>
+        <td><%= event.end_date.strftime("%d-%m-%Y à %Hh%M") %></td>
+        <td>
+          <%= link_to event, :class => "btn btn-mini" do %>
+            <i class="icon-eye-open"></i>
+            <!-- Voir -->
+          <% end %>
+          <% if @student_admin && event.student_id == current_user.rolable.id %>
+            <%= link_to edit_event_path(event), :class => "btn btn-mini" do %>
+              <i class="icon-pencil"></i>
+              <!-- Modifier -->
+            <% end %>
+            <%= link_to event, confirm: 'Êtes-vous sûr?', method: :delete, :class => "btn btn-mini" do %>
+              <i class=" icon-trash"></i>
+              <!-- Supprimer -->
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+<% else %>
+  <h2>Aucun événement</h2>
+<% end %>

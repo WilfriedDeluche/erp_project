@@ -1,0 +1,29 @@
+<%= form_for(@event) do |f| %>
+  <%= error_messages!(@event) %>
+
+  <div>
+    <%= f.label :name, "Nom de l'événement" %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :start_date, "Début de l'événement" %>
+    <%= f.datetime_select :start_date, {}, { :class => "span1" } %>
+  </div>
+  <div>
+    <%= f.label :end_date, "Fin de l'événement" %>
+    <%= f.datetime_select :end_date, {}, { :class => "span1" } %>
+  </div>
+  <div>
+    <%= f.label :location, "Lieu" %>
+    <%= f.text_field :location %>
+  </div>
+  <div>
+    <%= f.label :description, "Description" %>
+    <%= f.text_area :description, :rows => 10, :class => "span6" %>
+  </div>
+  
+  <div class="form-actions">
+    <%= link_to '← Retour', events_path, :class => "btn btn-primary" %>
+    <%= f.submit submit_text(@event), :class => "btn btn-primary" %>
+  </div>
+<% end %>

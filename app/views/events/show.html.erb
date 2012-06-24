@@ -1,0 +1,31 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Événement <small><%= @event.name %></small></h1>
+
+<div class="well">  
+  <strong>Début: </strong><%= @event.start_date.strftime("%d-%m-%Y à %Hh%M") %><br />
+  <strong>Fin: </strong><%= @event.end_date.strftime("%d-%m-%Y à %Hh%M") %><br />
+  <strong>Lieu: </strong><%= @event.location %><br />
+  <strong>Description: </strong><br />
+  <% unless @event.description.empty? %>
+    <%= @event.description %>
+  <% else %>
+    <em>Aucune description pour cet événement</em>
+  <% end %>
+</div>
+
+<div class="well">  
+  <strong>Organisateur: </strong><%= @event.student.user.name %> (<%= @event.student.user.email %>)<br />
+  <% unless @event.klass.nil? %>
+    <strong>Classe: </strong><%= @event.klass.name %><br />
+  <% else %>
+    <strong>Événement organisé pour toute l'école</strong>
+  <% end %>
+</div>
+
+<div class="form-actions">
+  <%= link_to '← Retour', events_path, :class => "btn btn-primary" %>
+  <% if @student_admin %>
+    <%= link_to 'Editer', edit_event_path(@event), :class => "btn btn-primary" %>
+  <% end %>
+</div>
