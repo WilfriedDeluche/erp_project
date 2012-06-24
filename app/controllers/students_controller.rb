@@ -3,7 +3,7 @@ class StudentsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :school_users_only, :except => [:show, :index]
   before_filter :find_class, :only => [:show]
-  before_filter :find_student, :only => [:show, :edit, :update, :destroy, :reinvite_user, :new_class]
+  before_filter :find_student, :only => [:show, :edit, :update, :destroy, :reinvite_user, :new_class, :contact, :send_mail]
   before_filter :own_recruiter_only, :only => [:show]
   respond_to :html, :json
   
@@ -111,6 +111,41 @@ class StudentsController < ApplicationController
     @student_classes = @student.klasses.order("year DESC")
     @classes = Klass.order("year DESC")
     respond_with @student
+  end
+  
+  # POST /students/1/contact
+  def contact
+    @subject = ""
+    @message = ""
+    respond_with @student
+  end
+  
+  # POST /students/1/send_mail
+  def send_mail
+    @subject = params[:mail][:subject]
+    @message = params[:mail][:message]
+    unless (@subject.empty? || @message.empty?)
+      begin
+        PublicMailer.student_email(@student, current_user, @subject, @message).deliver
+        respond_to do |format|
+          format.html { redirect_to students_path, notice: "L'email a bien été envoyé à l'étudiant." }
+        end
+      rescue
+        respond_to do |format|
+          format.html do 
+            flash[:alert] = "Un problème est survenu pendant l'envoi de votre email."
+            render action: "contact"
+          end
+        end
+      end
+    else
+      respond_to do |format|
+        format.html do 
+          flash[:alert] = "Vous devez remplir intégralement le formulaire afin d'envoyer un email."
+          render action: "contact"
+        end
+      end
+    end
   end
   
   private
