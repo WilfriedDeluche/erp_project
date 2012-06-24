@@ -1,2 +1,29 @@
 <%= render "shared/public_sidebar" %>
+
 <h1 class="page-header">Actualité</h1>
+
+<% if @events.any? %>
+  <h2 class="label header label-info">Événements Ingesup</h2>
+  
+  <% @events.each do |event| %>
+    <div class="well">
+      <h2><%= event.name %></h2>
+      <div>
+        <h3><small>Quand ? </small></h3>
+        Du <strong><%= event.start_date.strftime("%d-%m-%Y à %Hh%M") %></strong> au 
+        <strong><%= event.end_date.strftime("%d-%m-%Y à %Hh%M") %></strong>
+      </div>
+      <div>
+        <h3><small>Où ? </small></h3>
+        <strong><%= simple_format(event.location) %></strong>
+      </div>
+      <div class="event-description">
+        <% unless event.description.empty? %>
+          <%= h(event.description) %>
+        <% else %>
+          <em>Aucune description pour cet événement</em>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

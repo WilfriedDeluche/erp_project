@@ -4,6 +4,7 @@ class Klass < ActiveRecord::Base
   belongs_to :training
   has_and_belongs_to_many :students
   has_and_belongs_to_many :subjects
+  has_many :events
   
   has_many :lessons
   

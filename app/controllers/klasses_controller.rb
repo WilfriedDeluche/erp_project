@@ -8,14 +8,19 @@ class KlassesController < ApplicationController
   # GET /classes
   # GET /classes.json
   def index
-    @classes = Klass.order("year DESC")
+    if teacher_signed_in?
+      @subjects = current_user.rolable.subjects
+      @classes = @subjects.map { |s| s.klasses }.flatten.uniq
+    else
+      @classes = Klass.order("year DESC")
+    end
     respond_with @classes
   end
 
   # GET /classes/1
   # GET /classes/1.json
   def show
-    @students = @class.students
+    @students = @class.students.order("created_at ASC")
     respond_with @class
   end
 
@@ -84,9 +89,12 @@ class KlassesController < ApplicationController
   def find_class
     begin
       @class = Klass.find(params[:id])
+      if teacher_signed_in?
+        raise RecordNotFound.new unless current_user.rolable.subjects.map { |s| s.klasses }.flatten.uniq.include?(@class)
+      end
     rescue
       respond_to do |format|
-        format.html { redirect_to classes_path, alert: "Cette classe n'existe pas." }
+        format.html { redirect_to classes_path, alert: "Cette classe n'existe pas ou n'est pas gérée par vous." }
         format.json { render head: :not_found }
       end
     end

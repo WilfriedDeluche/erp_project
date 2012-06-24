@@ -1,0 +1,60 @@
+<%= render "shared/private_sidebar" %>
+
+<h1 class="page-header">Liste des Événements</h1>
+
+<div class="row page-menu-bar">
+  <% if @student_admin %>
+    <%= link_to 'Nouveau', new_event_path, :class => "btn btn-mini btn-inverse" %>
+  <% end %>
+</div>
+
+<% if @events.any? %>
+  <table class="table table-bordered table-condensed">
+    <tr>
+      <th>Nom</th>
+      <th>Date</th>
+      <th>Participants</th>
+      <th>Actions</th>
+    </tr>
+
+    <% @events.each do |event| %>
+      <tr>
+        <td>
+          <span class="badge badge-status <%= attend_event_status(event, current_user.rolable) %>"></span>
+          <span class="event-identity"><%= event.name %></span><br />
+          <div class="pull-right">
+            <% if event.klass.nil? %>
+              <span class="label label-success">Public</span>
+            <% else %>
+              <span class="label label-warning">Non Public</span>
+            <% end %>
+          </div>
+        </td>
+        <td>
+          Du <%= event.start_date.strftime("%d-%m-%Y à %Hh%M") %><br />
+          Au <%= event.end_date.strftime("%d-%m-%Y à %Hh%M") %>
+        </td>
+        <td><span class="badge badge-info"><%= event.attendees.count %></span></td>
+        <td>
+          <%= link_to event, :class => "btn btn-mini" do %>
+            <i class="icon-eye-open"></i>
+            <!-- Voir -->
+          <% end %>
+          <% if @student_admin && event.student_id == current_user.rolable.id %>
+            <%= link_to edit_event_path(event), :class => "btn btn-mini" do %>
+              <i class="icon-pencil"></i>
+              <!-- Modifier -->
+            <% end %>
+            <%= link_to event, confirm: 'Êtes-vous sûr?', method: :delete, :class => "btn btn-mini" do %>
+              <i class=" icon-trash"></i>
+              <!-- Supprimer -->
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+<% else %>
+  <h2>Aucun événement</h2>
+<% end %>

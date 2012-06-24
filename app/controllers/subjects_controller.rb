@@ -1,7 +1,8 @@
 # encoding: utf-8
 class SubjectsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :school_users_only, :except => [:show, :index]
+  before_filter :school_users_only, :except => [:show, :index, :edit, :update]
+  before_filter :teachers_or_school_users_only, :only => [:edit, :update]
   before_filter :find_subject, :only => [:show, :edit, :update, :destroy]
   respond_to :html, :json
   
