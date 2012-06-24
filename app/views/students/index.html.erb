@@ -48,9 +48,13 @@
       <% end %>
       <% if student.user.invitation_accepted_at.nil? %>
         <%= link_to reinvite_user_student_path(student), method: :put, :class => "btn btn-mini" do %>
-          <i class="icon-envelope"></i>
+          <i class="icon-gift"></i>
           <!-- Envoyer email invitation -->
         <% end %>
+      <% end %>
+      <%= link_to contact_student_path(student), :class => "btn btn-mini" do %>
+        <i class="icon-envelope"></i>
+        <!-- Envoyer email -->
       <% end %>
     </td>
   </tr>

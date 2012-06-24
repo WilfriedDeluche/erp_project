@@ -60,6 +60,10 @@
             <!-- Envoyer email invitation -->
           <% end %>
         <% end %>
+        <%= link_to contact_student_path(student), :class => "btn btn-mini" do %>
+          <i class="icon-envelope"></i>
+          <!-- Envoyer email -->
+        <% end %>
       </td>
     </tr>
   <% end %>
