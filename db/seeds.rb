@@ -138,14 +138,14 @@ companies = Company.all
 nb_comp = companies.size
 
 Student.all.each do |student|
-  random_recruiter = recruiters[rand(0..nb_rec-1)]
+  random_recruiter = recruiters[rand(nb_rec)]
   rs = Recruitment.create! :student_id => student.id, :recruiter_id => random_recruiter.id, :start_date => DateTime.now
   puts rs.student.user.first_name << " " << rs.student.user.last_name << "'s current recruiter is " << rs.recruiter.user.first_name << " " << rs.recruiter.user.last_name
 
-  to_contract = rand(0..1)
+  to_contract = rand(2)
   if to_contract == 1
     type_contract = contracts.sample
-    random_company = companies[rand(0..nb_comp-1)]
+    random_company = companies[rand(nb_comp)]
     contract = Contract.create! :student_id => student.id, :recruiter_id => random_recruiter.id, :company_id => random_company.id, 
         :start_date => Date.today - 250.days, :end_date => Date.today + 120.days, :kind => type_contract
     puts contract.student.user.first_name << " " << contract.student.user.last_name << " en contrat avec " << contract.company.corporate_name
@@ -172,7 +172,7 @@ classes = Klass.all
 nb_cl = classes.size
 
 Student.all.each do |student|
-  student.klasses << classes[rand(0..nb_cl-1)] # adds a record in join table "klasses_students"
+  student.klasses << classes[rand(nb_cl)] # adds a record in join table "klasses_students"
 end
 
 puts "..."
@@ -182,12 +182,12 @@ teachers = Teacher.all
 nb_teachers = teachers.size
 subjects.each do |subject|
   teachers_list = {}
-  rand(0..5).times do
-    teachers_list[teachers[rand(0..nb_teachers-1)].id.to_s] = "1"
+  rand(6).times do
+    teachers_list[teachers[rand(nb_teachers)].id.to_s] = "1"
   end
   classes_list = {}
-  rand(1..4).times do
-    classes_list[classes[rand(0..nb_cl-1)].id.to_s] = "1"
+  (rand(5-1)+1).times do
+    classes_list[classes[rand(nb_cl)].id.to_s] = "1"
   end
   s = Subject.create! :name => subject, :description => lorem, :teachers_list => teachers_list, :classes_list => classes_list
   puts subject
