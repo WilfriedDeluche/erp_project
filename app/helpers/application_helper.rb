@@ -68,5 +68,5 @@ module ApplicationHelper
   
   def submit_text(object)
     (object.persisted?) ? "Mettre à jour" : "Créer"
-  end
+  end  
 end

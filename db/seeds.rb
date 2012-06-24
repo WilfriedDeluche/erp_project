@@ -12,6 +12,8 @@ Contract.destroy_all
 Training.destroy_all
 Klass.destroy_all
 Subject.destroy_all
+Event.destroy_all
+Attendee.destroy_all
 
 first_names = %w(AURELIE LAETITA ALAIN NICOLAS FELICIA IGNACIO ELODIE ARTHUR LAURENCE MARIE PATRICIA AURELIE MATHIEU LINDA LISA JENNIFER JEAN FRANCOIS MICHAEL WILLIAM DAVID RICHARD CHARLES THOMAS)
 last_names = %w(MARTIN DUPONT JANVIER BERGER DUJARDIN LEMAITRE VIARD COTILLARD MOUNIER HERAUT BOUYER SARDIN RIVERIN GOMES FERRERA VIGNAUT WAGNER ZEPETA AGUILA BRIANCON DUCHOMMIER)
@@ -235,7 +237,7 @@ all_event_owners.each do |owner|
           :start_date => DateTime.now + 25.days,
           :end_date => DateTime.now + 25.days + 7.hours,
           :description => lorem,
-          :location => "Paris",
+          :location => "Bâtiment C\r\nIngesup PARIS",
           :klass_id => class_id do |event|
             event.student_id = owner.id
           end

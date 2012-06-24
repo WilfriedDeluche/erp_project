@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(:version => 20120624123308) do
     t.string   "name"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.string   "location"
+    t.text     "location"
     t.integer  "student_id"
     t.integer  "klass_id"
     t.text     "description"

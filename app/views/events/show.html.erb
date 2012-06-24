@@ -5,10 +5,10 @@
 <div class="well">  
   <strong>Début: </strong><%= @event.start_date.strftime("%d-%m-%Y à %Hh%M") %><br />
   <strong>Fin: </strong><%= @event.end_date.strftime("%d-%m-%Y à %Hh%M") %><br />
-  <strong>Lieu: </strong><%= @event.location %><br />
+  <strong>Lieu: </strong><%= simple_format(@event.location) %>
   <strong>Description: </strong><br />
   <% unless @event.description.empty? %>
-    <%= @event.description %>
+    <%= simple_format(@event.description) %>
   <% else %>
     <em>Aucune description pour cet événement</em>
   <% end %>

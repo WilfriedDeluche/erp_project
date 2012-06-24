@@ -1,8 +1,4 @@
 ErpProject::Application.routes.draw do
-  
-  resources :attendees
-
-  resources :events
 
   devise_for :users
   
@@ -42,5 +38,9 @@ ErpProject::Application.routes.draw do
   end
 
   resources :subjects
+  
+  resources :events do
+    resources :attendees
+  end
 
 end

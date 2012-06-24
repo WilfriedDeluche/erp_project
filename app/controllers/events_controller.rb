@@ -6,12 +6,16 @@ class EventsController < ApplicationController
   before_filter :set_student_status
   before_filter :find_event, :only => [:show, :edit, :update, :destroy]
   before_filter :owner_only, :only => [:edit, :update, :destroy]
+  before_filter :own_class_events_only, :only => [:show]
   respond_to :html, :json
   
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    @public_events = Event.where(:klass_id => nil)
+    @klass_events = Event.where(:klass_id => current_user.rolable.klasses.order("year DESC").first.id)
+    @owner_events = Event.where(:student_id => current_user.rolable.id)
+    @events = (@public_events + @klass_events + @owner_events).uniq
     respond_with @events
   end
 
@@ -94,6 +98,16 @@ class EventsController < ApplicationController
     unless @event.student_id == current_user.rolable.id
       respond_to do |format|
         format.html { redirect_to events_path, alert: "Vous n'avez pas les droits pour gérer cet événement." }
+        format.json { render head: :not_found }
+      end
+    end
+  end
+  
+  def own_class_events_only
+    return if @event.klass_id.nil? || @event.student_id == current_user.rolable.id
+    unless @event.klass_id == current_user.rolable.klasses.order("year DESC").first.id
+      respond_to do |format|
+        format.html { redirect_to events_path, alert: "Vous n'avez pas les droits pour visualiser cet événement." }
         format.json { render head: :not_found }
       end
     end
