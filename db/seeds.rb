@@ -12,6 +12,7 @@ Contract.destroy_all
 Training.destroy_all
 Klass.destroy_all
 Subject.destroy_all
+Evaluation.destroy_all
 Event.destroy_all
 Attendee.destroy_all
 
