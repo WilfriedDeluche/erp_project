@@ -12,6 +12,8 @@ Contract.destroy_all
 Training.destroy_all
 Klass.destroy_all
 Subject.destroy_all
+Event.destroy_all
+Attendee.destroy_all
 
 first_names = %w(AURELIE LAETITA ALAIN NICOLAS FELICIA IGNACIO ELODIE ARTHUR LAURENCE MARIE PATRICIA AURELIE MATHIEU LINDA LISA JENNIFER JEAN FRANCOIS MICHAEL WILLIAM DAVID RICHARD CHARLES THOMAS)
 last_names = %w(MARTIN DUPONT JANVIER BERGER DUJARDIN LEMAITRE VIARD COTILLARD MOUNIER HERAUT BOUYER SARDIN RIVERIN GOMES FERRERA VIGNAUT WAGNER ZEPETA AGUILA BRIANCON DUCHOMMIER)
@@ -29,6 +31,10 @@ trainings = { "Système d'Ingénierie et Génie Logiciel" => "SIGL",
 grades = %w(0 1 2 3 4 5 6 6.5 7 7.5 8 8.5 9 9.5 10 10.5 11 11.5 12 12.5 13 13.5 14 14.5 15 15.5 16 16.5 17 17.5 18 18.5 19 19.5 20)
 
 lorem = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+event_pref = %w(Soirée Journée Week-end Salon Congrès Fête)
+event_suff = ["Poker", "Portes ouvertes", "du Sport", "de la Musique", "des Geeks", "des Jeux Vidéos", "des Gamers",
+      "Ruby", "MongoDB", "de la Tartiflette", "de la Culture"]
 
 puts "#### ALL DATAS FROM CURRENT DATABASE DESTROYED ####"
 
@@ -195,12 +201,75 @@ end
 puts "#{subjects.size} SUBJECTS"
 
 puts "..."
-puts "SETTING DEFAULT EVALUATION TO STUDENTS"
-
+puts "SETTING DEFAULT EVALUATIONS TO STUDENTS"
+puts "..."
 classes.each do |klass|
   klass.subjects.each do |subject|
     klass.students.each do |student|
       Evaluation.create! :student_id => student.id, :subject_id => subject.id, :scale => 20, :grade => grades.sample
+    end
+  end
+end
+
+puts "..."
+puts "SETTING UP CLASSES CAPTAIN"
+puts "..."
+classes.each do |klass|
+  students_klass = klass.students
+  size = students_klass.size
+  2.times do
+    random_student = students_klass[rand(size)]
+    random_student.is_captain = true
+    random_student.save!
+  end
+  puts "2 captains created for Class #{klass.name}"
+end
+
+puts "..."
+puts "SETTING UP STUDENT UNION MEMBERS"
+puts "..."
+all_students = Student.all
+student_size = Student.all.size
+10.times do
+  random_student = all_students[rand(student_size)]
+  random_student.is_student_union_member = true
+  random_student.save!
+end
+puts "10 student union members created"
+
+puts "..."
+puts "SETTING UP DEFAULT EVENTS"
+puts "..."
+all_captains = all_students.select { |s| s.is_captain }
+all_student_union_members = all_students.select { |s| s.is_student_union_member }
+all_event_owners = all_captains + all_student_union_members
+event_suff_size = event_suff.size
+all_event_owners.each do |owner|
+  class_id = (owner.is_captain) ? (owner.klasses.order("year DESC").first.id) : nil
+  e = Event.create! :name => "#{event_pref.sample} #{event_suff[rand(event_suff_size)]}", 
+          :start_date => DateTime.now + 25.days,
+          :end_date => DateTime.now + 25.days + 7.hours,
+          :description => lorem,
+          :location => "Bâtiment C\r\nIngesup PARIS",
+          :klass_id => class_id do |event|
+            event.student_id = owner.id
+          end
+          
+  unless e.klass_id.nil?
+    klass_students = e.klass.students
+    klass_students_size = klass_students.size
+  end
+  
+  rand(6).times do
+    if e.klass_id.nil?
+      student = all_students[rand(student_size)] #random student from school for Public Event
+    else
+      random = rand(klass_students_size)
+      student = klass_students[random]
+      klass_students.delete_at(random) if student
+    end
+    if student
+      Attendee.create! :event_id => e.id, :student_id => student.id
     end
   end
 end
