@@ -1,0 +1,37 @@
+<table class="table table-bordered table-condensed">
+  <tr>
+    <th>Étudiant</th>
+    <th>Notes</th>
+    <th>Actions</th>
+  </tr>
+
+<% @students.each do |student| %>
+  <tr>
+    <td>
+      <span class="badge badge-status <%= account_status(student.user) %>"></span>
+      <%= student.user.last_name.upcase %> <%= student.user.first_name.capitalize %>
+    </td>
+    <td>
+      <% if subject %>
+        <% evaluations = student.evaluations.where(:subject_id => subject) %>
+        <% if evaluations.any? %>
+          <% evaluations.each_with_index do |ev, index| %>
+            <span>
+              <% if index > 0 %><strong> | </strong><% end %>
+              <%= ev.grade %>/<%= ev.scale %>
+            </span>
+          <% end %>
+        <% else %>
+          <em>Aucune note pour cette matière</em>
+        <% end %>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to class_student_evaluations_path(@class, student), :class => "btn btn-mini" do %>
+        <i class="icon-eye-open"></i>
+        <!-- Voir -->
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+</table>
