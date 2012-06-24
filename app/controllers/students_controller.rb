@@ -1,7 +1,7 @@
 # encoding: utf-8
 class StudentsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :school_users_only, :except => [:show, :index]
+  before_filter :school_users_only, :except => [:show, :index, :contact, :send_mail]
   before_filter :find_class, :only => [:show]
   before_filter :find_student, :only => [:show, :edit, :update, :destroy, :reinvite_user, :new_class, :contact, :send_mail]
   before_filter :own_recruiter_only, :only => [:show]

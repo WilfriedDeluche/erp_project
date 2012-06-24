@@ -13,7 +13,6 @@ class PublicMailer < ActionMailer::Base
   end
   
   def student_email(student, sender, subject, message)
-    debugger
     @message = message
     
     mail(:from => "#{sender.first_name} #{sender.last_name}<#{sender.email}>",
