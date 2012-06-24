@@ -8,6 +8,7 @@ ErpProject::Application.routes.draw do
     get "school", :on => :collection
     get "news", :on => :collection
     get "contact", :on => :collection
+    post "send_email", :on => :collection
   end
   
   resources :home, :only => [:index]
@@ -21,6 +22,8 @@ ErpProject::Application.routes.draw do
   resources :students do
     put "reinvite_user", :on => :member
     get "new_class", :on => :member
+    get "contact", :on => :member
+    post "send_mail", :on => :member
     
     resources :recruitments, :only => [:index, :new, :create]
     resources :contracts

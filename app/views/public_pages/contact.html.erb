@@ -1,2 +1,45 @@
 <%= render "shared/public_sidebar" %>
-<h1 class="page-header">Contact</h1>
+
+<h1 class="page-header">Contacter un Chargé de Placement</h1>
+
+<div class="alert alert-info">
+  Tous les champs sont obligatoires afin d'assurer l'envoi de l'email
+</div>
+
+<%= form_tag send_email_public_pages_path, :method => 'post', :id => 'contact_form' do %>
+
+  <div>
+    <%= label_tag "mail_first_name", "Votre Prénom" %>
+    <%= text_field_tag "mail[first_name]" %>
+  </div>
+  
+  <div>
+    <%= label_tag "mail_last_name", "Votre Nom" %>
+    <%= text_field_tag "mail[last_name]" %>
+  </div>
+  
+  <div>
+    <%= label_tag "mail_email", "Votre Email" %>
+    <%= text_field_tag "mail[email]" %>
+  </div>
+  
+  <div >
+    <%= label_tag "mail_recruiter_id", "Chargé de Placement à contacter" %>
+    <%= select_tag("mail[recruiter_id]", options_from_collection_for_select(@recruiters, "id", "name")) %>
+  </div>
+  
+  <div >
+    <%= label_tag "mail_subject", "Objet de votre email" %>
+    <%= text_field_tag "mail[subject]", "", :class => "span6" %>
+  </div>
+  
+  <div >
+    <%= label_tag "mail_message", "Votre message" %>
+    <%= text_area_tag "mail[message]", "", { :rows => 8, :class => "span6"} %>
+  </div>
+  
+  <div>
+    <%= submit_tag "Envoyer l'Email", :class => "btn btn-primary" %>
+  </div>
+  
+<% end %>

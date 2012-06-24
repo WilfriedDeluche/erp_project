@@ -1,0 +1,25 @@
+<%= render "shared/public_sidebar" %>
+
+<h1 class="page-header">Contacter un Étudiant <small><%= @student.user.name %></small></h1>
+
+<div class="alert alert-info">
+  Tous les champs sont obligatoires afin d'assurer l'envoi de l'email
+</div>
+
+<%= form_tag send_mail_student_path(@student), :method => 'post', :id => 'contact_form' do %>
+  
+  <div >
+    <%= label_tag "mail_subject", "Objet de votre email" %>
+    <%= text_field_tag "mail[subject]", @subject, :class => "span6" %>
+  </div>
+  
+  <div >
+    <%= label_tag "mail_message", "Votre message" %>
+    <%= text_area_tag "mail[message]", @message, { :rows => 8, :class => "span6"} %>
+  </div>
+  
+  <div>
+    <%= submit_tag "Envoyer l'Email", :class => "btn btn-primary" %>
+  </div>
+  
+<% end %>
