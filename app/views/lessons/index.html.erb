@@ -14,7 +14,7 @@
       <%= date.day %>
       <ul>
         <% for lesson in lessons %>
-          <li><%= link_to h(lesson.subject.name), lesson %></li>
+          <li><%= link_to h(lesson.klass_and_lesson), lesson, "rel" => "popover", "data-original-title" => "#{lesson.start_time} à #{lesson.end_time}" ,"data-content" => "<b>Classe : </b>#{lesson.klass.name_and_level}<br /><b>Cour : </b>#{lesson.subject.name}<br /><b>Professeur : </b>#{lesson.teacher.name}" %></li>
         <% end %>
       </ul>
     <% end %>

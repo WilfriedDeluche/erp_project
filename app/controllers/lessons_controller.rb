@@ -4,7 +4,7 @@ class LessonsController < ApplicationController
   before_filter :find_all_sujects_klasses_and_teachers, :only => [:new, :edit]
   
   def index
-    @lessons = Lesson.all
+    @lessons = Lesson.order("start_date ASC").all
     @date = params[:month] ? Date.parse(params[:month]) : Date.today
   end
   

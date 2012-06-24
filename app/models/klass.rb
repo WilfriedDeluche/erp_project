@@ -16,4 +16,8 @@ class Klass < ActiveRecord::Base
   def name
     "#{self.training.section.upcase} #{self.training.level} - #{self.year}"
   end
+  
+  def name_and_level
+    "#{self.training.section.upcase} #{self.training.level}"
+  end
 end
