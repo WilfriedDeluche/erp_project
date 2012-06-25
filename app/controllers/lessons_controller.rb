@@ -2,7 +2,7 @@
 class LessonsController < ApplicationController
   before_filter :students_or_school_users_or_teacher_only
   before_filter :find_lesson, :only => [:show, :edit, :update, :destroy]
-  before_filter :find_all_sujects_klasses_and_teachers, :only => [:new, :edit]
+  before_filter :find_all_sujects_klasses_and_teachers, :only => [:new, :edit, :create, :update]
   
   def index
     if student_signed_in?
@@ -40,9 +40,7 @@ class LessonsController < ApplicationController
           format.html { redirect_to lessons_path(@lesson), notice: 'Le cour a bien été créé' }
           format.json { render json: @lesson, status: :created, location: @lesson }
         else
-          format.html do
-            render action: "new"
-          end
+          format.html { render action: "new" }
           format.json { render json: @lesson.errors, status: :unprocessable_entity }
         end
       end
@@ -74,7 +72,7 @@ class LessonsController < ApplicationController
     if school_user_signed_in?
       @lesson.destroy
       respond_to do |format|
-        format.html { redirect_to lessons_url }
+        format.html { redirect_to lessons_url, alert: 'le cour a bien été supprimé' }
         format.json { head :ok }
       end
     else

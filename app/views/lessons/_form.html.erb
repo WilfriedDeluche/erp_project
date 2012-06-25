@@ -1,4 +1,9 @@
 <%= form_for(@lesson) do |f| %>
+  <div class="alert alert-error">
+    <a class="close" data-dismiss="alert" href="#">&times;</a>
+    <%= error_messages!(@lesson) %>  
+  </div>
+  
   <div>
     <%= f.label :klass_id, "Matière" %>
     <%= f.collection_select :subject_id, @subjects, :id, :name, { :prompt => "Sélectionnez" } %>
@@ -15,17 +20,17 @@
   </div>
   
   <div>
-    <%= f.label :start_date %>
+    <%= f.label :start_date, "Début du cours" %>
     <%= f.datetime_select :start_date %>
   </div>
   
   <div>
-    <%= f.label :end_date %>
+    <%= f.label :end_date, "Fin du cours" %>
     <%= f.datetime_select :end_date %>
   </div>
   
   <div>
-    <%= f.label :is_test %>
+    <%= f.label :is_test, "Examen ?" %>
     <%= f.check_box :is_test %>
   </div>
   
