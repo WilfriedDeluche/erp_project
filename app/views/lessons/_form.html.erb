@@ -1,8 +1,10 @@
 <%= form_for(@lesson) do |f| %>
-  <div class="alert alert-error">
-    <a class="close" data-dismiss="alert" href="#">&times;</a>
-    <%= error_messages!(@lesson) %>  
-  </div>
+  <% unless error_messages!(@lesson).blank? %>
+    <div class="alert alert-error">
+      <a class="close" data-dismiss="alert" href="#">&times;</a>
+      <%= error_messages!(@lesson) %>  
+    </div>
+  <% end %>
   
   <div>
     <%= f.label :klass_id, "Matière" %>
