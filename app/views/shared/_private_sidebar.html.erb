@@ -18,45 +18,89 @@
       Contact
     <% end %>
   </li>
+  
   <li class="nav-header">Privé</li>
   <% if user_signed_in? %>
-    <li>
+    <% if params[:controller] == "home" %>
+      <li class="active">
+    <% else %>
+      <li>
+    <% end %>
       <%= link_to home_index_path do %>
-        <i class="icon-user"></i>
+        <% if params[:controller] == "home" %>
+          <i class="icon-user icon-white"></i>
+        <% else %>
+          <i class="icon-user"></i>
+        <% end %>
         Mon espace
       <% end %>
     </li>
   <% end %>
   
   <% if school_user_signed_in? %>
-    <li>
+    <% if params[:controller] == "school_users" %>
+      <li class="active">
+    <% else %>
+      <li>
+    <% end %>
       <%= link_to school_users_path do %>
-        <i class="icon-list-alt"></i>
+        <% if params[:controller] == "school_users" %>
+          <i class="icon-list-alt icon-white"></i>
+        <% else %>
+          <i class="icon-list-alt"></i>
+        <% end %>
         Pédagogiques
       <% end %>
     </li>
-    <li>
+    
+    <% if params[:controller] == "teachers" %>
+      <li class="active">
+    <% else %>
+      <li>
+    <% end %>
       <%= link_to teachers_path do %>
-        <i class="icon-list-alt"></i>
+        <% if params[:controller] == "teachers" %>
+          <i class="icon-list-alt icon-white"></i>
+        <% else %>
+          <i class="icon-list-alt"></i>
+        <% end %>
         Professeurs
       <% end %>
     </li>
   <% end %>
   
   <% if school_user_signed_in? || recruiter_signed_in? %>
-    <li>
+    <% if params[:controller] == "recruiters" %>
+      <li class="active">
+    <% else %>
+      <li>
+    <% end %>
       <%= link_to recruiters_path do %>
-        <i class="icon-list-alt"></i>
+        <% if params[:controller] == "recruiters" %>
+          <i class="icon-list-alt icon-white"></i>
+        <% else %>
+          <i class="icon-list-alt"></i>
+        <% end %>
         Chargés de Placement
       <% end %>
     </li>
-    <li>
+    
+    <% if params[:controller] == "students" %>
+      <li class="active">
+    <% else %>
+      <li>
+    <% end %>
       <%= link_to students_path do %>
-        <i class="icon-list-alt"></i>
+        <% if params[:controller] == "students" %>
+          <i class="icon-list-alt icon-white"></i>
+        <% else %>
+          <i class="icon-list-alt"></i>
+        <% end %>
         Étudiants
       <% end %>
     </li>
   <% end %>
+  
   <% if recruiter_signed_in? %>
     <li>
       <%= link_to companies_path do %>
@@ -67,9 +111,17 @@
   <% end %>
   
   <% if school_user_signed_in? %>
-    <li>
+    <% if params[:controller] == "trainings" %>
+      <li class="active">
+    <% else %>
+      <li>
+    <% end %>
       <%= link_to trainings_path do %>
-        <i class="icon-list-alt"></i>
+        <% if params[:controller] == "trainings" %>
+          <i class="icon-list-alt icon-white"></i>
+        <% else %>
+          <i class="icon-list-alt"></i>
+        <% end %>
         Formations
       <% end %>
     </li>
@@ -84,41 +136,81 @@
     </li>
   <% end %>
     
-  <li>
+  <% if params[:controller] == "klasses" %>
+    <li class="active">
+  <% else %>
+    <li>
+  <% end %>
     <%= link_to classes_path do %>
-      <i class="icon-list-alt"></i>
+      <% if params[:controller] == "klasses" %>
+        <i class="icon-list-alt icon-white"></i>
+      <% else %>
+        <i class="icon-list-alt"></i>
+      <% end %>
       Classes
     <% end %>
   </li>
   
   <% if school_user_signed_in? || student_signed_in? || teacher_signed_in? %>
-    <li>
+    <% if params[:controller] == "subjects" %>
+      <li class="active">
+    <% else %>
+      <li>
+    <% end %>
       <%= link_to subjects_path do %>
-        <i class="icon-list-alt"></i>
+        <% if params[:controller] == "subjects" %>
+          <i class="icon-list-alt icon-white"></i>
+        <% else %>
+          <i class="icon-list-alt"></i>
+        <% end %>
         Matières
       <% end %>
     </li>
   <% end %>
 
   <% if school_user_signed_in? || student_signed_in? || teacher_signed_in? %>
-    <li>
+    <% if params[:controller] == "lessons" %>
+      <li class="active">
+    <% else %>
+      <li>
+    <% end %>
       <%= link_to lessons_path do %>
-        <i class="icon-list-alt"></i>
+        <% if params[:controller] == "lessons" %>  
+          <i class="icon-list-alt icon-white"></i>
+        <% else %>
+          <i class="icon-list-alt"></i>
+        <% end %>
         Planning
       <% end %>
     </li>
   <% end %>
   
   <% if student_signed_in? %>
-    <li>
+    <% if params[:controller] == "evaluations" %>
+      <li class="acrive">
+    <% else %>
+      <li>
+    <% end %>
       <%= link_to evaluations_path do %>
-        <i class="icon-list-alt"></i>
+        <% if params[:controller] == "evaluations" %>
+          <i class="icon-list-alt icon-white"></i>
+        <% else %>
+          <i class="icon-list-alt"></i>
+        <% end %>
         Mes Notes
       <% end %>
     </li>
-    <li>
+    <% if params[:controller] == "events" %>
+      <li class="active">
+    <% else %>
+      <li>
+    <% end %>
       <%= link_to events_path do %>
-        <i class="icon-list-alt"></i>
+        <% if params[:controller] == "events" %>
+          <i class="icon-list-alt icon-white"></i>
+        <% else %>
+          <i class="icon-list-alt"></i>
+        <% end %>
         Événements
       <% end %>
     </li>
