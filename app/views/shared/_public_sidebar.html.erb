@@ -1,37 +1,83 @@
 <%= content_for :sidebar do %>
   <li class="nav-header">Public</li>
-  <li>
+  
+  <% if params[:action] == "school" && params[:controller] == "public_pages" %>
+    <li class="active">
+  <% else %>
+    <li>
+  <% end %>
     <%= link_to school_public_pages_path do %>
-      <i class="icon-home"></i>
+      <% if params[:action] == "school" && params[:controller] == "public_pages" %>
+        <i class="icon-home icon-white"></i>
+      <% else %>
+        <i class="icon-home"></i>
+      <% end %>
       École
     <% end %>
   </li>
-  <li>
+  
+  <% if params[:action] == "news" && params[:controller] == "public_pages" %>
+    <li class="active">
+  <% else %>
+    <li>
+  <% end %>
     <%= link_to news_public_pages_path do %>
-      <i class="icon-camera"></i>
+      <% if params[:action] == "news" && params[:controller] == "public_pages" %>
+        <i class="icon-camera icon-white"></i>
+      <% else %>
+        <i class="icon-camera"></i>
+      <% end %>
       Actualités
     <% end %>
   </li>
-  <li>
+  
+  <% if params[:action] == "contact" && params[:controller] == "public_pages" %>
+    <li class="active">
+  <% else %>
+    <li>
+  <% end %>
     <%= link_to contact_public_pages_path do %>
-      <i class="icon-envelope"></i>
+      <% if params[:action] == "contact" && params[:controller] == "public_pages" %>
+        <i class="icon-envelope icon-white"></i>
+      <% else %>
+        <i class="icon-envelope"></i>
+      <% end %>
       Contact
     <% end %>
   </li>
+  
   <li class="nav-header">Privé</li>
   <% if user_signed_in? %>
-    <li>
+    <% if params[:controller] == "home" %>
+      <li class="active">
+    <% else %>
+      <li>
+    <% end %>
       <%= link_to home_index_path do %>
-        <i class="icon-user"></i>
+        <% if params[:controller] == "home" %>
+          <i class="icon-user icon-white"></i>
+        <% else %>
+          <i class="icon-user"></i>
+        <% end %>
         Mon espace
       <% end %>
     </li>
   <% else %>
-    <li>
+    <% debugger %>
+    <% if params[:controller] == "devise/sessions" %>
+      <li class="active">
+    <% else %>
+      <li>
+    <% end %>
       <%= link_to new_user_session_path do %>
-        <i class="icon-user"></i>
+        <% if params[:controller] == "devise/sessions" %>
+          <i class="icon-user icon-white"></i>
+        <% else %>
+          <i class="icon-user"></i>
+        <% end %>
         Connexion
       <% end %>
     </li>
   <% end %>
+  
 <% end %>
