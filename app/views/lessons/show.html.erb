@@ -13,5 +13,6 @@
   <%= link_to '← Retour', lessons_path, :class => "btn btn-primary" %>
   <% if school_user_signed_in? %>
     <%= link_to "Edit", edit_lesson_path, :class => "btn btn-primary" %>
+    <%= link_to "Supprimer", lesson_path, confirm:'Êtes-vous sûr?', method: :delete, :class => "btn btn-danger" %>
   <% end %>
 </div>
