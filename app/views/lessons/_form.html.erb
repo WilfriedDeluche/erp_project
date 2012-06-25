@@ -1,4 +1,9 @@
 <%= form_for(@lesson) do |f| %>
+  <div class="alert alert-error">
+    <a class="close" data-dismiss="alert" href="#">&times;</a>
+    <%= error_messages!(@lesson) %>  
+  </div>
+  
   <div>
     <%= f.label :klass_id, "Matière" %>
     <%= f.collection_select :subject_id, @subjects, :id, :name, { :prompt => "Sélectionnez" } %>

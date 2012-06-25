@@ -2,7 +2,7 @@
 class LessonsController < ApplicationController
   before_filter :students_or_school_users_or_teacher_only
   before_filter :find_lesson, :only => [:show, :edit, :update, :destroy]
-  before_filter :find_all_sujects_klasses_and_teachers, :only => [:new, :edit]
+  before_filter :find_all_sujects_klasses_and_teachers, :only => [:new, :edit, :create]
   
   def index
     if student_signed_in?
@@ -35,22 +35,12 @@ class LessonsController < ApplicationController
   def create
     if school_user_signed_in?
       @lesson = Lesson.new(params[:lesson])
-      
-      teacher_lessons = Lesson.find_all_by_teacher_id(@lesson.teacher_id)
-      teacher_lessons.each do |teacher_lesson|
-        if @teacher.start_date >= teacher_lesson.start_date && @teacher.end_date <= teacher_lesson.end_date
-          redirect_to new_lesson_path, alert: "Le professeur à déjà un cour de prévu dans cette tranche d'horaire"
-        end 
-      end
-      
       respond_to do |format|
         if @lesson.save
           format.html { redirect_to lessons_path(@lesson), notice: 'Le cour a bien été créé' }
           format.json { render json: @lesson, status: :created, location: @lesson }
         else
-          format.html do
-            render action: "new"
-          end
+          format.html { render action: "new" }
           format.json { render json: @lesson.errors, status: :unprocessable_entity }
         end
       end
@@ -82,7 +72,7 @@ class LessonsController < ApplicationController
     if school_user_signed_in?
       @lesson.destroy
       respond_to do |format|
-        format.html { redirect_to lessons_url }
+        format.html { redirect_to lessons_url, alert: 'le cour a bien été supprimé' }
         format.json { head :ok }
       end
     else
