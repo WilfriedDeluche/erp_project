@@ -35,6 +35,14 @@ class LessonsController < ApplicationController
   def create
     if school_user_signed_in?
       @lesson = Lesson.new(params[:lesson])
+      
+      teacher_lessons = Lesson.find_all_by_teacher_id(@lesson.teacher_id)
+      teacher_lessons.each do |teacher_lesson|
+        if @teacher.start_date >= teacher_lesson.start_date && @teacher.end_date <= teacher_lesson.end_date
+          redirect_to new_lesson_path, alert: "Le professeur à déjà un cour de prévu dans cette tranche d'horaire"
+        end 
+      end
+      
       respond_to do |format|
         if @lesson.save
           format.html { redirect_to lessons_path(@lesson), notice: 'Le cour a bien été créé' }
