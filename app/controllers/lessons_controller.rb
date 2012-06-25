@@ -2,7 +2,7 @@
 class LessonsController < ApplicationController
   before_filter :students_or_school_users_or_teacher_only
   before_filter :find_lesson, :only => [:show, :edit, :update, :destroy]
-  before_filter :find_all_sujects_klasses_and_teachers, :only => [:new, :edit, :create]
+  before_filter :find_all_sujects_klasses_and_teachers, :only => [:new, :edit, :create, :update]
   
   def index
     if student_signed_in?
